@@ -1,0 +1,3 @@
+
+enum GameKey;
+enum EnemyType;
