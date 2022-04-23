@@ -44,3 +44,27 @@ void SpeedItem::action(Player* player){
 void PowerItem::action(Player* player){
     player->getGaurd(duration);
 }
+
+//------
+Enemy::Enemy(int x, int y, int width, int height, std::string imgAddress, int rate )
+    : Box(x, y, width, height, imgAddress, rate){
+}
+void Enemy::shoot(){
+    Arrow* arrow = new 
+        Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT));
+    arrows.push_back(arrow);
+}
+void Enemy::moveArrows(){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        arrows[i]->moveDown();
+    }
+    
+}
+void Enemy::drawArrows(Window* window){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        arrows[i]->draw(window);
+    }
+}
+virtual Enemy::void move(int windowWidth) = 0;

@@ -85,3 +85,17 @@ private:
 public:
     void action(Player* player);
 };
+
+
+class Enemy:public Box{
+private:
+    int health;
+    std::vector<Arrow*> arrows;
+public:
+    Enemy(int x, int y, int width, int height, std::string imgAddress, int rate )
+        : Box(x, y, width, height, imgAddress, rate);
+    void shoot();
+    void moveArrows();
+    void drawArrows(Window* window);
+    virtual void move(int windowWidth) = 0;
+};
