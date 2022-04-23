@@ -6,3 +6,4 @@ class Controller;
 class Box;
 class Arrow;
 class Item;
+class MovingEnemy;

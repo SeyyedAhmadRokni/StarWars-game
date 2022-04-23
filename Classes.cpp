@@ -11,7 +11,6 @@ const int ITEM_WIDTH = 3;
 const int ITEM_HEIGHT = 3;
 const int BONUS_SPEED_RATIO = 2;
 
-
 class Controller{
 private:
     std::map<char, GameKey> keys;
@@ -72,3 +71,14 @@ public:
     virtual void action(Player* player) = 0;
 };
 
+
+class MovingEnemy:public Enemy{
+    MovingEnemy(int x, int y, int rate=10)
+        :Enemy(x, y, STANDARD_BLOCK_WIDTH
+        ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) 
+    bool moveIsPossible(int windowWidth);
+    void moveToDirection();
+    void changeDirection();
+    void move(const int windowWidth);
+    void draw(Window* window);
+};
