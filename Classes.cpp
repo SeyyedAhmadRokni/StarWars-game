@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 #include <StarWars.hpp>
 
+const int FIRE_WIDHT = 2;
+const int FIRE_HEIGHT = 2;
+
+
 class Controller{
 private:
     std::map<char, GameKey> keys;
@@ -32,4 +36,19 @@ public:
     Point matchCenterUp(int otherWidth, int otherHeight);
     Point matchCenterDown(int otherWidth, int otherHeight);
     virtual void draw(Window* window)=0;
+};
+
+class Arrow:public Box{
+private:
+    int damage;
+    std::string imageAddress = GAME_PATH +
+        PLAYER_IMAGES_PATH + "fire.png";
+public:
+    Arrow(int x, int y, int damage = 100, int rate = 6):
+        Box(x, y, FIRE_WIDHT, FIRE_HEIGHT, 
+            imageAddress, rate);
+    Arrow(Point p, int damage = 100, int rate = 6):
+        Box(p, FIRE_WIDHT, FIRE_HEIGHT, 
+            imageAddress, rate);
+    void draw(Window* window);
 };
