@@ -16,3 +16,21 @@ void Arrow::draw(Window* window){
     window->draw_img(imageAddress,
         Rectangle(x, y, width, height));
 }
+
+Item::Item(int x, int y, int sec, std::string imgAddress): Box(x, y, ITEM_WIDTH,
+    ITEM_HEIGHT, imgAddress, 0){
+    time(&creationTime);
+    existsDuration = sec;
+}
+bool Item::isDeleteTime(){
+    if (time(NULL)-creationTime > existsDuration){
+        return true;
+    }
+    return false;
+}
+
+void Item::draw(Window* window){
+    window->draw_img(imageSource, Rectangle(x, y, width, height));
+}
+
+virtual Item:void action(Player* player) = 0;

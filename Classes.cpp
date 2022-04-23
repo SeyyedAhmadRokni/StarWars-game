@@ -7,6 +7,9 @@ const std::string ENEMY_IMAGES_PATH = "/img/enemy";
 const std::string PLAYER_IMAGES_PATH = "/img/ship";
 const int FIRE_WIDHT = 2;
 const int FIRE_HEIGHT = 2;
+const int ITEM_WIDTH = 3;
+const int ITEM_HEIGHT = 3;
+const int BONUS_SPEED_RATIO = 2;
 
 
 class Controller{
@@ -56,3 +59,16 @@ public:
             imageAddress, rate);
     void draw(Window* window);
 };
+
+class Item:public Box{
+private:
+    time_t creationTime;
+    int existsDuration;
+public:
+    Item(int x, int y, int sec, std::string imgAddress): Box(x, y, ITEM_WIDTH,
+        ITEM_HEIGHT, imgAddress, 0);
+    bool isDeleteTime();
+    void draw(Window* window);
+    virtual void action(Player* player) = 0;
+};
+
