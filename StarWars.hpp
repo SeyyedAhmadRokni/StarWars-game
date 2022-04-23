@@ -1,3 +1,3 @@
-
-enum GameKey;
-enum EnemyType;
+enum GameKeys;
+enum EnemiesTypes;
+class Controller;
