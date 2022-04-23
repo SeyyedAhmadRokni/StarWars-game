@@ -77,3 +77,17 @@ void MovingEnemy::draw(Window* window){
     window->draw_img(imageAddress,
         Rectangle(x, y, width, height));
 }
+
+
+FixedEnemy::FixedEnemy(int x, int y, int rate=10)
+    :Enemy(x, y, STANDARD_BLOCK_WIDTH
+    ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) {
+
+}
+void FixedEnemy::draw(Window* window){
+    window->draw_img(imageAddress,
+        Rectangle(x, y, width, height));
+}
+void FixedEnemy::move(int windowWidth){
+
+}

@@ -114,3 +114,16 @@ public:
     void move(const int windowWidth);
     void draw(Window* window);
 };
+
+class FixedEnemy:public Enemy{
+private:
+    std::string imageAddress = GAME_PATH +
+        ENEMY_IMAGES_PATH +"/fixed.png";
+public:
+    FixedEnemy(int x, int y, int rate=10)
+        :Enemy(x, y, STANDARD_BLOCK_WIDTH
+        ,STANDARD_BLOCK_HEIGHT, imageAddress, rate);
+    void draw(Window* window);
+    void move(int windowWidth);
+};
+

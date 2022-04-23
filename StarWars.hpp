@@ -10,3 +10,4 @@ class SpeedItem;
 class PowerItem;
 class Enemy;
 class MovingEnemy;
+class FixedEnemy;
