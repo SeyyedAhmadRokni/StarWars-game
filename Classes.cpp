@@ -72,3 +72,10 @@ public:
     virtual void action(Player* player) = 0;
 };
 
+class SpeedItem:public Item{
+private:
+    int speedRatio = 2;
+    int duration = 5;
+public:
+    void action(Player* player);
+};

@@ -34,3 +34,7 @@ void Item::draw(Window* window){
 }
 
 virtual Item:void action(Player* player) = 0;
+
+void SpeedItem::action(Player* player){
+    player->getSpeed(duration, speedRatio);
+}
