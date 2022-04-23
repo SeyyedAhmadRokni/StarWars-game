@@ -3,7 +3,7 @@
 #include "Classes.cpp"
 
 const std::string GAME_TITLE = "Star Wars";
-const std::string GAME_PATH = "/home/seyyedahmad/Documents/Term2/Taklif5/StarWars";
+const std::string GAME_PATH = "/home/seyyedahmad/Documents/Term2/Taklif5/Last";
 const std::string ENEMY_IMAGES_PATH = "/img/enemy";
 const std::string PLAYER_IMAGES_PATH = "/img/ship";
 
