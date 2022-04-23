@@ -71,19 +71,6 @@ public:
     virtual void action(Player* player) = 0;
 };
 
-<<<<<<< HEAD
-
-class MovingEnemy:public Enemy{
-    MovingEnemy(int x, int y, int rate=10)
-        :Enemy(x, y, STANDARD_BLOCK_WIDTH
-        ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) 
-    bool moveIsPossible(int windowWidth);
-    void moveToDirection();
-    void changeDirection();
-    void move(const int windowWidth);
-    void draw(Window* window);
-};
-=======
 class SpeedItem:public Item{
 private:
     int speedRatio = 2;
@@ -91,4 +78,10 @@ private:
 public:
     void action(Player* player);
 };
->>>>>>> speed_item
+
+class PowrItem:public Item{
+private:
+    int duration = 5;
+public:
+    void action(Player* player);
+};

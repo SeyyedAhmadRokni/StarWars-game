@@ -37,64 +37,10 @@ void Item::draw(Window* window){
 
 virtual Item:void action(Player* player) = 0;
 
-<<<<<<< HEAD
-//--------------------------------------------------
-
-
-MovingEnemy::MovingEnemy(int x, int y, int rate=10)
-    :Enemy(x, y, STANDARD_BLOCK_WIDTH
-    ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) {
-
-}
-bool MovingEnemy::moveIsPossible(int windowWidth){
-    if (moveDiretion == RIGHT){
-        if (x+moveRate+width <= windowWidth){
-            return true;
-        }
-    }
-    else {
-        if (x-moveRate >= 0){
-            return true;
-        }
-    }
-    return false;
-}
-
-void MovingEnemy::moveToDirection(){
-    switch (moveDiretion){
-        case LEFT:
-            this->moveLeft();
-            break;
-        case RIGHT:
-            this->moveRight();
-            break;
-    }
-}
-
-void MovingEnemy::changeDirection(){
-    if (moveDiretion == RIGHT){
-        moveDiretion = LEFT;
-    }
-    else{
-        moveDiretion= RIGHT;
-    }
-}
-
-void MovingEnemy::move(const int windowWidth){
-    if (!moveIsPossible(windowWidth)){
-        changeDirection();
-    }
-    moveToDirection();
-}
-
-void MovingEnemy::draw(Window* window){
-    window->draw_img(imageAddress,
-        Rectangle(x, y, width, height));
-}
-
-//------------------------------------------------------
-=======
 void SpeedItem::action(Player* player){
     player->getSpeed(duration, speedRatio);
 }
->>>>>>> speed_item
+
+void PowerItem::action(Player* player){
+    player->getGaurd(duration);
+}
