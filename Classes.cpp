@@ -99,3 +99,18 @@ public:
     void drawArrows(Window* window);
     virtual void move(int windowWidth) = 0;
 };
+
+class MovingEnemy:public Enemy{
+private:
+    GameKeys moveDiretion = RIGHT;
+    std::string imageAddress = GAME_PATH + ENEMY_IMAGES_PATH + "/moving.png";
+public:
+    MovingEnemy(int x, int y, int rate=10)
+        :Enemy(x, y, STANDARD_BLOCK_WIDTH
+        ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) 
+    bool moveIsPossible(int windowWidth);
+    void moveToDirection();
+    void changeDirection();
+    void move(const int windowWidth);
+    void draw(Window* window);
+};

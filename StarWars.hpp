@@ -9,3 +9,4 @@ class Item;
 class SpeedItem;
 class PowerItem;
 class Enemy;
+class MovingEnemy;
