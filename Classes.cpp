@@ -71,6 +71,7 @@ public:
     virtual void action(Player* player) = 0;
 };
 
+<<<<<<< HEAD
 
 class MovingEnemy:public Enemy{
     MovingEnemy(int x, int y, int rate=10)
@@ -82,3 +83,12 @@ class MovingEnemy:public Enemy{
     void move(const int windowWidth);
     void draw(Window* window);
 };
+=======
+class SpeedItem:public Item{
+private:
+    int speedRatio = 2;
+    int duration = 5;
+public:
+    void action(Player* player);
+};
+>>>>>>> speed_item
