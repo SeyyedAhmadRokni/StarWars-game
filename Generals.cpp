@@ -2,6 +2,12 @@
 #include <StarWars.hpp>
 #include "Classes.cpp"
 
+const std::string GAME_TITLE = "Star Wars";
+const std::string GAME_PATH = "/home/seyyedahmad/Documents/Term2/Taklif5/StarWars";
+const std::string ENEMY_IMAGES_PATH = "/img/enemy";
+const std::string PLAYER_IMAGES_PATH = "/img/ship";
+
+
 Controller::Controller(char up, char down, char left, char right, char shoot){
     keys.insert(std::pair<char, GameKey>(up, UP));
     keys.insert(std::pair<char, GameKey>(down, DOWN));
