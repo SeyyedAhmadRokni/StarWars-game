@@ -1,5 +1,4 @@
-
-
+ 
 enum GameKeys;
 enum EnemiesTypes;
 class Controller;
@@ -11,3 +10,4 @@ class PowerItem;
 class Enemy;
 class MovingEnemy;
 class FixedEnemy;
+class Player;

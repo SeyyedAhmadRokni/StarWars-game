@@ -1,3 +1,5 @@
+#pragma once
+
 #include <bits/stdc++.h>
 #include <StarWars.hpp>
 
@@ -125,5 +127,43 @@ public:
         ,STANDARD_BLOCK_HEIGHT, imageAddress, rate);
     void draw(Window* window);
     void move(int windowWidth);
+};
+
+
+class Player:public Box{
+private:
+    Controller* controls;
+    std::vector<Arrow*> arrows;
+    int health;
+    
+    bool hasGaurdItem = false;
+    int gaurdDuration;
+    time_t getGaurdTime;
+
+    bool hasBonusSpeed = false;
+    int speedRatio = 1;
+    int speedDuration;
+    time_t getSpeedTime;
+
+    void lossGaurd();
+    void lossBonusSpeed();
+    std::string imageAddress = GAME_PATH +
+        PLAYER_IMAGES_PATH + "/1.png";
+public:
+    Player(Controller cont, int x, int y)
+        :Box(x, y, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,
+        imageAddress, PLAYER_MOVE_RATE);
+
+    Player(char up, char down, char left, char right, char shoot)
+        :Box(x, y, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,
+        imageAddress, PLAYER_MOVE_RATE);
+    bool hasKey(char released);
+    void shoot();
+    void getGaurd(int duration);
+    void getSpeed(int duration, int ratio);
+    void moveArrows();
+    void drawArrows(Window* window);
+    bool moveIsPossible(GameKeys direction, int windowWidth, int windowHeight);
+    void doCommand(char input, int windowWidth, int windowHeight);
 };
 
