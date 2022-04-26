@@ -33,6 +33,21 @@ void Enemy::draw(Window* window){
     window->draw_rect(Rectangle(x, y, width, height));
 }
 
+void Enemy::earseExitedArrow(int windowWidth,
+    int windowHeight){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        if (!arrows[i]->isInScreen(windowWidth, windowHeight)){
+            delete arrows[i];
+            arrows.erase(arrows.begin()+i);
+        }
+    }
+}
+
+void Enemy::earseAllArrows(){
+    delete[] arrows;
+}
+
 MovingEnemy::MovingEnemy(int x, int y, int rate=10)
     :Enemy(x, y, STANDARD_BLOCK_WIDTH
     ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) {

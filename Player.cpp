@@ -60,6 +60,7 @@ void Player::drawArrows(Window* window){
         arrows[i]->draw(window);
     }
 }
+
 bool Player::moveIsPossible(GameKey direction, int windowWidth, int windowHeight){
     switch(direction){
         case UP:
@@ -131,8 +132,6 @@ void Player::earseAllArrows(){
     delete[] arrows;
 }
 
-void Player::erase(){
-    earseAllArrows();
-}
+//TODO: delete earse function
 
 #endif
