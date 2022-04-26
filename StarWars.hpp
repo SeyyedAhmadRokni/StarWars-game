@@ -117,7 +117,7 @@ private:
     std::string imageAddress = GAME_PATH +
         PLAYER_IMAGES_PATH + "/1.png";
 public:
-    Player(Controller cont, int x, int y);
+    Player(Controller cont, Point p);
     Player(char up, char down, char left,
         char right, char shoot);
     bool hasKey(char released);
@@ -131,6 +131,9 @@ public:
     void draw(Window* winodws);
     void earseExitedArrow(int windowWidth,
         int windowHeight);
+    void earseAllArrows();
+    void erase();
+
 };
 
 class Item:public Box{
@@ -164,9 +167,10 @@ private:
     std::vector<Player*> players;
 public:
     Controller getDefaultsControllers(int playerN);
-    void addPlayer(int x, int y);
-    void earaseExitedArrows(int windowWidth, int windowHeight);
+    void addPlayer(Point p);
+    void eraseExitedArrows(int windowWidth, int windowHeight);
     void doCommand(char key);
     void movePlayerElements();
     void draw(Window* window);
+    void erase();
 };

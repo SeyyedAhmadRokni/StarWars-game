@@ -15,8 +15,8 @@ void Player::lossBonusSpeed(){
         hasBonusSpeed = false;
     }
 }
-Player::Player(Controller cont, int x, int y)
-    :Box(x, y, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,
+Player::Player(Controller cont, Point p)
+    :Box(p, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,
     imageAddress, PLAYER_MOVE_RATE){
     controls = new Controller(cont);
 }
@@ -125,6 +125,14 @@ void Player::earseExitedArrow(int windowWidth,
             arrows.erase(arrows.begin()+i);
         }
     }
+}
+
+void Player::earseAllArrows(){
+    delete[] arrows;
+}
+
+void Player::erase(){
+    earseAllArrows();
 }
 
 #endif
