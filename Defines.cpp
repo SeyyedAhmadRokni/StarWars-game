@@ -1,6 +1,21 @@
+
 #ifndef _BITS_STARWARS_H
 #define _BITS_STARWARS_H
 #include <string>
+#include "StarWars.hpp"
+
+enum GameKey{
+    UP,
+    DOWN,
+    RIGHT,
+    LEFT,
+    SHOOT,
+};
+
+enum EnemyType{
+    FIXED,
+    MOVING,
+};
 
 const std::string GAME_TITLE = "Star Wars";
 const std::string GAME_PATH = "/home/seyyedahmad/Documents/Term2/Taklif5/Last";
