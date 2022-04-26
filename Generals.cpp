@@ -22,7 +22,7 @@ GameKey Controller::getCommand(char input){
 
 
 Box::Box(int x, int y, int width, int height, 
-    std::string imgSource, int rate = 10){
+    std::string imgSource, int rate){
     this->y = y;
     this->x = x;
     this->width = width;
@@ -31,7 +31,7 @@ Box::Box(int x, int y, int width, int height,
     moveRate = rate;
 }
 Box::Box(Point p, int width, int height, 
-    std::string imgSource, int rate = 10){
+    std::string imgSource, int rate){
     this->y = p.y;
     this->x = p.x;
     this->width = width;
@@ -63,8 +63,8 @@ Point Box::matchCenterDown(int otherWidth, int otherHeight){//cahnge name
     return Point((x + width - otherWidth)/2
     ,y + height);
 }
-virtual void Box::draw(Window* window){
-    window->draw_img(imageAddress,
+void Box::draw(Window* window){
+    window->draw_img(imageSource,
         Rectangle(x, y, width, height));
 }
 

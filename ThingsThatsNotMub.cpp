@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
-#include <StarWars.hpp>
-#include "Classes.cpp"
+#include "StarWars.hpp"
+#include "Defines.cpp"
 
 Arrow::Arrow(int x, int y, int damage = 100, int rate = 6):
     Box(x, y, FIRE_WIDHT, FIRE_HEIGHT, 

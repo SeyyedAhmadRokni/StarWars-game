@@ -2,7 +2,7 @@
 #define _DEFS_
 
 #include <string>
-#include "StarWars.hpp"
+// #include "StarWars.hpp"
 
 const std::string GAME_TITLE = "Star Wars";
 const std::string GAME_PATH = "/home/seyyedahmad/Documents/Term2/Taklif5/Last";

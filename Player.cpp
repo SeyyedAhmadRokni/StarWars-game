@@ -2,7 +2,8 @@
 #define _BITS_STARWARS_H
 
 #include <bits/stdc++.h>
-#include <StarWars.hpp>
+#include "StarWars.hpp"
+#include "Defines.cpp"
 
 void Player::lossGaurd(){
     if (time(NULL) - getGaurdTime > gaurdDuration){

@@ -31,9 +31,9 @@ protected:
     int moveRate;
 public:
     Box(int x, int y, int width, int height, 
-        std::string imgSource, int rate = 10);
+        std::string imgSource, int rate);
     Box(Point p, int width, int height, 
-        std::string imgSource, int rate = 10);
+        std::string imgSource, int rate);
 
     void setLoc(Point p);
     void moveDown();
