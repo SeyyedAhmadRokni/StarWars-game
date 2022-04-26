@@ -9,12 +9,9 @@ Arrow::Arrow(int x, int y, int damage = 100, int rate = 6):
 }
 Arrow::Arrow(Point p, int damage = 100, int rate = 6):
     Box(p, FIRE_WIDHT, FIRE_HEIGHT, 
-        imageAddress, rate
+        imageAddress, rate){
+
     this->damage = damage;
-}
-void Arrow::draw(Window* window){
-    window->draw_img(imageAddress,
-        Rectangle(x, y, width, height));
 }
 
 //--------------------------------------------------
@@ -30,12 +27,6 @@ bool Item::isDeleteTime(){
     }
     return false;
 }
-
-void Item::draw(Window* window){
-    window->draw_img(imageSource, Rectangle(x, y, width, height));
-}
-
-virtual Item:void action(Player* player) = 0;
 
 void SpeedItem::action(Player* player){
     player->getSpeed(duration, speedRatio);
