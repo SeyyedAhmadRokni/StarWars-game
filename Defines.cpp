@@ -1,7 +1,4 @@
-#pragma once
-
-#include <bits/stdc++.h>
-#include <StarWars.hpp>
+#include <string>
 
 const std::string GAME_TITLE = "Star Wars";
 const std::string GAME_PATH = "/home/seyyedahmad/Documents/Term2/Taklif5/Last";
