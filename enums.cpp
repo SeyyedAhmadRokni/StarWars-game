@@ -1,9 +1,9 @@
 #ifndef _BITS_STARWARS_H
 #define _BITS_STARWARS_H
 
-#include <StarWars.hpp>
+#include "StarWars.hpp"
 
-enum GameKeys{
+enum GameKey{
     UP,
     DOWN,
     RIGHT,
@@ -11,7 +11,7 @@ enum GameKeys{
     SHOOT,
 };
 
-enum EnemiesTypes{
+enum EnemyType{
     FIXED,
     MOVING,
 };

@@ -2,8 +2,8 @@
 #define _BITS_STARWARS_H
 
 #include <bits/stdc++.h>
-#include <StarWars.hpp>
-#include "Classes.cpp"
+#include "StarWars.hpp"
+#include "Defines.cpp"
 
 Controller::Controller(char up, char down, char left, char right, char shoot){
     keys.insert(std::pair<char, GameKey>(up, UP));
