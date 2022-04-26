@@ -76,7 +76,7 @@ public:
     void earseExitedArrow(int windowWidth,
     int windowHeight);
 
-    void Enemy::earseAllArrows();
+    void earseAllArrows();
 };
 
 class MovingEnemy:public Enemy{
@@ -172,7 +172,7 @@ public:
     void addPlayer(Point p);
     void eraseExitedArrows(int windowWidth, int windowHeight);
     void doCommand(char key);
-    void movePlayerElements();
+    void movePlayersElements();
     void draw(Window* window);
     void erase();
 };
@@ -204,7 +204,7 @@ public:
     void update();
     void draw();
     void run();
-    std::vector<std::string> readFile(string address);
+    std::vector<std::string> readFile(std::string address);
     Point getElementPosition(int i, int j);
     void addMapElement(char input, Point position);
     void readMap(std::string address);

@@ -129,9 +129,10 @@ void Player::earseExitedArrow(int windowWidth,
 }
 
 void Player::earseAllArrows(){
-    delete[] arrows;
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        delete arrows[i];
+    } 
 }
-
-//TODO: delete earse function
 
 #endif

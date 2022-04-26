@@ -33,8 +33,8 @@ void PlayerManger::erase(){
     for (int i = 0; i < players.siz(); i++)
     {
         players[i]->earseAllArrows();
+        delete players[i];
     }
-    delete[] players;
 }
 
 void PlayerManger::doCommand(char key){
@@ -75,8 +75,8 @@ void EnemyManager::earase(){
     for (int i = 0; i < enemies.size(); i++)
     {
         enemies[i]->earseAllArrows();
+        delete enemies[i];
     }
-    delete[] enemies;
 }
 
 void EnemyManager::moveEnemiesElements(Window* window){

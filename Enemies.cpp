@@ -45,7 +45,10 @@ void Enemy::earseExitedArrow(int windowWidth,
 }
 
 void Enemy::earseAllArrows(){
-    delete[] arrows;
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        delete arrows[i];
+    }
 }
 
 MovingEnemy::MovingEnemy(int x, int y, int rate=10)

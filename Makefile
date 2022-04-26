@@ -22,5 +22,8 @@ ThingsThatsNotMub.cpp.o: $(SRC_PATH)ThingsThatsNotMub.cpp StarWras.hpp
 
 GameController.o: $(SRC_PATH)GameController.cpp StarWars.hpp
 	$(CC) -c $(SRC_PATH)GameController.cpp 
+
+
+
 clean:
 	rm *.o a.out
