@@ -20,5 +20,7 @@ Generals.o: $(SRC_PATH)Generals.cpp StarWars.hpp
 ThingsThatsNotMub.cpp.o: $(SRC_PATH)ThingsThatsNotMub.cpp StarWras.hpp
 	$(CC) -c $(SRC_PATH)ThingsThatsNotMub.cpp
 
+GameController.o: $(SRC_PATH)GameController.cpp StarWars.hpp
+	$(CC) -c $(SRC_PATH)GameController.cpp 
 clean:
 	rm *.o a.out

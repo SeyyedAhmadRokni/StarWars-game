@@ -14,6 +14,7 @@ enum EnemyType{
     FIXED,
     MOVING,
 };
+
 class Controller{
 private:
     std::map<char, GameKey> keys;
@@ -55,6 +56,8 @@ private:
 public:
     Arrow(int x, int y, int damage, int rate);
     Arrow(Point p, int damage, int rate);
+    bool isInScreen(int windowWidth,
+        int windowHeight);
 };
 
 
@@ -126,6 +129,8 @@ public:
     bool moveIsPossible(GameKey direction, int windowWidth, int windowHeight);
     void doCommand(char input, int windowWidth, int windowHeight);
     void draw(Window* winodws);
+    void earseExitedArrow(int windowWidth,
+        int windowHeight);
 };
 
 class Item:public Box{
@@ -153,3 +158,15 @@ public:
     void action(Player* player);
 };
 
+
+class PlayerManger{
+private:
+    std::vector<Player*> players;
+public:
+    Controller getDefaultsControllers(int playerN);
+    void addPlayer(int x, int y);
+    void earaseExitedArrows(int windowWidth, int windowHeight);
+    void doCommand(char key);
+    void movePlayerElements();
+    void draw(Window* window);
+};

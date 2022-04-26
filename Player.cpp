@@ -116,4 +116,15 @@ void Player::draw(Window* window){
     window->draw_rect(Rectangle(x, y, width, height));
 }
 
+void Player::earseExitedArrow(int windowWidth,
+    int windowHeight){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        if (!arrows[i]->isInScreen(windowWidth, windowHeight)){
+            delete arrows[i];
+            arrows.erase(arrows.begin()+i);
+        }
+    }
+}
+
 #endif

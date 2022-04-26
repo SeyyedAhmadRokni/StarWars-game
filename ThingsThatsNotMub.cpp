@@ -14,6 +14,14 @@ Arrow::Arrow(Point p, int damage = 100, int rate = 6):
     this->damage = damage;
 }
 
+bool Arrow::isInScreen(int windowWidth, int windowHeight){
+    if (x<=windowWidth && x>=0 
+        && y<= windowHeight && windowHeight>=0){
+        return true;
+    }
+    return false;
+}
+
 //--------------------------------------------------
 
 Item::Item(int x, int y, int sec, std::string imgAddress): Box(x, y, ITEM_WIDTH,
