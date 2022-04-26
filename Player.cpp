@@ -31,7 +31,8 @@ bool Player::hasKey(char released){
 }
 void Player::shoot(){
     Arrow* arrow = new Arrow(
-            this->matchCenterUp(FIRE_WIDHT, FIRE_HEIGHT));
+            matchCenterUp(FIRE_WIDHT, FIRE_HEIGHT),
+            FIRE_DAMAGE, FIRE_RATE);
     arrows.push_back(arrow);
 }
 void Player::getGaurd(int duration){
@@ -58,9 +59,8 @@ void Player::drawArrows(Window* window){
     {
         arrows[i]->draw(window);
     }
-    
 }
-bool Player::moveIsPossible(GameKeys direction, int windowWidth, int windowHeight){
+bool Player::moveIsPossible(GameKey direction, int windowWidth, int windowHeight){
     switch(direction){
         case UP:
             if (y-speedRatio<0){
@@ -86,22 +86,24 @@ bool Player::moveIsPossible(GameKeys direction, int windowWidth, int windowHeigh
     return true;
 
 }
+
 void Player::doCommand(char input, int windowWidth, int windowHeight){
-    switch (controls->getCommand(input)){
+    GameKey direction = controls->getCommand(input);
+    switch (direction){
         case UP:
-            if (moveIsPossible)
+            if (moveIsPossible(direction, windowWidth, windowHeight))
                 this->moveUp();
             break;
         case DOWN:
-            if (moveIsPossible)
+            if (moveIsPossible(direction, windowWidth, windowHeight))
                 this->moveDown();
             break;
         case LEFT:
-            if (moveIsPossible)
+            if (moveIsPossible(direction, windowWidth, windowHeight))
                 this->moveLeft();
             break;
         case RIGHT:
-            if (moveIsPossible)
+            if (moveIsPossible(direction, windowWidth, windowHeight))
                 this->moveRight();
             break;
         case SHOOT:
@@ -109,4 +111,9 @@ void Player::doCommand(char input, int windowWidth, int windowHeight){
             break;
     }
 }
+void Player::draw(Window* window){
+    drawArrows(window);
+    window->draw_rect(Rectangle(x, y, width, height));
+}
+
 #endif
