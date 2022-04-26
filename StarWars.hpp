@@ -1,3 +1,5 @@
+#ifndef _m_
+#define _m_
 #include <bits/stdc++.h>
 #include "/home/seyyedahmad/Documents/Term2/Taklif5/RSDL/src/rsdl.hpp"
 #include "Defines.cpp"
@@ -164,14 +166,14 @@ public:
 };
 
 
-class PlayerManger{
+class PlayerManager{
 private:
     std::vector<Player*> players;
 public:
     Controller getDefaultsControllers(int playerN);
     void addPlayer(Point p);
     void eraseExitedArrows(int windowWidth, int windowHeight);
-    void doCommand(char key);
+    void doCommand(char key, int windowWidth, int windowHeight);
     void movePlayersElements();
     void draw(Window* window);
     void erase();
@@ -184,7 +186,7 @@ private:
 public:
     void addMovingEnemy(Point p);
     void addFixedEnemy(Point p);
-    void earase();
+    void erase();
     void moveEnemiesElements(Window* window);
     void draw(Window* window);
 };
@@ -193,7 +195,7 @@ class Game{
 private:
     Window* window;
     EnemyManager* enemyManager = new EnemyManager();
-    PlayerManger* playerManager = new PlayerManger();
+    PlayerManager* playerManager = new PlayerManager();
     bool gameIsRunning = true;
 public:
     void closeGame();
@@ -210,3 +212,4 @@ public:
     void makeWindow(std::string mapAddress);
     Game(std::string mapAddress);
 };
+#endif

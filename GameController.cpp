@@ -1,61 +1,60 @@
 #ifndef _G_
 #define _G_
-
 #include <bits/stdc++.h>
 #include "StarWars.hpp"
 
 using namespace std;
 
-Controller PlayerManger::getDefaultsControllers(int playerN){
+Controller PlayerManager::getDefaultsControllers(int playerN){
     switch (playerN)
     {
     case 1:
         return Controller ('w', 's', 'a', 'd', ' ');
         break;
-    case 2:
+    default:
         return Controller ('i', 'k', 'j', 'l', 'o');
     }
 }
 
-void PlayerManger::addPlayer(Point p){
+void PlayerManager::addPlayer(Point p){
     Controller control = getDefaultsControllers(players.size()+1);
     Player *player = new Player(control, p);
     players.push_back(player);
 }
 
-void PlayerManger::PlayerManger::eraseExitedArrows(int windowWidth, int windowHeight){
+void PlayerManager::PlayerManager::eraseExitedArrows(int windowWidth, int windowHeight){
     for (int i = 0; i < players.size(); i++)
     {
         players[i]->earseExitedArrow(windowWidth,
             windowHeight);
     }
 }
-void PlayerManger::erase(){
-    for (int i = 0; i < players.siz(); i++)
+void PlayerManager::erase(){
+    for (int i = 0; i < players.size(); i++)
     {
         players[i]->earseAllArrows();
         delete players[i];
     }
 }
 
-void PlayerManger::doCommand(char key){
+void PlayerManager::doCommand(char key, int windowWidth, int windowHeight){
     for (int i = 0; i < players.size(); i++)
     {
             if (players[i]->hasKey(key)){
-                players[i]->doCommand(key);
+                players[i]->doCommand(key, windowWidth, windowHeight);
                 break;
             }  
     }
 }
 
-void PlayerManger::movePlayersElements(){
+void PlayerManager::movePlayersElements(){
     for (int i = 0; i < players.size(); i++)
     {
         players[i]->moveArrows();
 
     }   
 }
-void PlayerManger::draw(Window* window){
+void PlayerManager::draw(Window* window){
     for (int i = 0; i < players.size(); i++)
     {
         players[i]->draw(window);
@@ -63,16 +62,16 @@ void PlayerManger::draw(Window* window){
 }
 
 void EnemyManager::addMovingEnemy(Point p){
-    MovingEnemy enemy = new MovingEnemy(p.x, p.y, FIRE_RATE);
+    MovingEnemy* enemy = new MovingEnemy(p.x, p.y, FIRE_RATE);
     enemies.push_back(enemy);
 }
 
 void EnemyManager::addFixedEnemy(Point p){
-    FixedEnemy enemy = new FixedEnemy(p.x, p.y, FIRE_RATE);
+    FixedEnemy* enemy = new FixedEnemy(p.x, p.y, FIRE_RATE);
     enemies.push_back(enemy);
 }
 
-void EnemyManager::earase(){
+void EnemyManager::erase(){
     for (int i = 0; i < enemies.size(); i++)
     {
         enemies[i]->earseAllArrows();
@@ -84,7 +83,7 @@ void EnemyManager::moveEnemiesElements(Window* window){
     for (int i = 0; i < enemies.size(); i++)
     {
         enemies[i]->moveArrows();
-        enemies[i]->move(window->get_width);
+        enemies[i]->move(window->get_width());
     }
 }
 
@@ -101,7 +100,7 @@ std::vector<std::string> Game::readFile(string address){
     vector<string> readed;
     string buf;
     while(getline(cin, buf)){
-        readed.push_back();
+        readed.push_back(buf);
     }
     return readed;
 }
@@ -109,15 +108,15 @@ std::vector<std::string> Game::readFile(string address){
 void Game::makeWindow(std::string mapAddress){
     vector<string> gameMap = readFile(mapAddress);
     int windowWidth = gameMap[0].size()*STANDARD_BLOCK_WIDTH
-        +(gameMap[0]+1)*STANDARD_SEPRATOR_WIDTH;
+        +(gameMap[0].size()+1)*STANDARD_SEPRATOR_WIDTH;
     int windowHeight = gameMap.size()*STANDARD_BLOCK_HEIGHT
         + (gameMap.size() + 1)*STANDARD_SEPRATOR_HEIGHT;
-    window = new Window(windowWidthm, windowHeight, GAME_TITLE);
+    window = new Window(windowWidth, windowHeight, GAME_TITLE);
 }
 
 void Game::closeGame(){
-    enemyManager->earase();
-    playerManager->earase();
+    enemyManager->erase();
+    playerManager->erase();
     delete window;
     exit(0);
 }
@@ -128,7 +127,8 @@ void Game::doEvent(Event event){
             closeGame();
             break;
         case Event::KEY_PRESS:
-            playerManager->doCommand(event.get_pressed_key());
+            playerManager->doCommand(event.get_pressed_key(),
+                window->get_width(), window->get_height());
             break;
     }
 }
@@ -172,10 +172,10 @@ void Game::addMapElement(char input, Point position){
     switch (input)
     {
     case 'E':
-        enemyManager->addFixedEnemy(position)
+        enemyManager->addFixedEnemy(position);
         break;
     case 'M':
-        enemyManager->addMovingEnemy(position)
+        enemyManager->addMovingEnemy(position);
         break;
     case 'S':
 
@@ -185,7 +185,7 @@ void Game::addMapElement(char input, Point position){
         break;
     default:
         break;
-    }int windowWidth, int windowHeight
+    }
 }
 
 void Game::addMapsElements(std::string address){
@@ -194,14 +194,14 @@ void Game::addMapsElements(std::string address){
     {
         for (int j = 0; j < gameMap[i].size(); j++)
         {
-            Point position = getElementPosition(i, j)
+            Point position = getElementPosition(i, j);
             addMapElement(gameMap[i][j], position);
         }
     }
 }
 Game::Game(std::string mapAddress){
     makeWindow(mapAddress);
-    addMapElement(mapAddress);
+    addMapsElements(mapAddress);
 }
 
 

@@ -2,8 +2,8 @@ CC := g++ -std=c++11
 CCFLAGS := -l SDL2 -l SDL2_image -l SDL2_ttf -l SDL2_mixer
 SRC_PATH :=
 
-a.out: Defines.o Generals.o ThingsThatsNotMub.o Player.o Enemies.o
-	$(CC) Defines.o Generals.o ThingsThatsNotMub.o Player.o Enemies.o $(SRC_PATH)rsdl.cpp $(CCFLAGS) 
+a.out: Defines.o Generals.o ThingsThatsNotMub.o Player.o Enemies.o main.o
+	$(CC) Defines.o Generals.o ThingsThatsNotMub.o Player.o Enemies.o main.o $(SRC_PATH)rsdl.cpp $(CCFLAGS) 
 
 Defines.o: $(SRC_PATH)Defines.cpp
 	$(CC) -c $(SRC_PATH)Defines.cpp
@@ -17,13 +17,14 @@ Enemies.o: $(SRC_PATH)Enemies.cpp StarWars.hpp
 Generals.o: $(SRC_PATH)Generals.cpp StarWars.hpp
 	$(CC) -c $(SRC_PATH)Generals.cpp
 
-ThingsThatsNotMub.cpp.o: $(SRC_PATH)ThingsThatsNotMub.cpp StarWras.hpp
+ThingsThatsNotMub.o: $(SRC_PATH)ThingsThatsNotMub.cpp StarWars.hpp
 	$(CC) -c $(SRC_PATH)ThingsThatsNotMub.cpp
 
 GameController.o: $(SRC_PATH)GameController.cpp StarWars.hpp
 	$(CC) -c $(SRC_PATH)GameController.cpp 
 
-
+main.o: $(SRC_PATH)main.cpp StarWars.hpp
+	$(CC) -c $(SRC_PATH)main.cpp 
 
 clean:
 	rm *.o a.out
