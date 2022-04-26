@@ -1,3 +1,5 @@
+#include <StarWars.hpp>
+
 enum GameKeys{
     UP,
     DOWN,
