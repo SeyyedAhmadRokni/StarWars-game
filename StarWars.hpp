@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include "/home/seyyedahmad/Documents/Term2/Taklif5/RSDL/src/rsdl.hpp"
+#include "Defines.cpp"
 
 enum GameKey{
     UP,
@@ -13,38 +14,37 @@ enum EnemyType{
     FIXED,
     MOVING,
 };
-// class Controller{
-// private:
-//     std::map<char, GameKey> keys;
-// public:
-//     Controller(char up, char down, char left, char right, char shoot);
-//     bool isAController(char input);
-//     GameKey getCommand(char input);
-// };
+class Controller{
+private:
+    std::map<char, GameKey> keys;
+public:
+    Controller(char up, char down, char left, char right, char shoot);
+    bool isAController(char input);
+    GameKey getCommand(char input);
+};
 
+class Box{
+protected:
+    int x, y;
+    int width, height;
+    std::string imageSource;
+    int moveRate;
+public:
+    Box(int x, int y, int width, int height, 
+        std::string imgSource, int rate = 10);
+    Box(Point p, int width, int height, 
+        std::string imgSource, int rate = 10);
 
-// class Box{
-// protected:
-//     int x, y;
-//     int width, height;
-//     std::string imageSource;
-//     int moveRate;
-// public:
-//     Box(int x, int y, int width, int height, 
-//         std::string imgSource, int rate = 10);
-//     Box(Point p, int width, int height, 
-//         std::string imgSource, int rate = 10);
+    void setLoc(Point p);
+    void moveDown();
+    void moveUp();
+    void moveRight();
+    void moveLeft();
 
-//     void setLoc(Point p);
-//     void moveDown();
-//     void moveUp();
-//     void moveRight();
-//     void moveLeft();
-
-//     Point matchCenterUp(int otherWidth, int otherHeight);
-//     Point matchCenterDown(int otherWidth, int otherHeight);
-//     virtual void draw(Window* window)=0;
-// };
+    Point matchCenterUp(int otherWidth, int otherHeight);
+    Point matchCenterDown(int otherWidth, int otherHeight);
+    virtual void draw(Window* window);
+};
 
 // class Arrow:public Box{
 // private:
@@ -58,7 +58,6 @@ enum EnemyType{
 //     Arrow(Point p, int damage = 100, int rate = 6):
 //         Box(p, FIRE_WIDHT, FIRE_HEIGHT, 
 //             imageAddress, rate);
-//     void draw(Window* window);
 // };
 
 // class Item:public Box{
@@ -69,7 +68,6 @@ enum EnemyType{
 //     Item(int x, int y, int sec, std::string imgAddress): Box(x, y, ITEM_WIDTH,
 //         ITEM_HEIGHT, imgAddress, 0);
 //     bool isDeleteTime();
-//     void draw(Window* window);
 //     virtual void action(Player* player) = 0;
 // };
 
@@ -99,6 +97,7 @@ enum EnemyType{
 //     void shoot();
 //     void moveArrows();
 //     void drawArrows(Window* window);
+//     void draw(Window* window);
 //     virtual void move(int windowWidth) = 0;
 // };
 
@@ -114,7 +113,6 @@ enum EnemyType{
 //     void moveToDirection();
 //     void changeDirection();
 //     void move(const int windowWidth);
-//     void draw(Window* window);
 // };
 
 // class FixedEnemy:public Enemy{
@@ -125,7 +123,6 @@ enum EnemyType{
 //     FixedEnemy(int x, int y, int rate=10)
 //         :Enemy(x, y, STANDARD_BLOCK_WIDTH
 //         ,STANDARD_BLOCK_HEIGHT, imageAddress, rate);
-//     void draw(Window* window);
 //     void move(int windowWidth);
 // };
 
@@ -165,4 +162,5 @@ enum EnemyType{
 //     void drawArrows(Window* window);
 //     bool moveIsPossible(GameKeys direction, int windowWidth, int windowHeight);
 //     void doCommand(char input, int windowWidth, int windowHeight);
+//     void draw(Windows* winodws);
 // };

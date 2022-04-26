@@ -63,5 +63,9 @@ Point Box::matchCenterDown(int otherWidth, int otherHeight){//cahnge name
     return Point((x + width - otherWidth)/2
     ,y + height);
 }
-virtual void Box::draw(Window* window)=0;
+virtual void Box::draw(Window* window){
+    window->draw_img(imageAddress,
+        Rectangle(x, y, width, height));
+}
+
 #endif

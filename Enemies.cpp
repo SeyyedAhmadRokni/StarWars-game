@@ -2,8 +2,8 @@
 #define _BITS_STARWARS_H
 
 #include <bits/stdc++.h>
-#include <StarWars.hpp>
-#include "Classes.cpp"
+#include "StarWars.hpp"
+#include "Defines.cpp"
 
 
 Enemy::Enemy(int x, int y, int width, int height, std::string imgAddress, int rate )
@@ -76,21 +76,12 @@ void MovingEnemy::move(const int windowWidth){
     moveToDirection();
 }
 
-void MovingEnemy::draw(Window* window){
-    window->draw_img(imageAddress,
-        Rectangle(x, y, width, height));
-}
-
-
 FixedEnemy::FixedEnemy(int x, int y, int rate=10)
     :Enemy(x, y, STANDARD_BLOCK_WIDTH
     ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) {
 
 }
-void FixedEnemy::draw(Window* window){
-    window->draw_img(imageAddress,
-        Rectangle(x, y, width, height));
-}
+
 void FixedEnemy::move(int windowWidth){
 
 }
