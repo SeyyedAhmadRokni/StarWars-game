@@ -73,6 +73,10 @@ public:
     void drawArrows(Window* window);
     void draw(Window* window);
     virtual void move(int windowWidth) = 0;
+    void earseExitedArrow(int windowWidth,
+    int windowHeight);
+
+    void Enemy::earseAllArrows();
 };
 
 class MovingEnemy:public Enemy{
@@ -132,8 +136,6 @@ public:
     void earseExitedArrow(int windowWidth,
         int windowHeight);
     void earseAllArrows();
-    void erase();
-
 };
 
 class Item:public Box{
@@ -173,4 +175,37 @@ public:
     void movePlayerElements();
     void draw(Window* window);
     void erase();
+};
+
+
+class EnemyManager{
+private:
+    std::vector<Enemy*> enemies;
+public:
+    void addMovingEnemy(Point p);
+    void addFixedEnemy(Point p);
+    void earase();
+    void moveEnemiesElements(Window* window);
+    void draw(Window* window);
+};
+
+class Game{
+private:
+    Window* window;
+    EnemyManager* enemyManager = new EnemyManager();
+    PlayerManger* playerManager = new PlayerManger();
+    bool gameIsRunning = true;
+public:
+    Game(int windowWidth, int windowHeight);
+    void closeGame();
+    void doEvent(Event event);
+    void getInput();
+    void moveElements();
+    void update();
+    void draw();
+    void run();
+    std::vector<std::string> readFile(string address);
+    Point getElementPosition(int i, int j);
+    void addMapElement(char input, Point position);
+    void readMap(std::string address);
 };

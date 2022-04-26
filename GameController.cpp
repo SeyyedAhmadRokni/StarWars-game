@@ -46,7 +46,7 @@ void PlayerManger::doCommand(char key){
             }  
     }
 }
-void PlayerManger::movePlayerElements(){
+void PlayerManger::movePlayersElements(){
     for (int i = 0; i < players.size(); i++)
     {
         players[i]->moveArrows();
@@ -60,110 +60,140 @@ void PlayerManger::draw(Window* window){
     }
 }
 
-class Game{
-private:
-    Window* window;
-    // EnemyManager* enemyManager = new EnemyManager();
-    PlayerManger* playerManager = new PlayerManger();
-    bool gameIsRunning = true;
-public:
-    Game(int windowWidth, int windowHeight){
-        window = new Window(windowWidth,
-         windowHeight, GAME_TITLE);
-    }
-    
-    void closeGame(){
-        // enemyManager->earase();
-        playerManager->earase();
-        delete window;
-        exit(0);
-    }
-    
-    void doEvent(Event event){
-        switch(event.get_type()){
-            case Event::QUIT:
-                closeGame();
-                break;
-            case Event::KEY_PRESS:
-                playerManager->doCommand(event.get_pressed_key());
-                break;
-        }
-    }
 
-    void getInput(){
-        if (window->has_pending_event()){
-            Event event = window->poll_for_event();
-            doEvent(event);
-        }
-    }
+void EnemyManager::addMovingEnemy(Point p){
+    MovingEnemy enemy = new MovingEnemy(p.x, p.y, FIRE_RATE);
+    enemies.push_back(enemy);
+}
 
-    void moveElements(){
-        playerManager->movePlayerElements();
-        enemyManager->moveEnemiesElements(window);
-    }
-    void update(){
-        getInput();
-        moveElements();
-    }
-    void draw(){
-        enemyManager->draw(window);
-        playerManager->draw(window);
-    }
-    void run(){
-        while(gameIsRunning){
-            update();
-            draw();
-            delay(15);
-        }
-        closeGame();
-    }
-    std::vector<std::string> readFile(string address){
-        std::ifstream file (address);
-        vector<string> readed;
-        string buf;
-        while(getline(cin, buf)){
-            readed.push_back();
-        }
-        return readed;
-    }
+void EnemyManager::addFixedEnemy(Point p){
+    FixedEnemy enemy = new FixedEnemy(p.x, p.y, FIRE_RATE);
+    enemies.push_back(enemy);
+}
 
-    Point getElementPosition(int i, int j){
-        return Point(i*STANDARD_BLOCK_WIDTH+   
-            (i+1)*STANDARD_SEPRATOR_WIDTH,
-            i*STANDARD_BLOCK_HEIGHT + 
-            (i+1)*STANDARD_SEPRATOR_HEIGHT);
+void EnemyManager::earase(){
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        enemies[i]->earseAllArrows();
     }
+    delete[] enemies;
+}
 
-    void addMapElement(char input, Point position){
-        switch (input)
+void EnemyManager::moveEnemiesElements(Window* window){
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        enemies[i]->moveArrows();
+        enemies[i]->move(window->get_width);
+    }
+}
+
+void EnemyManager::draw(Window* window){
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        enemies[i]->draw(window);
+        enemies[i]->drawArrows(window);
+    }
+}
+
+Game::Game(int windowWidth, int windowHeight){
+    window = new Window(windowWidth,
+        windowHeight, GAME_TITLE);
+}
+
+void Game::closeGame(){
+    enemyManager->earase();
+    playerManager->earase();
+    delete window;
+    exit(0);
+}
+
+void Game::doEvent(Event event){
+    switch(event.get_type()){
+        case Event::QUIT:
+            closeGame();
+            break;
+        case Event::KEY_PRESS:
+            playerManager->doCommand(event.get_pressed_key());
+            break;
+    }
+}
+
+void Game::getInput(){
+    if (window->has_pending_event()){
+        Event event = window->poll_for_event();
+        doEvent(event);
+    }
+}
+
+void Game::moveElements(){
+    playerManager->movePlayersElements();
+    enemyManager->moveEnemiesElements(window);
+}
+void Game::update(){
+    getInput();
+    moveElements();
+}
+void Game::draw(){
+    enemyManager->draw(window);
+    playerManager->draw(window);
+}
+void Game::run(){
+    while(gameIsRunning){
+        update();
+        draw();
+        delay(15);
+    }
+    closeGame();
+}
+std::vector<std::string> Game::readFile(string address){
+    std::ifstream file (address);
+    vector<string> readed;
+    string buf;
+    while(getline(cin, buf)){
+        readed.push_back();
+    }
+    return readed;
+}
+
+Point Game::getElementPosition(int i, int j){
+    return Point(i*STANDARD_BLOCK_WIDTH+   
+        (i+1)*STANDARD_SEPRATOR_WIDTH,
+        i*STANDARD_BLOCK_HEIGHT + 
+        (i+1)*STANDARD_SEPRATOR_HEIGHT);
+}
+
+void Game::addMapElement(char input, Point position){
+    switch (input)
+    {
+    case 'E':
+        enemyManager->addFixedEnemy(position)
+        break;
+    case 'M':
+        enemyManager->addMovingEnemy(position)
+        break;
+    case 'S':
+
+        break;
+    case 'P':
+        playerManager->addPlayer(position);
+        break;
+    default:
+        break;
+    }
+}
+
+void Game::readMap(std::string address){
+    vector<string> gameMap = readFile(address);
+    for (int i = 0; i < gameMap.size(); i++)
+    {
+        for (int j = 0; j < gameMap[i].size(); j++)
         {
-        case 'E':
-            
-            break;
-        case 'M':
-
-            break;
-        case 'S':
-
-            break;
-        case 'P':
-            playerManager->addPlayer(position);
-            break;
-        default:
-            break;
+            Point position = getElementPosition(i, j)
+            addMapElement(gameMap[i][j], position);
         }
     }
+}
 
-    void readMap(std::string address){
-        vector<string> gameMap = readFile(address);
-        for (int i = 0; i < gameMap.size(); i++)
-        {
-            for (int j = 0; j < gameMap[i].size(); j++)
-            {
-                Point position = getElementPosition(i, j)
-                addMapElement(gameMap[i][j], position);
-            }
-        }
-    }
-};
+
+
 #endif
