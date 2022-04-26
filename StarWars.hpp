@@ -1,9 +1,18 @@
 #include <bits/stdc++.h>
 #include "/home/seyyedahmad/Documents/Term2/Taklif5/RSDL/src/rsdl.hpp"
 
-enum GameKey;
-enum EnemyType;
+enum GameKey{
+    UP,
+    DOWN,
+    RIGHT,
+    LEFT,
+    SHOOT,
+};
 
+enum EnemyType{
+    FIXED,
+    MOVING,
+};
 // class Controller{
 // private:
 //     std::map<char, GameKey> keys;
