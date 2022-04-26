@@ -196,7 +196,6 @@ private:
     PlayerManger* playerManager = new PlayerManger();
     bool gameIsRunning = true;
 public:
-    Game(int windowWidth, int windowHeight);
     void closeGame();
     void doEvent(Event event);
     void getInput();
@@ -207,5 +206,7 @@ public:
     std::vector<std::string> readFile(std::string address);
     Point getElementPosition(int i, int j);
     void addMapElement(char input, Point position);
-    void readMap(std::string address);
+    void addMapsElements(std::string address);
+    void makeWindow(std::string mapAddress);
+    Game(std::string mapAddress);
 };

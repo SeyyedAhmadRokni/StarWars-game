@@ -16,6 +16,7 @@ Controller PlayerManger::getDefaultsControllers(int playerN){
         return Controller ('i', 'k', 'j', 'l', 'o');
     }
 }
+
 void PlayerManger::addPlayer(Point p){
     Controller control = getDefaultsControllers(players.size()+1);
     Player *player = new Player(control, p);
@@ -46,6 +47,7 @@ void PlayerManger::doCommand(char key){
             }  
     }
 }
+
 void PlayerManger::movePlayersElements(){
     for (int i = 0; i < players.size(); i++)
     {
@@ -59,7 +61,6 @@ void PlayerManger::draw(Window* window){
         players[i]->draw(window);
     }
 }
-
 
 void EnemyManager::addMovingEnemy(Point p){
     MovingEnemy enemy = new MovingEnemy(p.x, p.y, FIRE_RATE);
@@ -95,9 +96,23 @@ void EnemyManager::draw(Window* window){
     }
 }
 
-Game::Game(int windowWidth, int windowHeight){
-    window = new Window(windowWidth,
-        windowHeight, GAME_TITLE);
+std::vector<std::string> Game::readFile(string address){
+    std::ifstream file (address);
+    vector<string> readed;
+    string buf;
+    while(getline(cin, buf)){
+        readed.push_back();
+    }
+    return readed;
+}
+
+void Game::makeWindow(std::string mapAddress){
+    vector<string> gameMap = readFile(mapAddress);
+    int windowWidth = gameMap[0].size()*STANDARD_BLOCK_WIDTH
+        +(gameMap[0]+1)*STANDARD_SEPRATOR_WIDTH;
+    int windowHeight = gameMap.size()*STANDARD_BLOCK_HEIGHT
+        + (gameMap.size() + 1)*STANDARD_SEPRATOR_HEIGHT;
+    window = new Window(windowWidthm, windowHeight, GAME_TITLE);
 }
 
 void Game::closeGame(){
@@ -145,15 +160,6 @@ void Game::run(){
     }
     closeGame();
 }
-std::vector<std::string> Game::readFile(string address){
-    std::ifstream file (address);
-    vector<string> readed;
-    string buf;
-    while(getline(cin, buf)){
-        readed.push_back();
-    }
-    return readed;
-}
 
 Point Game::getElementPosition(int i, int j){
     return Point(i*STANDARD_BLOCK_WIDTH+   
@@ -179,10 +185,10 @@ void Game::addMapElement(char input, Point position){
         break;
     default:
         break;
-    }
+    }int windowWidth, int windowHeight
 }
 
-void Game::readMap(std::string address){
+void Game::addMapsElements(std::string address){
     vector<string> gameMap = readFile(address);
     for (int i = 0; i < gameMap.size(); i++)
     {
@@ -193,7 +199,10 @@ void Game::readMap(std::string address){
         }
     }
 }
-
+Game::Game(std::string mapAddress){
+    makeWindow(mapAddress);
+    addMapElement(mapAddress);
+}
 
 
 #endif
