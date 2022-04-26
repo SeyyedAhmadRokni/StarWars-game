@@ -1,3 +1,6 @@
+#ifndef _BITS_STARWARS_H
+#define _BITS_STARWARS_H
+
 #include <bits/stdc++.h>
 #include <StarWars.hpp>
 #include "Classes.cpp"
@@ -61,3 +64,4 @@ Point Box::matchCenterDown(int otherWidth, int otherHeight){//cahnge name
     ,y + height);
 }
 virtual void Box::draw(Window* window)=0;
+#endif

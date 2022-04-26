@@ -1,3 +1,5 @@
+#ifndef _BITS_STARWARS_H
+#define _BITS_STARWARS_H
 
 #include <bits/stdc++.h>
 #include <StarWars.hpp>
@@ -106,3 +108,4 @@ void Player::doCommand(char input, int windowWidth, int windowHeight){
             break;
     }
 }
+#endif

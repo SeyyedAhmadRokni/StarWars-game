@@ -1,3 +1,5 @@
+#ifndef _BITS_STARWARS_H
+#define _BITS_STARWARS_H
 #include <string>
 
 const std::string GAME_TITLE = "Star Wars";
@@ -9,3 +11,6 @@ const int FIRE_HEIGHT = 2;
 const int ITEM_WIDTH = 3;
 const int ITEM_HEIGHT = 3;
 const int BONUS_SPEED_RATIO = 2;
+
+
+#endif

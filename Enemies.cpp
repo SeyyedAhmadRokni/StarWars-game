@@ -1,3 +1,6 @@
+#ifndef _BITS_STARWARS_H
+#define _BITS_STARWARS_H
+
 #include <bits/stdc++.h>
 #include <StarWars.hpp>
 #include "Classes.cpp"
@@ -91,3 +94,4 @@ void FixedEnemy::draw(Window* window){
 void FixedEnemy::move(int windowWidth){
 
 }
+#endif
