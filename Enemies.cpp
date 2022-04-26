@@ -11,7 +11,8 @@ Enemy::Enemy(int x, int y, int width, int height, std::string imgAddress, int ra
 }
 void Enemy::shoot(){
     Arrow* arrow = new 
-        Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT));
+        Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT), 
+            FIRE_DAMAGE, FIRE_RATE);
     arrows.push_back(arrow);
 }
 void Enemy::moveArrows(){
@@ -19,7 +20,6 @@ void Enemy::moveArrows(){
     {
         arrows[i]->moveDown();
     }
-    
 }
 void Enemy::drawArrows(Window* window){
     for (int i = 0; i < arrows.size(); i++)
@@ -27,8 +27,11 @@ void Enemy::drawArrows(Window* window){
         arrows[i]->draw(window);
     }
 }
-virtual Enemy::void move(int windowWidth) = 0;
 
+void Enemy::draw(Window* window){
+    drawArrows(window);
+    window->draw_rect(Rectangle(x, y, width, height));
+}
 
 MovingEnemy::MovingEnemy(int x, int y, int rate=10)
     :Enemy(x, y, STANDARD_BLOCK_WIDTH
@@ -69,7 +72,7 @@ void MovingEnemy::changeDirection(){
     }
 }
 
-void MovingEnemy::move(const int windowWidth){
+void MovingEnemy::move(int windowWidth){
     if (!moveIsPossible(windowWidth)){
         changeDirection();
     }
@@ -78,7 +81,7 @@ void MovingEnemy::move(const int windowWidth){
 
 FixedEnemy::FixedEnemy(int x, int y, int rate=10)
     :Enemy(x, y, STANDARD_BLOCK_WIDTH
-    ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) {
+    ,STANDARD_BLOCK_HEIGHT, imageAddress, rate){
 
 }
 
