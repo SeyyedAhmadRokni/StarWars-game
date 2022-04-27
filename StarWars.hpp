@@ -98,7 +98,7 @@ private:
     std::string imageAddress = GAME_PATH +
         ENEMY_IMAGES_PATH +"/fixed.png";
 public:
-    FixedEnemy(int x, int y, int rate);
+    FixedEnemy(int x, int y);
     void move(int windowWidth);
 };
 
@@ -114,7 +114,6 @@ private:
     time_t getGaurdTime;
 
     bool hasBonusSpeed = false;
-    int speedRatio = 1;
     int speedDuration;
     time_t getSpeedTime;
 
@@ -210,6 +209,7 @@ public:
     void addMapElement(char input, Point position);
     void addMapsElements(std::string address);
     void makeWindow(std::string mapAddress);
+    void drawBackGround();
     Game(std::string mapAddress);
 };
 #endif

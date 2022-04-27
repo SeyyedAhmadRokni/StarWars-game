@@ -97,9 +97,9 @@ void MovingEnemy::move(int windowWidth){
     moveToDirection();
 }
 
-FixedEnemy::FixedEnemy(int x, int y, int rate=10)
-    :Enemy(x, y, STANDARD_BLOCK_WIDTH
-    ,STANDARD_BLOCK_HEIGHT, imageAddress, rate){
+FixedEnemy::FixedEnemy(int x, int y)
+    :Enemy(x, y, STANDARD_BLOCK_WIDTH,
+    STANDARD_BLOCK_HEIGHT, imageAddress, 0){
 
 }
 

@@ -42,7 +42,7 @@ void Player::getGaurd(int duration){
 }
 void Player::getSpeed(int duration, int ratio){
     hasBonusSpeed = true;
-    speedRatio = ratio;
+    moveRate = ratio;
     time(&getSpeedTime);
     speedDuration = duration;
 }
@@ -64,22 +64,22 @@ void Player::drawArrows(Window* window){
 bool Player::moveIsPossible(GameKey direction, int windowWidth, int windowHeight){
     switch(direction){
         case UP:
-            if (y-speedRatio<0){
+            if (y-moveRate<0){
                 return false;
             }
             break;
         case DOWN:
-            if (y+speedRatio > windowHeight){
+            if (y+moveRate+height > windowHeight){
                 return false;
             }
             break;
         case RIGHT:
-            if (x+speedRatio > windowWidth){
+            if (x+moveRate+width > windowWidth){
                 return false;
             }
             break;
         case LEFT:
-            if (x-speedRatio < 0){
+            if (x-moveRate < 0){
                 return false;
             }
             break;

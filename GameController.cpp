@@ -40,10 +40,10 @@ void PlayerManager::erase(){
 void PlayerManager::doCommand(char key, int windowWidth, int windowHeight){
     for (int i = 0; i < players.size(); i++)
     {
-            if (players[i]->hasKey(key)){
-                players[i]->doCommand(key, windowWidth, windowHeight);
-                break;
-            }  
+        if (players[i]->hasKey(key)){
+            players[i]->doCommand(key, windowWidth, windowHeight);
+            break;
+        }  
     }
 }
 
@@ -62,12 +62,12 @@ void PlayerManager::draw(Window* window){
 }
 
 void EnemyManager::addMovingEnemy(Point p){
-    MovingEnemy* enemy = new MovingEnemy(p.x, p.y, FIRE_RATE);
+    MovingEnemy* enemy = new MovingEnemy(p.x, p.y, MOVING_ENEMY_MOVE_RATE);
     enemies.push_back(enemy);
 }
 
 void EnemyManager::addFixedEnemy(Point p){
-    FixedEnemy* enemy = new FixedEnemy(p.x, p.y, FIRE_RATE);
+    FixedEnemy* enemy = new FixedEnemy(p.x, p.y);
     enemies.push_back(enemy);
 }
 
@@ -99,9 +99,10 @@ std::vector<std::string> Game::readFile(string address){
     std::ifstream file (address);
     vector<string> readed;
     string buf;
-    while(getline(cin, buf)){
+    while(getline(file, buf)){
         readed.push_back(buf);
     }
+    file.close();
     return readed;
 }
 
@@ -148,9 +149,19 @@ void Game::update(){
     getInput();
     moveElements();
 }
+
+void Game::drawBackGround(){
+    string backgroundAddress = GAME_PATH +
+        BACKGROUND_IMAGES_PATH + "/space.png";
+    window->draw_img(backgroundAddress);
+}
+
 void Game::draw(){
+    window->clear();
+    drawBackGround();
     enemyManager->draw(window);
     playerManager->draw(window);
+    window->update_screen();
 }
 void Game::run(){
     while(gameIsRunning){

@@ -10,7 +10,7 @@ using namespace std;
 int main(){
     string mapAddress = "map.txt";
     Game game(mapAddress);
-    // game.run();
+    game.run();
     return 0;
 }
 
