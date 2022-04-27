@@ -17,13 +17,16 @@ void Player::lossBonusSpeed(){
 }
 Player::Player(Controller cont, Point p)
     :Box(p, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,
-    imageAddress, PLAYER_MOVE_RATE){
+    GAME_PATH + PLAYER_IMAGES_PATH +
+    "/1.png", PLAYER_MOVE_RATE){
+
     controls = new Controller(cont);
 }
 
 Player::Player(char up, char down, char left, char right, char shoot)
     :Box(x, y, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,
-    imageAddress, PLAYER_MOVE_RATE){
+    GAME_PATH + PLAYER_IMAGES_PATH +
+    "/1.png", PLAYER_MOVE_RATE){
     controls = new Controller(up, down, left, right, shoot);
 }
 bool Player::hasKey(char released){
@@ -31,8 +34,7 @@ bool Player::hasKey(char released){
 }
 void Player::shoot(){
     Arrow* arrow = new Arrow(
-            matchCenterUp(FIRE_WIDHT, FIRE_HEIGHT),
-            FIRE_DAMAGE, FIRE_RATE);
+            matchCenterUp(FIRE_WIDHT, FIRE_HEIGHT));
     arrows.push_back(arrow);
 }
 void Player::getGaurd(int duration){
@@ -114,7 +116,7 @@ void Player::doCommand(char input, int windowWidth, int windowHeight){
 }
 void Player::draw(Window* window){
     drawArrows(window);
-    window->draw_rect(Rectangle(x, y, width, height));
+    window->draw_img(imageSource, Rectangle(x, y, width, height));//imageAddress->imageSource
 }
 
 void Player::earseExitedArrow(int windowWidth,

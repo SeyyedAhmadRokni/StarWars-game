@@ -53,11 +53,11 @@ public:
 class Arrow:public Box{
 private:
     int damage;
-    std::string imageAddress = GAME_PATH +
-        PLAYER_IMAGES_PATH + "fire.png";
+    // std::string imageAddress = GAME_PATH +
+    //     PLAYER_IMAGES_PATH + "/fire.png";
 public:
-    Arrow(int x, int y, int damage, int rate);
-    Arrow(Point p, int damage, int rate);
+    Arrow(int x, int y, int damage = FIRE_DAMAGE);
+    Arrow(Point p, int damage = FIRE_DAMAGE);
     bool isInScreen(int windowWidth,
         int windowHeight);
 };
@@ -119,8 +119,8 @@ private:
 
     void lossGaurd();
     void lossBonusSpeed();
-    std::string imageAddress = GAME_PATH +
-        PLAYER_IMAGES_PATH + "/1.png";
+    // std::string imageAddress = GAME_PATH +
+    //     PLAYER_IMAGES_PATH + "/1.png";
 public:
     Player(Controller cont, Point p);
     Player(char up, char down, char left,

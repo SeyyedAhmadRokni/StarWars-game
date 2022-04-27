@@ -2,14 +2,17 @@
 #include "StarWars.hpp"
 #include "Defines.cpp"
 
-Arrow::Arrow(int x, int y, int damage = 100, int rate = 6):
+Arrow::Arrow(int x, int y, int damage):
     Box(x, y, FIRE_WIDHT, FIRE_HEIGHT, 
-        imageAddress, rate){
+        GAME_PATH + THINGS_IMAGES_PATH +
+        "/fire1.png", FIRE_RATE){
     this->damage = damage;
 }
-Arrow::Arrow(Point p, int damage = 100, int rate = 6):
+
+Arrow::Arrow(Point p, int damage):
     Box(p, FIRE_WIDHT, FIRE_HEIGHT, 
-        imageAddress, rate){
+        GAME_PATH + THINGS_IMAGES_PATH +
+        "/fire1.png", FIRE_RATE){
 
     this->damage = damage;
 }

@@ -57,10 +57,10 @@ void Box::moveLeft(){
 }
 
 Point Box::matchCenterUp(int otherWidth, int otherHeight){//change name
-    return Point((x + width - otherWidth)/2, y);
+    return Point((2*x + width - otherWidth)/2, y);
 }
 Point Box::matchCenterDown(int otherWidth, int otherHeight){//cahnge name
-    return Point((x + width - otherWidth)/2
+    return Point((2*x + width - otherWidth)/2
     ,y + height);
 }
 void Box::draw(Window* window){

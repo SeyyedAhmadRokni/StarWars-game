@@ -11,8 +11,7 @@ Enemy::Enemy(int x, int y, int width, int height, std::string imgAddress, int ra
 }
 void Enemy::shoot(){
     Arrow* arrow = new 
-        Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT), 
-            FIRE_DAMAGE, FIRE_RATE);
+        Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT));
     arrows.push_back(arrow);
 }
 void Enemy::moveArrows(){
@@ -51,9 +50,9 @@ void Enemy::earseAllArrows(){
     }
 }
 
-MovingEnemy::MovingEnemy(int x, int y, int rate=10)
-    :Enemy(x, y, STANDARD_BLOCK_WIDTH
-    ,STANDARD_BLOCK_HEIGHT, imageAddress, rate) {
+MovingEnemy::MovingEnemy(int x, int y, int rate):
+    Enemy(x, y, STANDARD_BLOCK_WIDTH,
+    STANDARD_BLOCK_HEIGHT, imageAddress, rate) {
 
 }
 bool MovingEnemy::moveIsPossible(int windowWidth){
