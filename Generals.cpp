@@ -39,10 +39,7 @@ Box::Box(Point p, int width, int height,
     imageSource = imgSource;
     moveRate = rate;
 }
-void Box::setLoc(Point p){
-    x = p.x;
-    y = p.y;
-}
+
 void Box::moveDown(){
     y+=moveRate;    
 }
@@ -54,6 +51,10 @@ void Box::moveRight(){
 }
 void Box::moveLeft(){
     x-=moveRate;
+}
+
+Point Box::getPosition(){
+    return Point(x,y);
 }
 
 Point Box::matchCenterUp(int otherWidth, int otherHeight){//change name

@@ -9,9 +9,11 @@ using namespace std;
 
 int main(){
     string mapAddress = "map.txt";
-    Game game(mapAddress);
+    string gameLevel = "M";
+    Game game(mapAddress, gameLevel);
     game.run();
     return 0;
 }
-
+//TODO: -taghire name khoroji be starwars.out
+//      -voroodi dadane map be soorate argv
 #endif

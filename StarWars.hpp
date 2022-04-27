@@ -17,6 +17,12 @@ enum EnemyType{
     MOVING,
 };
 
+enum DifficultyLevel{
+    EASY,
+    MEDIUM, 
+    HARD,
+};
+
 class Controller{
 private:
     std::map<char, GameKey> keys;
@@ -39,11 +45,11 @@ public:
     Box(Point p, int width, int height, 
         std::string imgSource, int rate);
 
-    void setLoc(Point p);
     void moveDown();
     void moveUp();
     void moveRight();
     void moveLeft();
+    Point getPosition();
 
     Point matchCenterUp(int otherWidth, int otherHeight);
     Point matchCenterDown(int otherWidth, int otherHeight);
@@ -56,8 +62,8 @@ private:
     // std::string imageAddress = GAME_PATH +
     //     PLAYER_IMAGES_PATH + "/fire.png";
 public:
-    Arrow(int x, int y, int damage = FIRE_DAMAGE);
-    Arrow(Point p, int damage = FIRE_DAMAGE);
+    Arrow(int x, int y, std::string imageAddress, int damage = FIRE_DAMAGE);
+    Arrow(Point p, std::string imageAddress, int damage = FIRE_DAMAGE);
     bool isInScreen(int windowWidth,
         int windowHeight);
 };
@@ -176,25 +182,49 @@ public:
     void erase();
 };
 
+class EnemyShootTimer{
+private:
+    time_t lastShot;
+    int numberOfColumns;
+    DifficultyLevel level;
+    std::set<int> chooseColumns(int number);
+    std::set<int> chooseColumnsEasy();
+    std::set<int> chooseColumnsMedium();
+    std::set<int> chooseColumnsHard();
+
+public:
+    EnemyShootTimer(int col, DifficultyLevel level);
+    bool isTimeToShot();
+    std::vector<int> getColumnsToShoot();
+};
+
 
 class EnemyManager{
 private:
+    EnemyShootTimer* enemyShootTimer;
     std::vector<Enemy*> enemies;
 public:
+    EnemyManager(int gameColumnsNumber, DifficultyLevel gameLevel);
     void addMovingEnemy(Point p);
     void addFixedEnemy(Point p);
     void erase();
     void moveEnemiesElements(Window* window);
     void draw(Window* window);
+    void enemiesShoot();
+    bool isInColumn(Enemy* enemy, int column);
 };
 
 class Game{
 private:
     Window* window;
-    EnemyManager* enemyManager = new EnemyManager();
+    int columnsNumber;
+    std::vector<std::string> map;
+    EnemyManager* enemyManager;
     PlayerManager* playerManager = new PlayerManager();
     bool gameIsRunning = true;
+    DifficultyLevel gameLevel;
 public:
+    
     void closeGame();
     void doEvent(Event event);
     void getInput();
@@ -202,12 +232,13 @@ public:
     void update();
     void draw();
     void run();
-    std::vector<std::string> readFile(std::string address);
+    void readMap(std::string address);
     Point getElementPosition(int i, int j);
     void addMapElement(char input, Point position);
     void addMapsElements(std::string address);
     void makeWindow(std::string mapAddress);
     void drawBackGround();
-    Game(std::string mapAddress);
+    void setGameLevel(std::string gameLevel);
+    Game(std::string mapAddress, std::string gameLevel);
 };
 #endif

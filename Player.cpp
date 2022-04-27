@@ -33,8 +33,11 @@ bool Player::hasKey(char released){
     return controls->isAController(released);
 }
 void Player::shoot(){
+    std::string imageAddress = GAME_PATH + THINGS_IMAGES_PATH +
+        "/player_fire.png";
     Arrow* arrow = new Arrow(
-            matchCenterUp(FIRE_WIDHT, FIRE_HEIGHT));
+            matchCenterUp(FIRE_WIDHT, FIRE_HEIGHT),
+            imageAddress);
     arrows.push_back(arrow);
 }
 void Player::getGaurd(int duration){

@@ -27,5 +27,7 @@ const int STANDARD_BLOCK_HEIGHT = 80;
 const int STANDARD_SEPRATOR_WIDTH = 100;
 const int STANDARD_SEPRATOR_HEIGHT = 100;
 
+const int TWO_SHOT_DIFFERENCE = 3;
+
 const int MOVING_ENEMY_MOVE_RATE = 5;
 #endif

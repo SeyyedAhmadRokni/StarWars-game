@@ -10,8 +10,11 @@ Enemy::Enemy(int x, int y, int width, int height, std::string imgAddress, int ra
     : Box(x, y, width, height, imgAddress, rate){
 }
 void Enemy::shoot(){
+    std::string imageAddress = GAME_PATH + THINGS_IMAGES_PATH +
+        "/enemy_fire.png";
     Arrow* arrow = new 
-        Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT));
+        Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT),
+        imageAddress);
     arrows.push_back(arrow);
 }
 void Enemy::moveArrows(){

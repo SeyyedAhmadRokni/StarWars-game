@@ -2,6 +2,7 @@
 #define _G_
 #include <bits/stdc++.h>
 #include "StarWars.hpp"
+#include "Defines.cpp"
 
 using namespace std;
 
@@ -95,23 +96,51 @@ void EnemyManager::draw(Window* window){
     }
 }
 
-std::vector<std::string> Game::readFile(string address){
+EnemyManager::EnemyManager(int columnsNumber, DifficultyLevel level){
+    enemyShootTimer = new EnemyShootTimer(columnsNumber, level);
+}
+
+bool EnemyManager::isInColumn(Enemy* enemy, int col){
+    Point position = enemy->getPosition();
+    int colStart = col*STANDARD_BLOCK_WIDTH +
+        (col+1)*STANDARD_SEPRATOR_WIDTH;
+    if (position.x >= colStart && position.x <= colStart+STANDARD_BLOCK_WIDTH){
+        return true;
+    }
+    return false;
+}
+
+
+void EnemyManager::enemiesShoot(){
+    if (!enemyShootTimer->isTimeToShot()){
+        return;
+    }
+    vector<int> columnsToShot = enemyShootTimer->getColumnsToShoot();
+    for (int i = 0; i < columnsToShot.size(); i++)
+    {
+        for (int j = 0; j < enemies.size(); j++)
+        {
+            if(!isInColumn(enemies[j], columnsToShot[i])){
+                enemies[j]->shoot();
+            }
+        }
+    }
+}
+
+void Game::readMap(string address){
     std::ifstream file (address);
-    vector<string> readed;
     string buf;
     while(getline(file, buf)){
-        readed.push_back(buf);
+        map.push_back(buf);
     }
     file.close();
-    return readed;
 }
 
 void Game::makeWindow(std::string mapAddress){
-    vector<string> gameMap = readFile(mapAddress);
-    int windowWidth = gameMap[0].size()*STANDARD_BLOCK_WIDTH
-        +(gameMap[0].size()+1)*STANDARD_SEPRATOR_WIDTH;
-    int windowHeight = gameMap.size()*STANDARD_BLOCK_HEIGHT
-        + (gameMap.size() + 1)*STANDARD_SEPRATOR_HEIGHT;
+    int windowWidth = map[0].size()*STANDARD_BLOCK_WIDTH
+        +(map[0].size()+1)*STANDARD_SEPRATOR_WIDTH;
+    int windowHeight = map.size()*STANDARD_BLOCK_HEIGHT
+        + (map.size() + 1)*STANDARD_SEPRATOR_HEIGHT;
     window = new Window(windowWidth, windowHeight, GAME_TITLE);
 }
 
@@ -148,6 +177,7 @@ void Game::moveElements(){
 void Game::update(){
     getInput();
     moveElements();
+    enemyManager->enemiesShoot();
 }
 
 void Game::drawBackGround(){
@@ -172,11 +202,11 @@ void Game::run(){
     closeGame();
 }
 
-Point Game::getElementPosition(int i, int j){
-    return Point(i*STANDARD_BLOCK_WIDTH+   
-        (i+1)*STANDARD_SEPRATOR_WIDTH,
-        i*STANDARD_BLOCK_HEIGHT + 
-        (i+1)*STANDARD_SEPRATOR_HEIGHT);
+Point Game::getElementPosition(int x, int y){
+    return Point(x*STANDARD_BLOCK_WIDTH+   
+        (x+1)*STANDARD_SEPRATOR_WIDTH,
+        y*STANDARD_BLOCK_HEIGHT + 
+        (y+1)*STANDARD_SEPRATOR_HEIGHT);
 }
 
 void Game::addMapElement(char input, Point position){
@@ -200,20 +230,36 @@ void Game::addMapElement(char input, Point position){
 }
 
 void Game::addMapsElements(std::string address){
-    vector<string> gameMap = readFile(address);
-    for (int i = 0; i < gameMap.size(); i++)
+    for (int i = 0; i < map.size(); i++)
     {
-        for (int j = 0; j < gameMap[i].size(); j++)
+        for (int j = 0; j < map[i].size(); j++)
         {
-            Point position = getElementPosition(i, j);
-            addMapElement(gameMap[i][j], position);
+            Point elementPosition = getElementPosition(j, i);
+            addMapElement(map[i][j], elementPosition);
         }
     }
 }
-Game::Game(std::string mapAddress){
+
+void Game::setGameLevel(string gameLevel){
+    if (gameLevel == "E"){
+        this->gameLevel = EASY;
+    }
+    else if (gameLevel == "M"){
+        this->gameLevel = MEDIUM;
+    }
+    else if (gameLevel == "H"){
+        this->gameLevel = HARD;
+    }
+}
+
+Game::Game(std::string mapAddress, std::string gameLevel){
+    readMap(mapAddress);
     makeWindow(mapAddress);
+    setGameLevel(gameLevel);
+    enemyManager = new EnemyManager(map.size(), this->gameLevel);
     addMapsElements(mapAddress);
 }
+
 
 
 #endif
