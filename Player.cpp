@@ -119,7 +119,7 @@ void Player::draw(Window* window){
     window->draw_img(imageSource, Rectangle(x, y, width, height));//imageAddress->imageSource
 }
 
-void Player::earseExitedArrow(int windowWidth,
+void Player::eraseExitedArrow(int windowWidth,
     int windowHeight){
     for (int i = 0; i < arrows.size(); i++)
     {
@@ -130,7 +130,7 @@ void Player::earseExitedArrow(int windowWidth,
     }
 }
 
-void Player::earseAllArrows(){
+void Player::eraseAllArrows(){
     for (int i = 0; i < arrows.size(); i++)
     {
         delete arrows[i];

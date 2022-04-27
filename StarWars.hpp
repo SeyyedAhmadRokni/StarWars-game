@@ -74,10 +74,9 @@ public:
     void moveArrows();
     void drawArrows(Window* window);
     virtual void move(int windowWidth) = 0;
-    void earseExitedArrow(int windowWidth,
+    void eraseExitedArrow(int windowWidth,
     int windowHeight);
-
-    void earseAllArrows();
+    void eraseAllArrows();
 };
 
 class MovingEnemy:public Enemy{
@@ -94,8 +93,8 @@ public:
 
 class FixedEnemy:public Enemy{
 private:
-    std::string imageAddress = GAME_PATH +
-        ENEMY_IMAGES_PATH +"/fixed.png";
+    // std::string imageAddress = GAME_PATH +
+    //     ENEMY_IMAGES_PATH +"/fixed.png";
 public:
     FixedEnemy(int x, int y);
     void move(int windowWidth);
@@ -133,9 +132,9 @@ public:
     bool moveIsPossible(GameKey direction, int windowWidth, int windowHeight);
     void doCommand(char input, int windowWidth, int windowHeight);
     void draw(Window* winodws);
-    void earseExitedArrow(int windowWidth,
+    void eraseExitedArrow(int windowWidth,
         int windowHeight);
-    void earseAllArrows();
+    void eraseAllArrows();
 };
 
 class Item:public Box{

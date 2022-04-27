@@ -25,14 +25,14 @@ void PlayerManager::addPlayer(Point p){
 void PlayerManager::PlayerManager::eraseExitedArrows(int windowWidth, int windowHeight){
     for (int i = 0; i < players.size(); i++)
     {
-        players[i]->earseExitedArrow(windowWidth,
+        players[i]->eraseExitedArrow(windowWidth,
             windowHeight);
     }
 }
 void PlayerManager::erase(){
     for (int i = 0; i < players.size(); i++)
     {
-        players[i]->earseAllArrows();
+        players[i]->eraseAllArrows();
         delete players[i];
     }
 }
@@ -74,7 +74,7 @@ void EnemyManager::addFixedEnemy(Point p){
 void EnemyManager::erase(){
     for (int i = 0; i < enemies.size(); i++)
     {
-        enemies[i]->earseAllArrows();
+        enemies[i]->eraseAllArrows();
         delete enemies[i];
     }
 }

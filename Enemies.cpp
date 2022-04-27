@@ -27,10 +27,7 @@ void Enemy::drawArrows(Window* window){
     }
 }
 
-bool
-
-void Enemy::earseExitedArrow(int windowWidth,
-    int windowHeight){
+void Enemy::eraseExitedArrow(int windowWidth, int windowHeight){
     for (int i = 0; i < arrows.size(); i++)
     {
         if (!arrows[i]->isInScreen(windowWidth, windowHeight)){
@@ -40,7 +37,7 @@ void Enemy::earseExitedArrow(int windowWidth,
     }
 }
 
-void Enemy::earseAllArrows(){
+void Enemy::eraseAllArrows(){
     for (int i = 0; i < arrows.size(); i++)
     {
         delete arrows[i];
@@ -96,7 +93,8 @@ void MovingEnemy::move(int windowWidth){
 
 FixedEnemy::FixedEnemy(int x, int y)
     :Enemy(x, y, STANDARD_BLOCK_WIDTH,
-    STANDARD_BLOCK_HEIGHT, imageAddress, 0){
+    STANDARD_BLOCK_HEIGHT, GAME_PATH +
+    ENEMY_IMAGES_PATH +"/fixed.png" , 0){
 
 }
 
