@@ -62,7 +62,7 @@ void PlayerManager::draw(Window* window){
 }
 
 void EnemyManager::addMovingEnemy(Point p){
-    MovingEnemy* enemy = new MovingEnemy(p.x, p.y, MOVING_ENEMY_MOVE_RATE);
+    MovingEnemy* enemy = new MovingEnemy(p.x, p.y);
     enemies.push_back(enemy);
 }
 

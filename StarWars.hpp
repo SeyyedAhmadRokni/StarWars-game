@@ -73,7 +73,6 @@ public:
     void shoot();
     void moveArrows();
     void drawArrows(Window* window);
-    void draw(Window* window);
     virtual void move(int windowWidth) = 0;
     void earseExitedArrow(int windowWidth,
     int windowHeight);
@@ -84,9 +83,9 @@ public:
 class MovingEnemy:public Enemy{
 private:
     GameKey moveDiretion = RIGHT;
-    std::string imageAddress = GAME_PATH + ENEMY_IMAGES_PATH + "/moving.png";
+    // std::string imageAddress = GAME_PATH + ENEMY_IMAGES_PATH + "/moving.png";
 public:
-    MovingEnemy(int x, int y, int rate);
+    MovingEnemy(int x, int y, int rate = MOVING_ENEMY_MOVE_RATE);
     bool moveIsPossible(int windowWidth);
     void moveToDirection();
     void changeDirection();

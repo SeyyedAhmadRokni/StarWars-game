@@ -27,10 +27,7 @@ void Enemy::drawArrows(Window* window){
     }
 }
 
-void Enemy::draw(Window* window){
-    drawArrows(window);
-    window->draw_rect(Rectangle(x, y, width, height));
-}
+bool
 
 void Enemy::earseExitedArrow(int windowWidth,
     int windowHeight){
@@ -52,7 +49,8 @@ void Enemy::earseAllArrows(){
 
 MovingEnemy::MovingEnemy(int x, int y, int rate):
     Enemy(x, y, STANDARD_BLOCK_WIDTH,
-    STANDARD_BLOCK_HEIGHT, imageAddress, rate) {
+    STANDARD_BLOCK_HEIGHT, GAME_PATH + ENEMY_IMAGES_PATH +
+    "/moving.png", rate) {
 
 }
 bool MovingEnemy::moveIsPossible(int windowWidth){
