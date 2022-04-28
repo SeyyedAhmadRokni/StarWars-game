@@ -30,6 +30,11 @@ enum WinnerType{
     PLAYERS,
 };
 
+enum ItemType{
+    SPEED,
+    GAURD,
+};
+
 class Controller{
 private:
     std::map<char, GameKey> keys;
@@ -62,6 +67,7 @@ public:
     int centerDistanceX(Box* other);
     int centerDistanceY(Box* other);
     bool hasCollision(Box* other);
+    // Point PositionToMatchCenters(Box* other);
     virtual void draw(Window* window);
    
 };
@@ -137,30 +143,32 @@ public:
 };
 
 class Item:public Box{
-private:
+protected:
     time_t creationTime;
     int existsDuration;
 public:
     Item(int x, int y, int sec, std::string imgAddress);
     bool isDeleteTime();
+    bool hasExpired();
     virtual void action(Player* player) = 0;
 };
 
 class SpeedItem:public Item{
 private:
-    int speedRatio = 2;
     int duration = 5;
+    int speedRatio = 2;
 public:
+    SpeedItem(Point position);
     void action(Player* player);
 };
 
-class PowerItem:public Item{
+class GaurdItem:public Item{
 private:
     int duration = 5;
 public:
+    GaurdItem(Point position);
     void action(Player* player);
 };
-
 
 class PlayerManager{
 private:
@@ -225,6 +233,9 @@ public:
         int windowHeight);
     void draw(Window* window);
     void enemiesShoot();
+    std::vector<Point> getMustDeleteEnemiesPositions(
+        vector<Arrow*>& playerArrows
+    );
     bool isInColumn(Enemy* enemy, int column);
     void deleteShotedEnemies(std::vector<Arrow*>& playerArrows);
     bool allEnemiesAreDead();
@@ -250,17 +261,34 @@ public:
     void showResultPage(WinnerType winner);
 };
 
+class ItemManager{
+private:
+    std::vector<Item*> items;
+public:
+    void addGaurdItem(Point position);
+    void addSpeedItem(Point position);
+    bool isChanceWithMakingItem();
+    ItemType whichItemToMake();
+    void addItemIfPossible(Point position);
+    void addItemIfPossible(vector<Point> positions);
+    void deleteExpiredItems();
+    void draw(Window* window);
+};
+
 class Game{
 private:
     Window* window;
     WinnerType winner;
     int columnsNumber;
+    bool gameIsRunning = true;
+    DifficultyLevel gameLevel;
+
     std::vector<std::string> map;
     EnemyManager* enemyManager;
     PlayerManager* playerManager = new PlayerManager();
-    bool gameIsRunning = true;
-    DifficultyLevel gameLevel;
+    ItemManager* itemManager = new ItemManager();
     Pages* pages;
+
 public:
     void closeGame();
     void doEvent(Event event);
@@ -276,7 +304,7 @@ public:
     void makeWindow(std::string mapAddress);
     void drawBackGround();
     void setGameLevel(std::string gameLevel);
-    void doCollision();
+    void doCollisions();
     void playersCollision();
     void showGameResult();
     bool gameIsEnded();

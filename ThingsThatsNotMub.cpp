@@ -38,11 +38,28 @@ bool Item::isDeleteTime(){
     return false;
 }
 
+bool Item::hasExpired(){
+    if (time(NULL) - creationTime > existsDuration){
+        return true;
+    }
+    return false;
+}
+
+SpeedItem::SpeedItem(Point position):
+    Item(position.x, position.y, SPEED_ITEM_EXISTS_TIME,
+    GAME_PATH + THINGS_IMAGES_PATH + "/speed.png"){
+}
+
 void SpeedItem::action(Player* player){
     player->getSpeed(duration, speedRatio);
 }
 
-void PowerItem::action(Player* player){
+GaurdItem::GaurdItem(Point position):
+    Item(position.x, position.y, GAURD_ITEM_EXISTS_TIME,
+    GAME_PATH + THINGS_IMAGES_PATH + "/gaurd.png"){
+}
+
+void GaurdItem::action(Player* player){
     player->getGaurd(duration);
 }
 

@@ -18,8 +18,8 @@ const int FIRE_WIDHT = 20;
 const int FIRE_HEIGHT = 20;
 const int FIRE_RATE = 10;
 
-const int ITEM_WIDTH = 3;
-const int ITEM_HEIGHT = 3;
+const int ITEM_WIDTH = 30;
+const int ITEM_HEIGHT = 30;
 const int BONUS_SPEED_RATIO = 2;
 
 const int STANDARD_BLOCK_WIDTH = 80;
@@ -33,6 +33,9 @@ const int MOVING_ENEMY_MOVE_RATE = 5;
 
 const int BUTTON_STANDARD_WIDTH = 60;
 const int BUTTON_STANDARD_HEIGHT = 40;
+
+const int SPEED_ITEM_EXISTS_TIME = 5;
+const int GAURD_ITEM_EXISTS_TIME = 5;
 
 const std::string FONTS_PATH = "/fonts";
 

@@ -216,6 +216,20 @@ bool EnemyManager::isInColumn(Enemy* enemy, int col){
     return false;
 }
 
+std::vector<Point> EnemyManager::getMustDeleteEnemiesPositions(vector<Arrow*>& playerArrows){
+    vector<Point> positions;
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        for (int j = 0; j < playerArrows.size(); j++)
+        {
+            if (enemies[i]->hasCollision(playerArrows[j])){
+                positions.push_back(enemies[i]->getPosition());
+            }
+        }
+    }
+    return positions;
+}
+
 void EnemyManager::deleteShotedEnemies(vector<Arrow*>& playerArrows){
     for (int i = 0; i < enemies.size(); i++)
     {
@@ -227,10 +241,12 @@ void EnemyManager::deleteShotedEnemies(vector<Arrow*>& playerArrows){
 
                 delete playerArrows[j];
                 playerArrows.erase(playerArrows.begin() + j);
+                break;
             }
         }
     }
 }
+
 
 void EnemyManager::enemiesShoot(){
     if (!enemyShootTimer->isTimeToShot()){
@@ -253,6 +269,83 @@ bool EnemyManager::allEnemiesAreDead(){
         return true;
     }
     return false;
+}
+
+bool ItemManager::isChanceWithMakingItem(){
+    const int YES_CHANCE = 100;
+    const int NO_CHANCE = 0;
+    int totalChances = YES_CHANCE + NO_CHANCE;
+    int identifier = random()%totalChances;
+    if (identifier<YES_CHANCE){
+        return true;   
+    }
+    else{
+        return false;
+    }
+}
+
+ItemType ItemManager::whichItemToMake(){
+    const int SPEED_CHANCE = 50;
+    const int GAURD_CHANCE = 50;
+    int totalChances = SPEED_CHANCE + GAURD_CHANCE;
+    int identifier = random()%totalChances;
+    if(identifier< SPEED_CHANCE){
+        return SPEED;
+    }
+    else{
+        return GAURD;
+    }
+}
+
+void ItemManager::addGaurdItem(Point position){
+    SpeedItem* item = new SpeedItem(position);
+    items.push_back(item);
+}
+
+void ItemManager::addSpeedItem(Point position){
+    GaurdItem* item = new GaurdItem(position);
+    items.push_back(item);
+}
+
+void ItemManager::addItemIfPossible(Point position){
+    if (isChanceWithMakingItem()){
+        ItemType itemToMake = whichItemToMake();
+        switch (itemToMake)
+        {
+        case SPEED:
+            addSpeedItem(position);
+            break;
+
+        case GAURD:
+            addGaurdItem(position);
+            break;
+        }
+    }
+}
+
+void ItemManager::addItemIfPossible(vector<Point> positions){
+    for (int i = 0; i < positions.size(); i++)
+    {
+        addItemIfPossible(positions[i]);
+    }
+}
+
+void ItemManager::deleteExpiredItems(){
+    for (int i = 0; i < items.size(); i++)
+    {
+        if (items[i]->hasExpired()){
+            delete items[i];
+            items.erase(items.begin() + i);
+        }
+    }
+}
+
+void ItemManager::draw(Window* window){
+    for (int i = 0; i < items.size(); i++)
+    {
+        items[i]->draw(window);
+    }
+    
 }
 
 void Game::readMap(string address){
@@ -306,7 +399,8 @@ void Game::update(){
     getInput();
     moveElements();
     enemyManager->enemiesShoot();
-    doCollision();
+    doCollisions();
+    itemManager->deleteExpiredItems();
     if(gameIsEnded()){
         gameIsRunning = false;
         identifyWinner();
@@ -324,6 +418,7 @@ void Game::draw(){
     drawBackGround();
     enemyManager->draw(window);
     playerManager->draw(window);
+    itemManager->draw(window);
     window->update_screen();
 }
 void Game::run(){
@@ -374,10 +469,15 @@ void Game::addMapsElements(std::string address){
     }
 }
 
-void Game::doCollision(){
+void Game::doCollisions(){
+    vector<Point> willDeleteEnemiesPositions = 
+        enemyManager->getMustDeleteEnemiesPositions(
+            playerManager->getArrows()
+        );
     enemyManager->deleteShotedEnemies(
         playerManager->getArrows()
     );
+    itemManager->addItemIfPossible(willDeleteEnemiesPositions);
     playerManager->deleteShotedPlayers(
         enemyManager->getArrows()
     );
