@@ -194,7 +194,7 @@ void EnemyManager::enemiesShoot(){
         for (int j = 0; j < enemies.size(); j++)
         {
             if(!isInColumn(enemies[j], columnsToShot[i])){
-                enemies[j]->shoot();
+                arrows.push_back(enemies[j]->shoot());
             }
         }
     }
