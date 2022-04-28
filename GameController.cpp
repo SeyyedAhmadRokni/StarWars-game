@@ -27,7 +27,8 @@ void PlayerManager::doCommand(char key, int windowWidth, int windowHeight){
     for (int i = 0; i < players.size(); i++)
     {
         if (players[i]->hasKey(key)){
-            players[i]->doCommand(key, windowWidth, windowHeight);
+            players[i]->doCommand(key, windowWidth, windowHeight,
+                arrows);
             break;
         }  
     }

@@ -123,7 +123,8 @@ public:
     void getGaurd(int duration);
     void getSpeed(int duration, int ratio);
     bool moveIsPossible(GameKey direction, int windowWidth, int windowHeight);
-    void doCommand(char input, int windowWidth, int windowHeight);
+    void doCommand(char input, int windowWidth, int windowHeight,
+        std::vector<Arrow*>& arrows);
     void draw(Window* winodws);
 };
 
@@ -160,7 +161,8 @@ private:
 public:
     Controller getDefaultsControllers(int playerN);
     void addPlayer(Point p);
-    void doCommand(char key, int windowWidth, int windowHeight);
+    void doCommand(char key, int windowWidth,
+        int windowHeight);
     void moveArrows();
     void moveElements();
     void drawPlayers(Window* window);

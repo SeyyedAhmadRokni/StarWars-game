@@ -79,7 +79,9 @@ bool Player::moveIsPossible(GameKey direction, int windowWidth, int windowHeight
 
 }
 
-void Player::doCommand(char input, int windowWidth, int windowHeight){
+void Player::doCommand(char input, int windowWidth,
+    int windowHeight, std::vector<Arrow*>& arrows){
+
     GameKey direction = controls->getCommand(input);
     switch (direction){
         case UP:
@@ -99,7 +101,7 @@ void Player::doCommand(char input, int windowWidth, int windowHeight){
                 this->moveRight();
             break;
         case SHOOT:
-            this->shoot();
+            arrows.push_back(this->shoot());
             break;
     }
 }
