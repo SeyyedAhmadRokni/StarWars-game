@@ -1,3 +1,6 @@
+#ifndef _GE_
+#define _GE_
+
 #include <bits/stdc++.h>
 #include <set>
 #include "StarWars.hpp"
@@ -83,3 +86,4 @@ void Button::draw(Window* window){
     window->show_text(title, Point(x, y), WHITE,
     GAME_PATH + FONTS_PATH + "/OpenSans.ttf");
 }
+#endif
