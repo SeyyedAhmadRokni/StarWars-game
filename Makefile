@@ -21,7 +21,7 @@ Generals.o: $(SRC_PATH)Generals.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
 ThingsThatsNotMub.o: $(SRC_PATH)ThingsThatsNotMub.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)ThingsThatsNotMub.cpp
 
-GameController.o: $(SRC_PATH)GameController.cpp StarWars.hpp
+GameController.o: $(SRC_PATH)GameController.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)GameController.cpp 
 
 main.o: $(SRC_PATH)main.cpp StarWars.hpp $(SRC_PATH)GameController.cpp

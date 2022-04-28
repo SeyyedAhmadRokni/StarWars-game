@@ -50,17 +50,17 @@ public:
     void moveRight();
     void moveLeft();
     Point getPosition();
-
     Point matchCenterUp(int otherWidth, int otherHeight);
     Point matchCenterDown(int otherWidth, int otherHeight);
+    int centerDistanceX(Box* other);
+    int centerDistanceY(Box* other);
     virtual void draw(Window* window);
+
 };
 
 class Arrow:public Box{
 private:
     int damage;
-    // std::string imageAddress = GAME_PATH +
-    //     PLAYER_IMAGES_PATH + "/fire.png";
 public:
     Arrow(int x, int y, std::string imageAddress, int damage = FIRE_DAMAGE);
     Arrow(Point p, std::string imageAddress, int damage = FIRE_DAMAGE);
@@ -72,23 +72,16 @@ public:
 class Enemy:public Box{
 private:
     int health;
-    std::vector<Arrow*> arrows;
 public:
     Enemy(int x, int y, int width, int height,
         std::string imgAddress, int rate );
-    void shoot();
-    void moveArrows();
-    void drawArrows(Window* window);
+    Arrow* shoot();
     virtual void move(int windowWidth) = 0;
-    void eraseExitedArrow(int windowWidth,
-    int windowHeight);
-    void eraseAllArrows();
 };
 
 class MovingEnemy:public Enemy{
 private:
     GameKey moveDiretion = RIGHT;
-    // std::string imageAddress = GAME_PATH + ENEMY_IMAGES_PATH + "/moving.png";
 public:
     MovingEnemy(int x, int y, int rate = MOVING_ENEMY_MOVE_RATE);
     bool moveIsPossible(int windowWidth);
@@ -99,8 +92,6 @@ public:
 
 class FixedEnemy:public Enemy{
 private:
-    // std::string imageAddress = GAME_PATH +
-    //     ENEMY_IMAGES_PATH +"/fixed.png";
 public:
     FixedEnemy(int x, int y);
     void move(int windowWidth);
@@ -110,7 +101,6 @@ public:
 class Player:public Box{
 private:
     Controller* controls;
-    std::vector<Arrow*> arrows;
     int health;
     
     bool hasGaurdItem = false;
@@ -121,26 +111,20 @@ private:
     int speedDuration;
     time_t getSpeedTime;
 
+
     void lossGaurd();
     void lossBonusSpeed();
-    // std::string imageAddress = GAME_PATH +
-    //     PLAYER_IMAGES_PATH + "/1.png";
 public:
     Player(Controller cont, Point p);
     Player(char up, char down, char left,
         char right, char shoot);
     bool hasKey(char released);
-    void shoot();
+    Arrow* shoot();
     void getGaurd(int duration);
     void getSpeed(int duration, int ratio);
-    void moveArrows();
-    void drawArrows(Window* window);
     bool moveIsPossible(GameKey direction, int windowWidth, int windowHeight);
     void doCommand(char input, int windowWidth, int windowHeight);
     void draw(Window* winodws);
-    void eraseExitedArrow(int windowWidth,
-        int windowHeight);
-    void eraseAllArrows();
 };
 
 class Item:public Box{
@@ -172,13 +156,20 @@ public:
 class PlayerManager{
 private:
     std::vector<Player*> players;
+    std::vector<Arrow*> arrows;
 public:
     Controller getDefaultsControllers(int playerN);
     void addPlayer(Point p);
-    void eraseExitedArrows(int windowWidth, int windowHeight);
     void doCommand(char key, int windowWidth, int windowHeight);
-    void movePlayersElements();
+    void moveArrows();
+    void moveElements();
+    void drawPlayers(Window* window);
+    void drawArrows(Window* window);
     void draw(Window* window);
+    void eraseExitedArrow(int windowWidth,
+        int windowHeight);
+    void eraseAllPlayers();
+    void eraseAllArrows();
     void erase();
 };
 
@@ -203,12 +194,21 @@ class EnemyManager{
 private:
     EnemyShootTimer* enemyShootTimer;
     std::vector<Enemy*> enemies;
+    std::vector<Arrow*> arrows;
+    void moveArrows();
+    void moveEnemies(int windowWidth);
+    void drawEnemies(Window* window);
+    void drawArrows(Window* window);
+    void eraseAllArrows();
+    void eraseAllEnemies();
 public:
     EnemyManager(int gameColumnsNumber, DifficultyLevel gameLevel);
     void addMovingEnemy(Point p);
     void addFixedEnemy(Point p);
     void erase();
-    void moveEnemiesElements(Window* window);
+    void moveElements(int windowWidth);
+    void eraseExitedArrows(int windowWidth,
+        int windowHeight);
     void draw(Window* window);
     void enemiesShoot();
     bool isInColumn(Enemy* enemy, int column);

@@ -57,6 +57,14 @@ Point Box::getPosition(){
     return Point(x,y);
 }
 
+int Box::centerDistanceX(Box* other){
+    return abs(x+width/2 - (other->x+other->width/2));
+}
+
+int Box::centerDistanceY(Box* other){
+    return abs(y+height/2 - (other->y+other->height/2));
+}
+
 Point Box::matchCenterUp(int otherWidth, int otherHeight){//change name
     return Point((2*x + width - otherWidth)/2, y);
 }

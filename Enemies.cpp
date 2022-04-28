@@ -9,42 +9,14 @@
 Enemy::Enemy(int x, int y, int width, int height, std::string imgAddress, int rate )
     : Box(x, y, width, height, imgAddress, rate){
 }
-void Enemy::shoot(){
+
+Arrow* Enemy::shoot(){
     std::string imageAddress = GAME_PATH + THINGS_IMAGES_PATH +
         "/enemy_fire.png";
     Arrow* arrow = new 
         Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT),
         imageAddress);
-    arrows.push_back(arrow);
-}
-void Enemy::moveArrows(){
-    for (int i = 0; i < arrows.size(); i++)
-    {
-        arrows[i]->moveDown();
-    }
-}
-void Enemy::drawArrows(Window* window){
-    for (int i = 0; i < arrows.size(); i++)
-    {
-        arrows[i]->draw(window);
-    }
-}
-
-void Enemy::eraseExitedArrow(int windowWidth, int windowHeight){
-    for (int i = 0; i < arrows.size(); i++)
-    {
-        if (!arrows[i]->isInScreen(windowWidth, windowHeight)){
-            delete arrows[i];
-            arrows.erase(arrows.begin()+i);
-        }
-    }
-}
-
-void Enemy::eraseAllArrows(){
-    for (int i = 0; i < arrows.size(); i++)
-    {
-        delete arrows[i];
-    }
+    return arrow;
 }
 
 MovingEnemy::MovingEnemy(int x, int y, int rate):
@@ -53,6 +25,7 @@ MovingEnemy::MovingEnemy(int x, int y, int rate):
     "/moving.png", rate) {
 
 }
+
 bool MovingEnemy::moveIsPossible(int windowWidth){
     if (moveDiretion == RIGHT){
         if (x+moveRate+width <= windowWidth){

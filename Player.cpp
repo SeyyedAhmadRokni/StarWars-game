@@ -32,13 +32,13 @@ Player::Player(char up, char down, char left, char right, char shoot)
 bool Player::hasKey(char released){
     return controls->isAController(released);
 }
-void Player::shoot(){
+Arrow* Player::shoot(){
     std::string imageAddress = GAME_PATH + THINGS_IMAGES_PATH +
         "/player_fire.png";
     Arrow* arrow = new Arrow(
             matchCenterUp(FIRE_WIDHT, FIRE_HEIGHT),
             imageAddress);
-    arrows.push_back(arrow);
+    return arrow;
 }
 void Player::getGaurd(int duration){
     hasGaurdItem = true;
@@ -50,20 +50,6 @@ void Player::getSpeed(int duration, int ratio){
     moveRate = ratio;
     time(&getSpeedTime);
     speedDuration = duration;
-}
-
-void Player::moveArrows(){
-    for (int i = 0; i < arrows.size(); i++)
-    {
-        arrows[i]->moveUp();
-    }
-}
-
-void Player::drawArrows(Window* window){
-    for (int i = 0; i < arrows.size(); i++)
-    {
-        arrows[i]->draw(window);
-    }
 }
 
 bool Player::moveIsPossible(GameKey direction, int windowWidth, int windowHeight){
@@ -117,27 +103,9 @@ void Player::doCommand(char input, int windowWidth, int windowHeight){
             break;
     }
 }
+
 void Player::draw(Window* window){
-    drawArrows(window);
     window->draw_img(imageSource, Rectangle(x, y, width, height));//imageAddress->imageSource
-}
-
-void Player::eraseExitedArrow(int windowWidth,
-    int windowHeight){
-    for (int i = 0; i < arrows.size(); i++)
-    {
-        if (!arrows[i]->isInScreen(windowWidth, windowHeight)){
-            delete arrows[i];
-            arrows.erase(arrows.begin()+i);
-        }
-    }
-}
-
-void Player::eraseAllArrows(){
-    for (int i = 0; i < arrows.size(); i++)
-    {
-        delete arrows[i];
-    } 
 }
 
 #endif

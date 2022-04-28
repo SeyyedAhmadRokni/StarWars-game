@@ -23,21 +23,6 @@ void PlayerManager::addPlayer(Point p){
     players.push_back(player);
 }
 
-void PlayerManager::PlayerManager::eraseExitedArrows(int windowWidth, int windowHeight){
-    for (int i = 0; i < players.size(); i++)
-    {
-        players[i]->eraseExitedArrow(windowWidth,
-            windowHeight);
-    }
-}
-void PlayerManager::erase(){
-    for (int i = 0; i < players.size(); i++)
-    {
-        players[i]->eraseAllArrows();
-        delete players[i];
-    }
-}
-
 void PlayerManager::doCommand(char key, int windowWidth, int windowHeight){
     for (int i = 0; i < players.size(); i++)
     {
@@ -48,18 +33,34 @@ void PlayerManager::doCommand(char key, int windowWidth, int windowHeight){
     }
 }
 
-void PlayerManager::movePlayersElements(){
-    for (int i = 0; i < players.size(); i++)
+void PlayerManager::moveArrows(){
+    for (int i = 0; i < arrows.size(); i++)
     {
-        players[i]->moveArrows();
-
-    }   
+        arrows[i]->moveUp();
+    }
 }
-void PlayerManager::draw(Window* window){
+
+void PlayerManager::moveElements(){
+     moveArrows();  
+}
+
+void PlayerManager::drawArrows(Window* window){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        arrows[i]->draw(window);
+    }
+}
+
+void PlayerManager::drawPlayers(Window* window){
     for (int i = 0; i < players.size(); i++)
     {
         players[i]->draw(window);
     }
+}
+
+void PlayerManager::draw(Window* window){
+    drawArrows(window);
+    drawPlayers(window); 
 }
 
 void EnemyManager::addMovingEnemy(Point p){
@@ -72,27 +73,98 @@ void EnemyManager::addFixedEnemy(Point p){
     enemies.push_back(enemy);
 }
 
-void EnemyManager::erase(){
+void PlayerManager::eraseExitedArrow(int windowWidth,
+    int windowHeight){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        if (!arrows[i]->isInScreen(windowWidth, windowHeight)){
+            delete arrows[i];
+            arrows.erase(arrows.begin()+i);
+        }
+    }
+}
+
+void PlayerManager::eraseAllArrows(){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        delete arrows[i];
+    } 
+}
+void PlayerManager::eraseAllPlayers(){
+    for (int i = 0; i < players.size(); i++)
+    {
+        delete players[i];
+    }
+}
+void PlayerManager::erase(){
+    eraseAllArrows();
+    eraseAllPlayers();
+}
+
+void EnemyManager::eraseAllArrows(){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        delete arrows[i];
+    }
+}
+
+void EnemyManager::eraseAllEnemies(){
     for (int i = 0; i < enemies.size(); i++)
     {
-        enemies[i]->eraseAllArrows();
         delete enemies[i];
     }
 }
 
-void EnemyManager::moveEnemiesElements(Window* window){
+void EnemyManager::erase(){
+    eraseAllArrows();
+    eraseAllEnemies();
+}
+
+void EnemyManager::moveArrows(){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        arrows[i]->moveDown();
+    }
+}
+
+void EnemyManager::moveEnemies(int windowWidth){
     for (int i = 0; i < enemies.size(); i++)
     {
-        enemies[i]->moveArrows();
-        enemies[i]->move(window->get_width());
+        enemies[i]->move(windowWidth);
+    }
+}
+
+void EnemyManager::moveElements(int windowWidth){
+    moveEnemies(windowWidth);
+    moveArrows();
+}
+
+void EnemyManager::drawArrows(Window* window){
+    for (int i = 0; i < arrows.size(); i++)
+    {
+        arrows[i]->draw(window);
+    }
+}
+
+void EnemyManager::drawEnemies(Window* window){
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        enemies[i]->draw(window);
     }
 }
 
 void EnemyManager::draw(Window* window){
-    for (int i = 0; i < enemies.size(); i++)
+    drawEnemies(window);
+    drawArrows(window);
+}
+
+void EnemyManager::eraseExitedArrows(int windowWidth, int windowHeight){
+    for (int i = 0; i < arrows.size(); i++)
     {
-        enemies[i]->draw(window);
-        enemies[i]->drawArrows(window);
+        if (!arrows[i]->isInScreen(windowWidth, windowHeight)){
+            delete arrows[i];
+            arrows.erase(arrows.begin()+i);
+        }
     }
 }
 
@@ -171,8 +243,8 @@ void Game::getInput(){
 }
 
 void Game::moveElements(){
-    playerManager->movePlayersElements();
-    enemyManager->moveEnemiesElements(window);
+    playerManager->moveElements();
+    enemyManager->moveElements(window->get_width());
 }
 void Game::update(){
     getInput();
@@ -239,6 +311,10 @@ void Game::addMapsElements(std::string address){
         }
     }
 }
+
+// void Game::enemiesCollision(){
+
+// }
 
 void Game::setGameLevel(string gameLevel){
     if (gameLevel == "E"){
