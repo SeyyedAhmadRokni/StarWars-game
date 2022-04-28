@@ -54,8 +54,9 @@ public:
     Point matchCenterDown(int otherWidth, int otherHeight);
     int centerDistanceX(Box* other);
     int centerDistanceY(Box* other);
+    bool hasCollision(Box* other);
     virtual void draw(Window* window);
-
+   
 };
 
 class Arrow:public Box{
@@ -163,6 +164,7 @@ public:
     void addPlayer(Point p);
     void doCommand(char key, int windowWidth,
         int windowHeight);
+    std::vector<Arrow*>&  getArrows();
     void moveArrows();
     void moveElements();
     void drawPlayers(Window* window);
@@ -173,6 +175,7 @@ public:
     void eraseAllPlayers();
     void eraseAllArrows();
     void erase();
+    void deleteShotedPlayers(std::vector<Arrow*>& enemiesArrow);
 };
 
 class EnemyShootTimer{
@@ -205,6 +208,7 @@ private:
     void eraseAllEnemies();
 public:
     EnemyManager(int gameColumnsNumber, DifficultyLevel gameLevel);
+    std::vector<Arrow*>& getArrows();
     void addMovingEnemy(Point p);
     void addFixedEnemy(Point p);
     void erase();
@@ -214,6 +218,7 @@ public:
     void draw(Window* window);
     void enemiesShoot();
     bool isInColumn(Enemy* enemy, int column);
+    void deleteShotedEnemies(std::vector<Arrow*>& playerArrows);
 };
 
 class Game{
@@ -226,7 +231,6 @@ private:
     bool gameIsRunning = true;
     DifficultyLevel gameLevel;
 public:
-    
     void closeGame();
     void doEvent(Event event);
     void getInput();
@@ -241,6 +245,8 @@ public:
     void makeWindow(std::string mapAddress);
     void drawBackGround();
     void setGameLevel(std::string gameLevel);
+    void doCollision();
+    void playersCollision();
     Game(std::string mapAddress, std::string gameLevel);
 };
 #endif

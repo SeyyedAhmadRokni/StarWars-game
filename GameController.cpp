@@ -69,9 +69,31 @@ void EnemyManager::addMovingEnemy(Point p){
     enemies.push_back(enemy);
 }
 
+std::vector<Arrow*>& EnemyManager::getArrows(){
+    return arrows;
+}
+
 void EnemyManager::addFixedEnemy(Point p){
     FixedEnemy* enemy = new FixedEnemy(p.x, p.y);
     enemies.push_back(enemy);
+}
+
+void PlayerManager::deleteShotedPlayers(
+    std::vector<Arrow*>& enemiesArrows){
+    for (int i = 0; i < players.size(); i++)
+    {
+        for (int j = 0; j < enemiesArrows.size(); j++)
+        {
+            if (players[i]->hasCollision(enemiesArrows[j])){
+                delete players[i];
+                players.erase(players.begin() + i);
+
+                delete enemiesArrows[j];
+                enemiesArrows.erase(enemiesArrows.begin() + j);
+                break;
+            }
+        }
+    }
 }
 
 void PlayerManager::eraseExitedArrow(int windowWidth,
@@ -100,6 +122,10 @@ void PlayerManager::eraseAllPlayers(){
 void PlayerManager::erase(){
     eraseAllArrows();
     eraseAllPlayers();
+}
+
+vector<Arrow*>& PlayerManager::getArrows(){
+    return arrows;
 }
 
 void EnemyManager::eraseAllArrows(){
@@ -183,6 +209,21 @@ bool EnemyManager::isInColumn(Enemy* enemy, int col){
     return false;
 }
 
+void EnemyManager::deleteShotedEnemies(vector<Arrow*>& playerArrows){
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        for (int j = 0; j < playerArrows.size(); j++)
+        {
+            if (enemies[i]->hasCollision(playerArrows[j])){
+                delete enemies[i];
+                enemies.erase(enemies.begin() + i);
+
+                delete playerArrows[j];
+                playerArrows.erase(playerArrows.begin() + j);
+            }
+        }
+    }
+}
 
 void EnemyManager::enemiesShoot(){
     if (!enemyShootTimer->isTimeToShot()){
@@ -251,6 +292,8 @@ void Game::update(){
     getInput();
     moveElements();
     enemyManager->enemiesShoot();
+    doCollision();
+
 }
 
 void Game::drawBackGround(){
@@ -313,9 +356,14 @@ void Game::addMapsElements(std::string address){
     }
 }
 
-// void Game::enemiesCollision(){
-
-// }
+void Game::doCollision(){
+    enemyManager->deleteShotedEnemies(
+        playerManager->getArrows()
+    );
+    playerManager->deleteShotedPlayers(
+        enemyManager->getArrows()
+    );
+}
 
 void Game::setGameLevel(string gameLevel){
     if (gameLevel == "E"){

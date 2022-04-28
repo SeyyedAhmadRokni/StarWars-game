@@ -65,6 +65,14 @@ int Box::centerDistanceY(Box* other){
     return abs(y+height/2 - (other->y+other->height/2));
 }
 
+bool Box::hasCollision(Box* other){
+    if (centerDistanceX(other) < (other->width + width)/2 &&
+        centerDistanceY(other) < (other->height + height)/2){
+        return true; 
+    }
+    return false;
+}
+
 Point Box::matchCenterUp(int otherWidth, int otherHeight){//change name
     return Point((2*x + width - otherWidth)/2, y);
 }
