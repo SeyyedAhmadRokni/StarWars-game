@@ -53,11 +53,6 @@ void Box::moveLeft(){
     x-=moveRate;
 }
 
-// Point Box::PositionToMatchCenters(Box* other){
-//     return Point(x+(width - other->width)/2,
-//         y+(height - other->height)/2);
-// }
-
 Point Box::getPosition(){
     return Point(x,y);
 }
