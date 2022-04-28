@@ -27,6 +27,7 @@ void Game::makeWindow(std::string mapAddress){
 void Game::closeGame(){
     enemyManager->erase();
     playerManager->erase();
+    itemManager->erase();
     delete window;
     exit(0);
 }

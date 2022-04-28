@@ -85,6 +85,13 @@ vector<Item*>& ItemManager::getItems(){
     return items;
 }
 
+void ItemManager::erase(){
+    for (int i = 0; i < items.size(); i++)
+    {
+        delete items[i];
+    }
+}
+
 void CollisionController::ArrowAndPlayer(vector<Arrow*>& arrows, vector<Player*>& players){
     for (int i = 0; i < players.size(); i++)
     {

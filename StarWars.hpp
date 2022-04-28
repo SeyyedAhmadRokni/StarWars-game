@@ -278,6 +278,7 @@ public:
     void deleteExpiredItems();
     void draw(Window* window);
     vector<Item*>& getItems();
+    void erase();
 };
 
 class CollisionController{
