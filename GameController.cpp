@@ -121,6 +121,13 @@ vector<Player*>& PlayerManager::getPlayers(){
     return players;
 }
 
+void PlayerManager::disableExpiredItems(){
+    for (int i = 0; i < players.size(); i++)
+    {
+        players[i]->disableExpiredItems();
+    }
+}
+
 void EnemyManager::eraseAllArrows(){
     for (int i = 0; i < arrows.size(); i++)
     {
@@ -459,6 +466,7 @@ void Game::update(){
     enemyManager->enemiesShoot();
     doCollisions();
     itemManager->deleteExpiredItems();
+    playerManager->disableExpiredItems();
     if(isGameEnded()){
         gameIsRunning = false;
         identifyWinner();

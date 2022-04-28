@@ -47,7 +47,8 @@ void Player::getGaurd(int duration){
 }
 void Player::getSpeed(int duration, int ratio){
     hasBonusSpeed = true;
-    moveRate = ratio;
+    bonusSpeedRatio = ratio;
+    moveRate *= ratio;
     time(&getSpeedTime);
     speedDuration = duration;
 }
@@ -112,6 +113,26 @@ void Player::draw(Window* window){
 
 bool Player::hasGaurd(){
     return hasGaurdItem;
+}
+
+void Player::disableSpeedItem(){
+    if (hasBonusSpeed && 
+        time(NULL)-getSpeedTime > speedDuration){
+        hasBonusSpeed = false;
+        moveRate /= bonusSpeedRatio; 
+    }
+}
+
+void Player::disableGaurdItem(){
+    if (hasGaurdItem &&
+        time(NULL)-getGaurdTime > speedDuration){
+        hasGaurdItem = false;
+    }
+}
+
+void Player::disableExpiredItems(){
+    disableSpeedItem();
+    disableGaurdItem();
 }
 
 #endif

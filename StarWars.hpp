@@ -123,6 +123,7 @@ private:
 
     bool hasBonusSpeed = false;
     int speedDuration;
+    int bonusSpeedRatio;
     time_t getSpeedTime;
 
 
@@ -141,6 +142,10 @@ public:
         std::vector<Arrow*>& arrows);
     void draw(Window* winodws);
     bool hasGaurd();
+    void disableSpeedItem();
+    void disableGaurdItem();
+    void disableExpiredItems();
+    
 };
 
 class Item:public Box{
@@ -193,6 +198,7 @@ public:
     void erase();
     bool allPlayersAreDead();
     vector<Player*>& getPlayers();
+    void disableExpiredItems();
 };
 
 class EnemyShootTimer{
