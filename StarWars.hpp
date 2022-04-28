@@ -140,6 +140,7 @@ public:
     void doCommand(char input, int windowWidth, int windowHeight,
         std::vector<Arrow*>& arrows);
     void draw(Window* winodws);
+    bool hasGaurd();
 };
 
 class Item:public Box{
@@ -190,8 +191,8 @@ public:
     void eraseAllPlayers();
     void eraseAllArrows();
     void erase();
-    void deleteShotedPlayers(std::vector<Arrow*>& enemiesArrow);
     bool allPlayersAreDead();
+    vector<Player*>& getPlayers();
 };
 
 class EnemyShootTimer{
@@ -233,12 +234,9 @@ public:
         int windowHeight);
     void draw(Window* window);
     void enemiesShoot();
-    std::vector<Point> getMustDeleteEnemiesPositions(
-        vector<Arrow*>& playerArrows
-    );
     bool isInColumn(Enemy* enemy, int column);
-    void deleteShotedEnemies(std::vector<Arrow*>& playerArrows);
     bool allEnemiesAreDead();
+    vector<Enemy*>& getEnemies();
 };
 
 class Button:Box{
@@ -273,6 +271,22 @@ public:
     void addItemIfPossible(vector<Point> positions);
     void deleteExpiredItems();
     void draw(Window* window);
+    vector<Item*>& getItems();
+};
+
+class CollisionController{
+private:
+
+public:
+    void ArrowAndPlayer(vector<Arrow*>& arrows, vector<Player*>& players);
+    void ArrowAndEnemy(vector<Arrow*>& arrows, vector<Enemy*>& enemies);
+    void PlayerAndEnemy(vector<Player*>& players, vector<Enemy*>& enemies);
+    void PlayerAndItem(vector<Player*>& players, vector<Item*>& items);
+    void controlAllCollisions(vector<Player*>& players,
+        vector<Enemy*>& enemies, vector<Arrow*>& playersArrows,
+        vector<Arrow*>& enemiesArrows, vector<Item*>& items);
+    vector<Point> getAddItemsPosition(const vector<Arrow*>& arrows,
+        const vector<Enemy*> enemies);
 };
 
 class Game{
@@ -283,6 +297,7 @@ private:
     bool gameIsRunning = true;
     DifficultyLevel gameLevel;
 
+    CollisionController collisionController;
     std::vector<std::string> map;
     EnemyManager* enemyManager;
     PlayerManager* playerManager = new PlayerManager();
@@ -307,7 +322,7 @@ public:
     void doCollisions();
     void playersCollision();
     void showGameResult();
-    bool gameIsEnded();
+    bool isGameEnded();
     void identifyWinner();
     Game(std::string mapAddress, std::string gameLevel);
 };

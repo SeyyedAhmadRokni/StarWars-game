@@ -110,4 +110,8 @@ void Player::draw(Window* window){
     window->draw_img(imageSource, Rectangle(x, y, width, height));//imageAddress->imageSource
 }
 
+bool Player::hasGaurd(){
+    return hasGaurdItem;
+}
+
 #endif

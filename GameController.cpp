@@ -78,24 +78,6 @@ void EnemyManager::addFixedEnemy(Point p){
     enemies.push_back(enemy);
 }
 
-void PlayerManager::deleteShotedPlayers(
-    std::vector<Arrow*>& enemiesArrows){
-    for (int i = 0; i < players.size(); i++)
-    {
-        for (int j = 0; j < enemiesArrows.size(); j++)
-        {
-            if (players[i]->hasCollision(enemiesArrows[j])){
-                delete players[i];
-                players.erase(players.begin() + i);
-
-                delete enemiesArrows[j];
-                enemiesArrows.erase(enemiesArrows.begin() + j);
-                break;
-            }
-        }
-    }
-}
-
 void PlayerManager::eraseExitedArrow(int windowWidth,
     int windowHeight){
     for (int i = 0; i < arrows.size(); i++)
@@ -133,6 +115,10 @@ bool PlayerManager::allPlayersAreDead(){
         return true;
     }
     return false;
+}
+
+vector<Player*>& PlayerManager::getPlayers(){
+    return players;
 }
 
 void EnemyManager::eraseAllArrows(){
@@ -216,38 +202,6 @@ bool EnemyManager::isInColumn(Enemy* enemy, int col){
     return false;
 }
 
-std::vector<Point> EnemyManager::getMustDeleteEnemiesPositions(vector<Arrow*>& playerArrows){
-    vector<Point> positions;
-    for (int i = 0; i < enemies.size(); i++)
-    {
-        for (int j = 0; j < playerArrows.size(); j++)
-        {
-            if (enemies[i]->hasCollision(playerArrows[j])){
-                positions.push_back(enemies[i]->getPosition());
-            }
-        }
-    }
-    return positions;
-}
-
-void EnemyManager::deleteShotedEnemies(vector<Arrow*>& playerArrows){
-    for (int i = 0; i < enemies.size(); i++)
-    {
-        for (int j = 0; j < playerArrows.size(); j++)
-        {
-            if (enemies[i]->hasCollision(playerArrows[j])){
-                delete enemies[i];
-                enemies.erase(enemies.begin() + i);
-
-                delete playerArrows[j];
-                playerArrows.erase(playerArrows.begin() + j);
-                break;
-            }
-        }
-    }
-}
-
-
 void EnemyManager::enemiesShoot(){
     if (!enemyShootTimer->isTimeToShot()){
         return;
@@ -269,6 +223,10 @@ bool EnemyManager::allEnemiesAreDead(){
         return true;
     }
     return false;
+}
+
+vector<Enemy*>& EnemyManager::getEnemies(){
+    return enemies;
 }
 
 bool ItemManager::isChanceWithMakingItem(){
@@ -348,6 +306,106 @@ void ItemManager::draw(Window* window){
     
 }
 
+vector<Item*>& ItemManager::getItems(){
+    return items;
+}
+
+void CollisionController::ArrowAndPlayer(vector<Arrow*>& arrows, vector<Player*>& players){
+    for (int i = 0; i < players.size(); i++)
+    {
+        for (int j = 0; j < arrows.size(); j++)
+        {
+            if (players[i]->hasCollision(arrows[j])&&
+                !players[i]->hasGaurd()){
+                delete players[i];
+                players.erase(players.begin() + i);
+
+                delete arrows[j];
+                arrows.erase(arrows.begin() + j);
+                break;
+            }
+        }
+    }
+}
+
+void CollisionController::ArrowAndEnemy(vector<Arrow*>& arrows, vector<Enemy*>& enemies){
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        for (int j = 0; j < arrows.size(); j++)
+        {
+            if (enemies[i]->hasCollision(arrows[j])){
+                delete enemies[i];
+                enemies.erase(enemies.begin() + i);
+
+                delete arrows[j];
+                arrows.erase(arrows.begin() + j);
+                break;
+            }
+        }
+    }
+}
+
+void CollisionController::PlayerAndEnemy(vector<Player*>& players, vector<Enemy*>& enemies){
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        for (int j = 0; j < players.size(); j++)
+        {
+            if (enemies[i]->hasCollision(players[j])
+                && !players[j]->hasGaurd()){
+                delete enemies[i];
+                enemies.erase(enemies.begin() + i);
+
+                delete players[j];
+                players.erase(players.begin() + j);
+                break;
+            }
+        }
+    }
+}
+
+void CollisionController::PlayerAndItem(vector<Player*>& players, vector<Item*>& items){
+    for (int i = 0; i < players.size(); i++)
+    {
+        for (int j = 0; j < items.size(); j++)
+        {
+            if (players[i]->hasCollision(items[j])){
+                items[j]->action(players[i]);
+
+                delete items[j];
+                items.erase(items.begin() + j);
+                break;
+            }
+        }
+    }
+}
+
+vector<Point> CollisionController::getAddItemsPosition(
+    const vector<Arrow*>& arrows, const vector<Enemy*> enemies){
+    vector<Point> positions;
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        for (int j = 0; j < arrows.size(); j++)
+        {
+            if (enemies[i]->hasCollision(arrows[j])){
+                positions.push_back(enemies[i]->getPosition());
+                break;
+            }
+        }
+    }
+    return positions;
+}
+
+void CollisionController::controlAllCollisions(vector<Player*>& players,
+    vector<Enemy*>& enemies, vector<Arrow*>& playersArrows,
+    vector<Arrow*>& enemiesArrows, vector<Item*>& items){
+    
+    ArrowAndPlayer(enemiesArrows, players);
+    ArrowAndEnemy(playersArrows, enemies);
+    PlayerAndEnemy(players, enemies);
+    PlayerAndItem(players, items);
+}
+
+
 void Game::readMap(string address){
     std::ifstream file (address);
     string buf;
@@ -401,7 +459,7 @@ void Game::update(){
     enemyManager->enemiesShoot();
     doCollisions();
     itemManager->deleteExpiredItems();
-    if(gameIsEnded()){
+    if(isGameEnded()){
         gameIsRunning = false;
         identifyWinner();
     }
@@ -470,17 +528,14 @@ void Game::addMapsElements(std::string address){
 }
 
 void Game::doCollisions(){
-    vector<Point> willDeleteEnemiesPositions = 
-        enemyManager->getMustDeleteEnemiesPositions(
-            playerManager->getArrows()
-        );
-    enemyManager->deleteShotedEnemies(
-        playerManager->getArrows()
+    vector<Point> newItemsPositions = collisionController.getAddItemsPosition
+    (playerManager->getArrows(), enemyManager->getEnemies());
+    collisionController.controlAllCollisions(
+        playerManager->getPlayers(), enemyManager->getEnemies(),
+        playerManager->getArrows(), enemyManager->getArrows(),
+        itemManager->getItems()
     );
-    itemManager->addItemIfPossible(willDeleteEnemiesPositions);
-    playerManager->deleteShotedPlayers(
-        enemyManager->getArrows()
-    );
+    itemManager->addItemIfPossible(newItemsPositions);
 }
 
 void Game::setGameLevel(string gameLevel){
@@ -504,7 +559,7 @@ Game::Game(std::string mapAddress, std::string gameLevel){
     addMapsElements(mapAddress);
 }
 
-bool Game::gameIsEnded(){
+bool Game::isGameEnded(){
     if (enemyManager->allEnemiesAreDead() || 
         playerManager->allPlayersAreDead()){
         return true;
