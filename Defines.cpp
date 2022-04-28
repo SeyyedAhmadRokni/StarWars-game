@@ -30,4 +30,10 @@ const int STANDARD_SEPRATOR_HEIGHT = 100;
 const int TWO_SHOT_DIFFERENCE = 3;
 
 const int MOVING_ENEMY_MOVE_RATE = 5;
+
+const int BUTTON_STANDARD_WIDTH = 60;
+const int BUTTON_STANDARD_HEIGHT = 40;
+
+const std::string FONTS_PATH = "/fonts";
+
 #endif

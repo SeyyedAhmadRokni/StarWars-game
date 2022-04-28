@@ -128,6 +128,13 @@ vector<Arrow*>& PlayerManager::getArrows(){
     return arrows;
 }
 
+bool PlayerManager::allPlayersAreDead(){
+    if (players.size() == 0){
+        return true;
+    }
+    return false;
+}
+
 void EnemyManager::eraseAllArrows(){
     for (int i = 0; i < arrows.size(); i++)
     {
@@ -241,6 +248,13 @@ void EnemyManager::enemiesShoot(){
     }
 }
 
+bool EnemyManager::allEnemiesAreDead(){
+    if (enemies.size() == 0){
+        return true;
+    }
+    return false;
+}
+
 void Game::readMap(string address){
     std::ifstream file (address);
     string buf;
@@ -293,7 +307,10 @@ void Game::update(){
     moveElements();
     enemyManager->enemiesShoot();
     doCollision();
-
+    if(gameIsEnded()){
+        gameIsRunning = false;
+        identifyWinner();
+    }
 }
 
 void Game::drawBackGround(){
@@ -315,6 +332,7 @@ void Game::run(){
         draw();
         delay(15);
     }
+    pages->showResultPage(winner);
     closeGame();
 }
 
@@ -380,11 +398,27 @@ void Game::setGameLevel(string gameLevel){
 Game::Game(std::string mapAddress, std::string gameLevel){
     readMap(mapAddress);
     makeWindow(mapAddress);
+    pages = new Pages(window);
     setGameLevel(gameLevel);
     enemyManager = new EnemyManager(map.size(), this->gameLevel);
     addMapsElements(mapAddress);
 }
 
+bool Game::gameIsEnded(){
+    if (enemyManager->allEnemiesAreDead() || 
+        playerManager->allPlayersAreDead()){
+        return true;
+    }
+    return false;
+}
 
+void Game::identifyWinner(){
+    if (enemyManager->allEnemiesAreDead()){
+        winner = PLAYERS;
+    }
+    else{
+        winner = ENEMIES;
+    }
+}
 
 #endif

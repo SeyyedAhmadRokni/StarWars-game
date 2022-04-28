@@ -85,4 +85,38 @@ void Box::draw(Window* window){
         Rectangle(x, y, width, height));
 }
 
+
+Pages::Pages(Window* window){
+    this->window = window;
+}
+
+Point Pages::getCenterOfPageToShow(){
+    return Point((window->get_width() - BUTTON_STANDARD_WIDTH)/2,
+        (window->get_height() - BUTTON_STANDARD_HEIGHT)/2);
+}
+void Pages::showResult(WinnerType winner){
+    std::string result;
+    switch (winner)
+    {
+    case ENEMIES:
+        result = "Enemies Win :(";
+        break;
+    
+    default:
+        result = "Players Win! :)";
+        break;
+    }
+    window->show_text(result, getCenterOfPageToShow(),
+        WHITE, GAME_PATH + FONTS_PATH + "/OpenSans.ttf");
+
+}
+void Pages::showResultPage(WinnerType winner){
+    window->clear();
+    window->draw_img(GAME_PATH+BACKGROUND_IMAGES_PATH+"/end.jpg");
+    showResult(winner);
+    window->update_screen();
+    delay(5000);
+}
+
+
 #endif

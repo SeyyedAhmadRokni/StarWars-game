@@ -4,6 +4,8 @@
 #include "/home/seyyedahmad/Documents/Term2/Taklif5/RSDL/src/rsdl.hpp"
 #include "Defines.cpp"
 
+using namespace std;
+
 enum GameKey{
     UP,
     DOWN,
@@ -21,6 +23,11 @@ enum DifficultyLevel{
     EASY,
     MEDIUM, 
     HARD,
+};
+
+enum WinnerType{
+    ENEMIES,
+    PLAYERS,
 };
 
 class Controller{
@@ -41,9 +48,9 @@ protected:
     int moveRate;
 public:
     Box(int x, int y, int width, int height, 
-        std::string imgSource, int rate);
+        std::string imgSource="", int rate=0);
     Box(Point p, int width, int height, 
-        std::string imgSource, int rate);
+        std::string imgSource="", int rate=0);
 
     void moveDown();
     void moveUp();
@@ -176,6 +183,7 @@ public:
     void eraseAllArrows();
     void erase();
     void deleteShotedPlayers(std::vector<Arrow*>& enemiesArrow);
+    bool allPlayersAreDead();
 };
 
 class EnemyShootTimer{
@@ -219,17 +227,40 @@ public:
     void enemiesShoot();
     bool isInColumn(Enemy* enemy, int column);
     void deleteShotedEnemies(std::vector<Arrow*>& playerArrows);
+    bool allEnemiesAreDead();
+};
+
+class Button:Box{
+private:
+    string title;
+public:
+    Button(string title, Point position);
+    bool isInClicked(Point mousPosition);
+    void draw(Window* window);
+};
+
+class Pages{
+private:
+    Window* window;
+    std::vector<Button*> buttons;
+public:
+    Pages(Window* window);
+    Point getCenterOfPageToShow();
+    void showResult(WinnerType winner);
+    void showResultPage(WinnerType winner);
 };
 
 class Game{
 private:
     Window* window;
+    WinnerType winner;
     int columnsNumber;
     std::vector<std::string> map;
     EnemyManager* enemyManager;
     PlayerManager* playerManager = new PlayerManager();
     bool gameIsRunning = true;
     DifficultyLevel gameLevel;
+    Pages* pages;
 public:
     void closeGame();
     void doEvent(Event event);
@@ -247,6 +278,9 @@ public:
     void setGameLevel(std::string gameLevel);
     void doCollision();
     void playersCollision();
+    void showGameResult();
+    bool gameIsEnded();
+    void identifyWinner();
     Game(std::string mapAddress, std::string gameLevel);
 };
 #endif
