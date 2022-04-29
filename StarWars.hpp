@@ -67,7 +67,6 @@ public:
     int centerDistanceX(Box* other);
     int centerDistanceY(Box* other);
     bool hasCollision(Box* other);
-    // Point PositionToMatchCenters(Box* other);
     virtual void draw(Window* window);
    
 };
@@ -116,6 +115,7 @@ class Player:public Box{
 private:
     Controller* controls;
     int health;
+    bool doLastCommand = false;
     
     bool hasGaurdItem = false;
     int gaurdDuration;
@@ -125,6 +125,11 @@ private:
     int speedDuration;
     int bonusSpeedRatio;
     time_t getSpeedTime;
+
+    bool movingRight = false;
+    bool movingLeft = false;
+    bool movingUP = false;
+    bool movingDown = false;
 
 
     void lossGaurd();
@@ -137,15 +142,16 @@ public:
     Arrow* shoot();
     void getGaurd(int duration);
     void getSpeed(int duration, int ratio);
-    bool moveIsPossible(GameKey direction, int windowWidth, int windowHeight);
-    void doCommand(char input, int windowWidth, int windowHeight,
+    bool isMovePossible(GameKey direction, int windowWidth, int windowHeight);
+    void manageKeyPress(char input, int windowWidth, int windowHeight,
         std::vector<Arrow*>& arrows);
     void draw(Window* winodws);
     bool hasGaurd();
+    void move();
     void disableSpeedItem();
     void disableGaurdItem();
     void disableExpiredItems();
-    
+    void manageKeyRelease(char input);
 };
 
 class Item:public Box{
@@ -180,25 +186,28 @@ class PlayerManager{
 private:
     std::vector<Player*> players;
     std::vector<Arrow*> arrows;
-public:
     Controller getDefaultsControllers(int playerN);
-    void addPlayer(Point p);
-    void doCommand(char key, int windowWidth,
-        int windowHeight);
-    std::vector<Arrow*>&  getArrows();
     void moveArrows();
-    void moveElements();
     void drawPlayers(Window* window);
     void drawArrows(Window* window);
-    void draw(Window* window);
     void eraseExitedArrow(int windowWidth,
         int windowHeight);
     void eraseAllPlayers();
     void eraseAllArrows();
+    void disableExpiredItems();
+    void movePlayers();
+public:
+    void manageKeyPress(char key, int windowWidth,
+        int windowHeight);
+    void addPlayer(Point p);
+    std::vector<Arrow*>&  getArrows();
+    void update();
+    void draw(Window* window);
     void erase();
     bool allPlayersAreDead();
     vector<Player*>& getPlayers();
-    void disableExpiredItems();
+    void manageKeyRelease(char released);
+
 };
 
 class EnemyShootTimer{
@@ -229,20 +238,20 @@ private:
     void drawArrows(Window* window);
     void eraseAllArrows();
     void eraseAllEnemies();
+    void eraseExitedArrows(int windowWidth,
+        int windowHeight);
+    bool isInColumn(Enemy* enemy, int column);
 public:
     EnemyManager(int gameColumnsNumber, DifficultyLevel gameLevel);
     std::vector<Arrow*>& getArrows();
     void addMovingEnemy(Point p);
     void addFixedEnemy(Point p);
     void erase();
-    void moveElements(int windowWidth);
-    void eraseExitedArrows(int windowWidth,
-        int windowHeight);
     void draw(Window* window);
-    void enemiesShoot();
-    bool isInColumn(Enemy* enemy, int column);
-    bool allEnemiesAreDead();
+    void shoot();
+    bool areAllEnemiesDead();
     vector<Enemy*>& getEnemies();
+    void update(int windowWidth);
 };
 
 class Button:Box{
@@ -268,11 +277,11 @@ public:
 class ItemManager{
 private:
     std::vector<Item*> items;
+    bool isChanceWithMakingItem();
+    ItemType whichItemToMake();
 public:
     void addGaurdItem(Point position);
     void addSpeedItem(Point position);
-    bool isChanceWithMakingItem();
-    ItemType whichItemToMake();
     void addItemIfPossible(Point position);
     void addItemIfPossible(vector<Point> positions);
     void deleteExpiredItems();
@@ -315,7 +324,6 @@ public:
     void closeGame();
     void doEvent(Event event);
     void getInput();
-    void moveElements();
     void update();
     void draw();
     void run();

@@ -53,7 +53,7 @@ void Player::getSpeed(int duration, int ratio){
     speedDuration = duration;
 }
 
-bool Player::moveIsPossible(GameKey direction, int windowWidth, int windowHeight){
+bool Player::isMovePossible(GameKey direction, int windowWidth, int windowHeight){
     switch(direction){
         case UP:
             if (y-moveRate<0){
@@ -80,32 +80,70 @@ bool Player::moveIsPossible(GameKey direction, int windowWidth, int windowHeight
 
 }
 
-void Player::doCommand(char input, int windowWidth,
+void Player::manageKeyRelease(char input){
+
+    GameKey direction = controls->getCommand(input);
+
+        switch (direction){
+            case UP:
+                movingUP = false;
+                break;
+            case DOWN:
+                movingDown = false;
+                break;
+            case LEFT:
+                movingLeft = false;
+                break;
+            case RIGHT:
+                movingRight = false;
+                break;
+        }
+}
+
+void Player::manageKeyPress(char input, int windowWidth,
     int windowHeight, std::vector<Arrow*>& arrows){
 
     GameKey direction = controls->getCommand(input);
-    switch (direction){
-        case UP:
-            if (moveIsPossible(direction, windowWidth, windowHeight))
-                this->moveUp();
-            break;
-        case DOWN:
-            if (moveIsPossible(direction, windowWidth, windowHeight))
-                this->moveDown();
-            break;
-        case LEFT:
-            if (moveIsPossible(direction, windowWidth, windowHeight))
-                this->moveLeft();
-            break;
-        case RIGHT:
-            if (moveIsPossible(direction, windowWidth, windowHeight))
-                this->moveRight();
-            break;
-        case SHOOT:
-            arrows.push_back(this->shoot());
-            break;
+
+        switch (direction){
+            case UP:
+                if (isMovePossible(direction, windowWidth, windowHeight))
+                    movingUP = true;
+                break;
+            case DOWN:
+                if (isMovePossible(direction, windowWidth, windowHeight))
+                    movingDown = true;
+                break;
+            case LEFT:
+                if (isMovePossible(direction, windowWidth, windowHeight))
+                    movingLeft = true;
+                break;
+            case RIGHT:
+                if (isMovePossible(direction, windowWidth, windowHeight))
+                    movingRight = true;
+                break;
+            case SHOOT:
+                arrows.push_back(this->shoot());
+                break;
+        }
+}
+
+
+void Player::move(){
+    if (movingDown){
+        moveDown();
+    }
+    if (movingLeft){
+        moveLeft();
+    }
+    if (movingRight){
+        moveRight();
+    }
+    if (movingUP){
+        moveUp();
     }
 }
+
 
 void Player::draw(Window* window){
     window->draw_img(imageSource, Rectangle(x, y, width, height));//imageAddress->imageSource
@@ -134,5 +172,6 @@ void Player::disableExpiredItems(){
     disableSpeedItem();
     disableGaurdItem();
 }
+
 
 #endif

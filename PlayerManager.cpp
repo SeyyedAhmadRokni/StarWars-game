@@ -24,11 +24,11 @@ void PlayerManager::addPlayer(Point p){
     players.push_back(player);
 }
 
-void PlayerManager::doCommand(char key, int windowWidth, int windowHeight){
+void PlayerManager::manageKeyPress(char key, int windowWidth, int windowHeight){
     for (int i = 0; i < players.size(); i++)
     {
         if (players[i]->hasKey(key)){
-            players[i]->doCommand(key, windowWidth, windowHeight,
+            players[i]->manageKeyPress(key, windowWidth, windowHeight,
                 arrows);
             break;
         }  
@@ -42,8 +42,10 @@ void PlayerManager::moveArrows(){
     }
 }
 
-void PlayerManager::moveElements(){
+void PlayerManager::update(){
      moveArrows();  
+     movePlayers();
+     disableExpiredItems();
 }
 
 void PlayerManager::drawArrows(Window* window){
@@ -115,6 +117,22 @@ void PlayerManager::disableExpiredItems(){
     for (int i = 0; i < players.size(); i++)
     {
         players[i]->disableExpiredItems();
+    }
+}
+
+void PlayerManager::manageKeyRelease(char released){
+    for (int i = 0; i < players.size(); i++)
+    {
+        if (players[i]->hasKey(released)){
+            players[i]->manageKeyRelease(released);
+        }
+    }
+}
+
+void PlayerManager::movePlayers(){
+    for (int i = 0; i < players.size(); i++)
+    {
+        players[i]->move();
     }
 }
 

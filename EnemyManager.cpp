@@ -52,11 +52,6 @@ void EnemyManager::moveEnemies(int windowWidth){
     }
 }
 
-void EnemyManager::moveElements(int windowWidth){
-    moveEnemies(windowWidth);
-    moveArrows();
-}
-
 void EnemyManager::drawArrows(Window* window){
     for (int i = 0; i < arrows.size(); i++)
     {
@@ -100,7 +95,7 @@ bool EnemyManager::isInColumn(Enemy* enemy, int col){
     return false;
 }
 
-void EnemyManager::enemiesShoot(){
+void EnemyManager::shoot(){
     if (!enemyShootTimer->isTimeToShot()){
         return;
     }
@@ -116,7 +111,7 @@ void EnemyManager::enemiesShoot(){
     }
 }
 
-bool EnemyManager::allEnemiesAreDead(){
+bool EnemyManager::areAllEnemiesDead(){
     if (enemies.size() == 0){
         return true;
     }
@@ -127,6 +122,12 @@ vector<Enemy*>& EnemyManager::getEnemies(){
     return enemies;
 }
 
+void EnemyManager::update(int windowWidth){
+    shoot();
+    moveEnemies(windowWidth);
+    moveArrows();
+
+}
 
 
 

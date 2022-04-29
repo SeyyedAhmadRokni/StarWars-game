@@ -38,9 +38,14 @@ void Game::doEvent(Event event){
             closeGame();
             break;
         case Event::KEY_PRESS:
-            playerManager->doCommand(event.get_pressed_key(),
+            playerManager->manageKeyPress(event.get_pressed_key(),
                 window->get_width(), window->get_height());
             break;
+
+        case Event::KEY_RELEASE:
+            playerManager->manageKeyRelease(event.get_pressed_key());
+            break;
+
     }
 }
 
@@ -51,18 +56,12 @@ void Game::getInput(){
     }
 }
 
-void Game::moveElements(){
-    playerManager->moveElements();
-    enemyManager->moveElements(window->get_width());
-}
-
 void Game::update(){
     getInput();
-    moveElements();
-    enemyManager->enemiesShoot();
+    enemyManager->update(window->get_width());
+    playerManager->update();
     doCollisions();
     itemManager->deleteExpiredItems();
-    playerManager->disableExpiredItems();
     if(isGameEnded()){
         gameIsRunning = false;
         identifyWinner();
@@ -165,7 +164,7 @@ Game::Game(std::string mapAddress, std::string gameLevel){
 }
 
 bool Game::isGameEnded(){
-    if (enemyManager->allEnemiesAreDead() || 
+    if (enemyManager->areAllEnemiesDead() || 
         playerManager->allPlayersAreDead()){
         return true;
     }
@@ -173,7 +172,7 @@ bool Game::isGameEnded(){
 }
 
 void Game::identifyWinner(){
-    if (enemyManager->allEnemiesAreDead()){
+    if (enemyManager->areAllEnemiesDead()){
         winner = PLAYERS;
     }
     else{
