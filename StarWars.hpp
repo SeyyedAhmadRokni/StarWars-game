@@ -319,14 +319,11 @@ private:
     PlayerManager* playerManager = new PlayerManager();
     ItemManager* itemManager = new ItemManager();
     Pages* pages;
-
-public:
     void closeGame();
     void doEvent(Event event);
     void getInput();
     void update();
     void draw();
-    void run();
     void readMap(std::string address);
     Point getElementPosition(int i, int j);
     void addMapElement(char input, Point position);
@@ -339,6 +336,8 @@ public:
     void showGameResult();
     bool isGameEnded();
     void identifyWinner();
+public:
+    void run();
     Game(std::string mapAddress, std::string gameLevel);
 };
 #endif
