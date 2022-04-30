@@ -34,8 +34,8 @@ public:
     void moveRight();
     void moveLeft();
     Point getPosition();
-    Point matchCenterUp(int otherWidth, int otherHeight);
-    Point matchCenterDown(int otherWidth, int otherHeight);
+    Point matchUpCenter(int otherWidth, int otherHeight);
+    Point matchDownCenter(int otherWidth, int otherHeight);
     int centerDistanceX(Box* other);
     int centerDistanceY(Box* other);
     bool hasCollision(Box* other);
@@ -43,20 +43,9 @@ public:
    
 };
 
-
-class Button:Box{
-private:
-    std::string title;
-public:
-    Button(string title, Point position);
-    bool isInClicked(Point mousPosition);
-    void draw(Window* window);
-};
-
 class Pages{
 private:
     Window* window;
-    std::vector<Button*> buttons;
 public:
     Pages(Window* window);
     Point getCenterOfPageToShow();

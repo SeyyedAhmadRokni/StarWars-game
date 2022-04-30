@@ -10,7 +10,6 @@ class Arrow:public Box{
 private:
     int damage;
 public:
-    Arrow(int x, int y, std::string imageAddress, int damage = ARROW_DAMAGE);
     Arrow(Point p, std::string imageAddress, int damage = ARROW_DAMAGE);
     bool isInScreen(int windowWidth,
         int windowHeight);

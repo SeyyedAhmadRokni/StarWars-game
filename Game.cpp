@@ -60,7 +60,7 @@ void Game::update(){
     enemyManager->update(window->get_width());
     doCollisions();
     playerManager->update(window->get_width(), window->get_height());
-    itemManager->deleteExpiredItems();
+    itemManager->update();
     if(isGameEnded()){
         gameIsRunning = false;
         identifyWinner();
@@ -145,11 +145,14 @@ void Game::setGameLevel(string gameLevel){
     if (gameLevel == "E"){
         this->gameLevel = EASY;
     }
+    else if (gameLevel == "H"){
+        this->gameLevel = HARD;
+    }
     else if (gameLevel == "M"){
         this->gameLevel = MEDIUM;
     }
-    else if (gameLevel == "H"){
-        this->gameLevel = HARD;
+    else{
+        this->gameLevel = MEDIUM;
     }
 }
 

@@ -72,10 +72,10 @@ bool Box::hasCollision(Box* other){
     return false;
 }
 
-Point Box::matchCenterUp(int otherWidth, int otherHeight){//change name
+Point Box::matchUpCenter(int otherWidth, int otherHeight){
     return Point((2*x + width - otherWidth)/2, y);
 }
-Point Box::matchCenterDown(int otherWidth, int otherHeight){//cahnge name
+Point Box::matchDownCenter(int otherWidth, int otherHeight){
     return Point((2*x + width - otherWidth)/2
     ,y + height);
 }
@@ -83,7 +83,6 @@ void Box::draw(Window* window){
     window->draw_img(imageSource,
         Rectangle(x, y, width, height));
 }
-
 
 Pages::Pages(Window* window){
     this->window = window;
@@ -107,7 +106,6 @@ void Pages::showResult(WinnerType winner){
     }
     window->show_text(result, getCenterOfPageToShow(),
         RED, GAME_PATH + FONTS_PATH + "/OpenSans.ttf");
-
 }
 void Pages::showResultPage(WinnerType winner){
     window->clear();

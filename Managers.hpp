@@ -100,6 +100,7 @@ public:
     void draw(Window* window);
     vector<Item*>& getItems();
     void erase();
+    void update();
 };
 
 class CollisionController{

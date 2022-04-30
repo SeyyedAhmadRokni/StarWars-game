@@ -7,11 +7,6 @@
 
 using namespace std;
 
-Arrow::Arrow(int x, int y, string imageAddress, int damage):
-    Box(x, y, ARROW_WIDHT, ARROW_HEIGHT, imageAddress, ARROW_RATE){
-    this->damage = damage;
-}
-
 Arrow::Arrow(Point p, string imageAddress, int damage):
     Box(p, ARROW_WIDHT, ARROW_HEIGHT, imageAddress, ARROW_RATE){
 
@@ -25,8 +20,6 @@ bool Arrow::isInScreen(int windowWidth, int windowHeight){
     }
     return false;
 }
-
-//--------------------------------------------------
 
 Item::Item(int x, int y, int sec, std::string imgAddress): Box(x, y, ITEM_WIDTH,
     ITEM_HEIGHT, imgAddress, 0){
@@ -65,24 +58,4 @@ void GaurdItem::action(Player* player){
     player->getGaurd(duration);
 }
 
-//----------------------------------
-
-Button::Button(string title, Point position):Box(position, 
-    BUTTON_STANDARD_WIDTH, BUTTON_STANDARD_HEIGHT){
-    this->title = title;
-}
-
-bool Button::isInClicked(Point mousPosition){
-    if (mousPosition.x >x && mousPosition.y < x+width &&
-        mousPosition.y >y && mousPosition.y < y+height){
-        return true;
-    }
-    return false;
-}
-
-void Button::draw(Window* window){
-    window->fill_rect(Rectangle(x, y, width, height), BLUE);
-    window->show_text(title, Point(x, y), WHITE,
-    GAME_PATH + FONTS_PATH + "/OpenSans.ttf");
-}
 #endif

@@ -4,8 +4,8 @@
 #include "StarWars.hpp"
 
 bool ItemManager::isChanceWithMakingItem(){
-    const int YES_CHANCE = 100;
-    const int NO_CHANCE = 0;
+    const int YES_CHANCE = 40;
+    const int NO_CHANCE = 60;
     int totalChances = YES_CHANCE + NO_CHANCE;
     int identifier = random()%totalChances;
     if (identifier<YES_CHANCE){
@@ -78,6 +78,10 @@ void ItemManager::draw(Window* window){
         items[i]->draw(window);
     }
     
+}
+
+void ItemManager::update(){
+    deleteExpiredItems();
 }
 
 vector<Item*>& ItemManager::getItems(){

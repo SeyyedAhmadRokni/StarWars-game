@@ -21,7 +21,7 @@ Arrow* Player::shoot(){
     std::string imageAddress = GAME_PATH + PLAYER_IMAGES_PATH +
         "/fire.png";
     Arrow* arrow = new Arrow(
-            matchCenterUp(ARROW_WIDHT, ARROW_HEIGHT),
+            matchUpCenter(ARROW_WIDHT, ARROW_HEIGHT),
             imageAddress);
     return arrow;
 }

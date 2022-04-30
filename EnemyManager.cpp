@@ -106,16 +106,6 @@ void EnemyManager::shoot(){
     }
     vector<int> safeColumns = enemyShootTimer-> getSafeColumns();
 
-    //
-    for (int i = 0; i < safeColumns.size(); i++)
-    {
-        cout << safeColumns[i] << endl;
-    }
-    cout << "-------------" << endl;
-    //
-
-
-
     for (int i = 0; i < safeColumns.size(); i++)
     {
         for (int j = 0; j < enemies.size(); j++)
