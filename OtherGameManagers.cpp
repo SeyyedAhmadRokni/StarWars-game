@@ -92,7 +92,8 @@ void ItemManager::erase(){
     }
 }
 
-void CollisionController::ArrowAndPlayer(vector<Arrow*>& arrows, vector<Player*>& players){
+void CollisionController::ArrowAndPlayer(vector<Arrow*>& arrows,
+    vector<Player*>& players, Window* window){
     for (int i = 0; i < players.size(); i++)
     {
         for (int j = 0; j < arrows.size(); j++)
@@ -104,6 +105,8 @@ void CollisionController::ArrowAndPlayer(vector<Arrow*>& arrows, vector<Player*>
 
                 delete arrows[j];
                 arrows.erase(arrows.begin() + j);
+                window->play_sound_effect(GAME_PATH + SOUNDS_PATH+
+                    "/player_collision_sound.wav");
                 break;
             }
         }
@@ -127,7 +130,8 @@ void CollisionController::ArrowAndEnemy(vector<Arrow*>& arrows, vector<Enemy*>& 
     }
 }
 
-void CollisionController::PlayerAndEnemy(vector<Player*>& players, vector<Enemy*>& enemies){
+void CollisionController::PlayerAndEnemy(vector<Player*>& players,
+    vector<Enemy*>& enemies, Window* window){
     for (int i = 0; i < enemies.size(); i++)
     {
         for (int j = 0; j < players.size(); j++)
@@ -139,13 +143,16 @@ void CollisionController::PlayerAndEnemy(vector<Player*>& players, vector<Enemy*
 
                 delete players[j];
                 players.erase(players.begin() + j);
+                window->play_sound_effect(GAME_PATH + SOUNDS_PATH + 
+                    "/player_collision_sound.wav");
                 break;
             }
         }
     }
 }
 
-void CollisionController::PlayerAndItem(vector<Player*>& players, vector<Item*>& items){
+void CollisionController::PlayerAndItem(vector<Player*>& players,
+    vector<Item*>& items, Window* window){
     for (int i = 0; i < players.size(); i++)
     {
         for (int j = 0; j < items.size(); j++)
@@ -155,6 +162,9 @@ void CollisionController::PlayerAndItem(vector<Player*>& players, vector<Item*>&
 
                 delete items[j];
                 items.erase(items.begin() + j);
+                window->play_sound_effect(GAME_PATH + SOUNDS_PATH +
+                    "/get_item_sound.wav");
+                
                 break;
             }
         }
@@ -179,12 +189,13 @@ vector<Point> CollisionController::getAddItemsPosition(
 
 void CollisionController::controlAllCollisions(vector<Player*>& players,
     vector<Enemy*>& enemies, vector<Arrow*>& playersArrows,
-    vector<Arrow*>& enemiesArrows, vector<Item*>& items){
+    vector<Arrow*>& enemiesArrows, vector<Item*>& items,
+    Window* window){
     
-    ArrowAndPlayer(enemiesArrows, players);
+    ArrowAndPlayer(enemiesArrows, players, window);
     ArrowAndEnemy(playersArrows, enemies);
-    PlayerAndEnemy(players, enemies);
-    PlayerAndItem(players, items);
+    PlayerAndEnemy(players, enemies, window);
+    PlayerAndItem(players, items, window);
 }
 
 set<int> EnemyShootTimer::chooseColumns(int number){

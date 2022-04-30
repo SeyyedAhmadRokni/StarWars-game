@@ -37,6 +37,8 @@ const int BUTTON_STANDARD_HEIGHT = 40;
 const int SPEED_ITEM_EXISTS_TIME = 5;
 const int GAURD_ITEM_EXISTS_TIME = 5;
 
+const std::string SOUNDS_PATH = "/sounds"; 
+
 const std::string FONTS_PATH = "/fonts";
 
 #endif

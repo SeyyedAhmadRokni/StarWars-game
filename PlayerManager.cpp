@@ -24,12 +24,11 @@ void PlayerManager::addPlayer(Point p){
     players.push_back(player);
 }
 
-void PlayerManager::manageKeyPress(char key, int windowWidth, int windowHeight){
+void PlayerManager::manageKeyPress(char key, Window* window){
     for (int i = 0; i < players.size(); i++)
     {
         if (players[i]->hasKey(key)){
-            players[i]->manageKeyPress(key, windowWidth, windowHeight,
-                arrows);
+            players[i]->manageKeyPress(key, window, arrows);
             break;
         }  
     }

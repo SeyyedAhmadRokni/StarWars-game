@@ -142,8 +142,7 @@ public:
     void getGaurd(int duration);
     void getSpeed(int duration, int ratio);
     bool isMovePossible(GameKey direction, int windowWidth, int windowHeight);
-    void manageKeyPress(char input, int windowWidth, int windowHeight,
-        std::vector<Arrow*>& arrows);
+    void manageKeyPress(char input, Window* window, std::vector<Arrow*>& arrows);
     void draw(Window* winodws);
     bool hasGaurd();
     void move();
@@ -194,8 +193,7 @@ private:
     void disableExpiredItems();
     void movePlayers();
 public:
-    void manageKeyPress(char key, int windowWidth,
-        int windowHeight);
+    void manageKeyPress(char key, Window* window);
     void addPlayer(Point p);
     std::vector<Arrow*>&  getArrows();
     void update();
@@ -291,13 +289,18 @@ class CollisionController{
 private:
 
 public:
-    void ArrowAndPlayer(vector<Arrow*>& arrows, vector<Player*>& players);
-    void ArrowAndEnemy(vector<Arrow*>& arrows, vector<Enemy*>& enemies);
-    void PlayerAndEnemy(vector<Player*>& players, vector<Enemy*>& enemies);
-    void PlayerAndItem(vector<Player*>& players, vector<Item*>& items);
+    void ArrowAndPlayer(vector<Arrow*>& arrows,
+        vector<Player*>& players, Window* window);
+    void ArrowAndEnemy(vector<Arrow*>& arrows,
+        vector<Enemy*>& enemies);
+    void PlayerAndEnemy(vector<Player*>& players,
+        vector<Enemy*>& enemies, Window* window);
+    void PlayerAndItem(vector<Player*>& players,
+        vector<Item*>& items, Window* window);
     void controlAllCollisions(vector<Player*>& players,
         vector<Enemy*>& enemies, vector<Arrow*>& playersArrows,
-        vector<Arrow*>& enemiesArrows, vector<Item*>& items);
+        vector<Arrow*>& enemiesArrows, vector<Item*>& items,
+        Window* window);
     vector<Point> getAddItemsPosition(const vector<Arrow*>& arrows,
         const vector<Enemy*> enemies);
 };

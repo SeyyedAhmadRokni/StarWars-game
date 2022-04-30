@@ -38,8 +38,8 @@ void Game::doEvent(Event event){
             closeGame();
             break;
         case Event::KEY_PRESS:
-            playerManager->manageKeyPress(event.get_pressed_key(),
-                window->get_width(), window->get_height());
+            playerManager->manageKeyPress(
+                event.get_pressed_key(), window);
             break;
 
         case Event::KEY_RELEASE:
@@ -137,7 +137,7 @@ void Game::doCollisions(){
     collisionController.controlAllCollisions(
         playerManager->getPlayers(), enemyManager->getEnemies(),
         playerManager->getArrows(), enemyManager->getArrows(),
-        itemManager->getItems()
+        itemManager->getItems(), window
     );
     itemManager->addItemIfPossible(newItemsPositions);
 }

@@ -11,8 +11,8 @@ Enemy::Enemy(int x, int y, int width, int height, std::string imgAddress, int ra
 }
 
 Arrow* Enemy::shoot(){
-    std::string imageAddress = GAME_PATH + THINGS_IMAGES_PATH +
-        "/enemy_fire.png";
+    std::string imageAddress = GAME_PATH + ENEMY_IMAGES_PATH +
+        "/fire.png";
     Arrow* arrow = new 
         Arrow(this->matchCenterDown(FIRE_WIDHT, FIRE_HEIGHT),
         imageAddress);

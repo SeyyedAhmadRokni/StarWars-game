@@ -20,8 +20,8 @@ bool Player::hasKey(char released){
 }
 
 Arrow* Player::shoot(){
-    std::string imageAddress = GAME_PATH + THINGS_IMAGES_PATH +
-        "/player_fire.png";
+    std::string imageAddress = GAME_PATH + PLAYER_IMAGES_PATH +
+        "/fire.png";
     Arrow* arrow = new Arrow(
             matchCenterUp(FIRE_WIDHT, FIRE_HEIGHT),
             imageAddress);
@@ -88,30 +88,31 @@ void Player::manageKeyRelease(char input){
         }
 }
 
-void Player::manageKeyPress(char input, int windowWidth,
-    int windowHeight, std::vector<Arrow*>& arrows){
+void Player::manageKeyPress(char input, Window* window, std::vector<Arrow*>& arrows){
 
     GameKey direction = controls->getCommand(input);
 
         switch (direction){
             case UP:
-                if (isMovePossible(direction, windowWidth, windowHeight))
+                if (isMovePossible(direction, window->get_width(), window->get_height()))
                     movingUP = true;
                 break;
             case DOWN:
-                if (isMovePossible(direction, windowWidth, windowHeight))
+                if (isMovePossible(direction, window->get_width(), window->get_height()))
                     movingDown = true;
                 break;
             case LEFT:
-                if (isMovePossible(direction, windowWidth, windowHeight))
+                if (isMovePossible(direction, window->get_width(), window->get_height()))
                     movingLeft = true;
                 break;
             case RIGHT:
-                if (isMovePossible(direction, windowWidth, windowHeight))
+                if (isMovePossible(direction, window->get_width(), window->get_height()))
                     movingRight = true;
                 break;
             case SHOOT:
                 arrows.push_back(this->shoot());
+                window->play_sound_effect(GAME_PATH + SOUNDS_PATH +
+                    "/fire_sound.wav");
                 break;
         }
 }
