@@ -301,5 +301,4 @@ vector<int> EnemyShootTimer::getSafeColumns(){
     return vector<int>(choosedColumns.begin(), choosedColumns.end());
 }
 
-
 #endif

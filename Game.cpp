@@ -59,8 +59,8 @@ void Game::getInput(){
 void Game::update(){
     getInput();
     enemyManager->update(window->get_width());
-    playerManager->update(window->get_width(), window->get_height());
     doCollisions();
+    playerManager->update(window->get_width(), window->get_height());
     itemManager->deleteExpiredItems();
     if(isGameEnded()){
         gameIsRunning = false;

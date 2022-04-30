@@ -18,7 +18,6 @@ Player::Player(Controller cont, Point p, int playerNumber)
 bool Player::hasKey(char released){
     return controls->isAController(released);
 }
-
 Arrow* Player::shoot(){
     std::string imageAddress = GAME_PATH + PLAYER_IMAGES_PATH +
         "/fire.png";
@@ -37,8 +36,7 @@ void Player::getGaurd(int duration){
 }
 void Player::getSpeed(int duration, int ratio){
     hasBonusSpeed = true;
-    bonusSpeedRatio = ratio;
-    moveRate *= ratio;
+    moveRate = ratio * PLAYER_MOVE_RATE;
     time(&getSpeedTime);
     speedDuration = duration;
 }
@@ -148,7 +146,7 @@ void Player::disableSpeedItem(){
     if (hasBonusSpeed && 
         time(NULL)-getSpeedTime > speedDuration){
         hasBonusSpeed = false;
-        moveRate /= bonusSpeedRatio; 
+        moveRate = PLAYER_MOVE_RATE; 
     }
 }
 

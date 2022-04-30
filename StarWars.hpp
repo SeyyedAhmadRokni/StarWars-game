@@ -136,7 +136,6 @@ private:
 
     bool hasBonusSpeed = false;
     int speedDuration;
-    int bonusSpeedRatio;
     time_t getSpeedTime;
 
     bool movingRight = false;
