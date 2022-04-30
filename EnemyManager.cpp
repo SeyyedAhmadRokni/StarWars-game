@@ -111,7 +111,7 @@ void EnemyManager::shoot(){
         for (int j = 0; j < enemies.size(); j++)
         {
             if(!isInColumn(enemies[j], safeColumns[i]) &&
-                enemies[i]->getType() != HOSTAGE_SHIP){
+                enemies[j]->getType() != HOSTAGE_SHIP){
                 arrows.push_back(enemies[j]->shoot());
             }
         }
@@ -119,10 +119,13 @@ void EnemyManager::shoot(){
 }
 
 bool EnemyManager::areAllEnemiesDead(){
-    if (enemies.size() == 0){
-        return true;
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        if (enemies[i]->getType() != HOSTAGE_SHIP){
+            return false;
+        }
     }
-    return false;
+    return true;
 }
 
 vector<Enemy*>& EnemyManager::getEnemies(){
