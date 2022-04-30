@@ -6,33 +6,38 @@
 #include "Player.hpp"
 #include "rsdl.hpp"
 
-
-class Item:public Box{
+class Item : public Box
+{
 protected:
     time_t creationTime;
     int existsDuration;
+
 public:
     Item(int x, int y, int sec, std::string imgAddress);
     bool isDeleteTime();
     bool hasExpired();
-    virtual void action(Player* player) = 0;
+    virtual void action(Player *player) = 0;
 };
 
-class SpeedItem:public Item{
+class SpeedItem : public Item
+{
 private:
     int duration = 5;
     int speedRatio = 2;
+
 public:
     SpeedItem(Point position);
-    void action(Player* player);
+    void action(Player *player);
 };
 
-class GaurdItem:public Item{
+class GaurdItem : public Item
+{
 private:
     int duration = 5;
+
 public:
     GaurdItem(Point position);
-    void action(Player* player);
+    void action(Player *player);
 };
 
 #endif

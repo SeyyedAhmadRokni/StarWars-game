@@ -7,12 +7,13 @@
 #include "Arrow.hpp"
 #include "rsdl.hpp"
 
-class Player:public Box{
+class Player : public Box
+{
 private:
-    Controller* controls;
+    Controller *controls;
     int health;
     bool doLastCommand = false;
-    
+
     bool hasGaurdItem = false;
     int gaurdDuration;
     time_t getGaurdTime;
@@ -33,12 +34,12 @@ private:
 public:
     Player(Controller cont, Point p, int playerNumber);
     bool hasKey(char released);
-    Arrow* shoot();
+    Arrow *shoot();
     void getGaurd(int duration);
     void getSpeed(int duration, int ratio);
     bool isMovePossible(GameKey direction, int windowWidth, int windowHeight);
-    void manageKeyPress(char input, Window* window, std::vector<Arrow*>& arrows);
-    void draw(Window* winodws);
+    void manageKeyPress(char input, Window *window, std::vector<Arrow *> &arrows);
+    void draw(Window *winodws);
     bool hasGaurd();
     void move(int windowWidth, int windowHeight);
     void disableExpiredItems();

@@ -5,25 +5,26 @@
 
 using namespace std;
 
-
-void Game::readMap(string address){
-    std::ifstream file (address);
+void Game::readMap(string address)
+{
+    std::ifstream file(address);
     string buf;
-    while(getline(file, buf)){
+    while (getline(file, buf))
+    {
         map.push_back(buf);
     }
     file.close();
 }
 
-void Game::makeWindow(std::string mapAddress){
-    int windowWidth = map[0].size()*STANDARD_BLOCK_WIDTH
-        +(map[0].size()+1)*STANDARD_MARGIN_WIDTH;
-    int windowHeight = map.size()*STANDARD_BLOCK_HEIGHT
-        + (map.size() + 1)*STANDARD_MARGIN_HEIGHT;
+void Game::makeWindow(std::string mapAddress)
+{
+    int windowWidth = map[0].size() * STANDARD_BLOCK_WIDTH + (map[0].size() + 1) * STANDARD_MARGIN_WIDTH;
+    int windowHeight = map.size() * STANDARD_BLOCK_HEIGHT + (map.size() + 1) * STANDARD_MARGIN_HEIGHT;
     window = new Window(windowWidth, windowHeight, GAME_TITLE);
 }
 
-void Game::closeGame(){
+void Game::closeGame()
+{
     enemyManager->erase();
     playerManager->erase();
     itemManager->erase();
@@ -31,49 +32,57 @@ void Game::closeGame(){
     exit(0);
 }
 
-void Game::doEvent(Event event){
-    switch(event.get_type()){
-        case Event::QUIT:
-            closeGame();
-            break;
-        case Event::KEY_PRESS:
-            playerManager->manageKeyPress(
-                event.get_pressed_key(), window);
-            break;
+void Game::doEvent(Event event)
+{
+    switch (event.get_type())
+    {
+    case Event::QUIT:
+        closeGame();
+        break;
+    case Event::KEY_PRESS:
+        playerManager->manageKeyPress(
+            event.get_pressed_key(), window);
+        break;
 
-        case Event::KEY_RELEASE:
-            playerManager->manageKeyRelease(event.get_pressed_key());
-            break;
-
+    case Event::KEY_RELEASE:
+        playerManager->manageKeyRelease(event.get_pressed_key());
+        break;
     }
 }
 
-void Game::getInput(){
-    if (window->has_pending_event()){
+void Game::getInput()
+{
+    if (window->has_pending_event())
+    {
         Event event = window->poll_for_event();
         doEvent(event);
     }
 }
 
-void Game::update(){
+void Game::update()
+{
     getInput();
-    enemyManager->update(window->get_width());
+    enemyManager->update(window->get_width(),
+                         columnsNumber);
     doCollisions();
     playerManager->update(window->get_width(), window->get_height());
     itemManager->update();
-    if(isGameEnded()){
+    if (isGameEnded())
+    {
         gameIsRunning = false;
         identifyWinner();
     }
 }
 
-void Game::drawBackGround(){
+void Game::drawBackGround()
+{
     string backgroundAddress = GAME_PATH +
-        BACKGROUND_IMAGES_PATH + "/space.png";
+                               BACKGROUND_IMAGES_PATH + "/space.png";
     window->draw_img(backgroundAddress);
 }
 
-void Game::draw(){
+void Game::draw()
+{
     window->clear();
     drawBackGround();
     enemyManager->draw(window);
@@ -82,8 +91,10 @@ void Game::draw(){
     window->update_screen();
 }
 
-void Game::run(){
-    while(gameIsRunning){
+void Game::run()
+{
+    while (gameIsRunning)
+    {
         update();
         draw();
         delay(15);
@@ -92,14 +103,16 @@ void Game::run(){
     closeGame();
 }
 
-Point Game::getElementPosition(int x, int y){
-    return Point(x*STANDARD_BLOCK_WIDTH+   
-        (x+1)*STANDARD_MARGIN_WIDTH,
-        y*STANDARD_BLOCK_HEIGHT + 
-        (y+1)*STANDARD_MARGIN_HEIGHT);
+Point Game::getElementPosition(int x, int y)
+{
+    return Point(x * STANDARD_BLOCK_WIDTH +
+                     (x + 1) * STANDARD_MARGIN_WIDTH,
+                 y * STANDARD_BLOCK_HEIGHT +
+                     (y + 1) * STANDARD_MARGIN_HEIGHT);
 }
 
-void Game::addMapElement(char input, Point position){
+void Game::addMapElement(char input, Point position)
+{
     switch (input)
     {
     case 'E':
@@ -109,7 +122,7 @@ void Game::addMapElement(char input, Point position){
         enemyManager->addMovingEnemy(position);
         break;
     case 'S':
-        enemyManager->addHostageShip(position); 
+        enemyManager->addHostageShip(position);
         break;
     case 'P':
         playerManager->addPlayer(position);
@@ -119,7 +132,8 @@ void Game::addMapElement(char input, Point position){
     }
 }
 
-void Game::addMapElements(std::string address){
+void Game::addMapElements(std::string address)
+{
     for (int i = 0; i < map.size(); i++)
     {
         for (int j = 0; j < map[i].size(); j++)
@@ -130,33 +144,38 @@ void Game::addMapElements(std::string address){
     }
 }
 
-void Game::doCollisions(){
-    vector<Point> newItemsPositions = collisionController.getAddItemsPosition
-    (playerManager->getArrows(), enemyManager->getEnemies());
+void Game::doCollisions()
+{
+    vector<Point> newItemsPositions = collisionController.getAddItemsPosition(playerManager->getArrows(), enemyManager->getEnemies());
     collisionController.controlAllCollisions(
         playerManager->getPlayers(), enemyManager->getEnemies(),
         playerManager->getArrows(), enemyManager->getArrows(),
-        itemManager->getItems(), window
-    );
+        itemManager->getItems(), window);
     itemManager->addItemIfPossible(newItemsPositions);
 }
 
-void Game::setGameLevel(string gameLevel){
-    if (gameLevel == "E"){
+void Game::setGameLevel(string gameLevel)
+{
+    if (gameLevel == "E")
+    {
         this->gameLevel = EASY;
     }
-    else if (gameLevel == "H"){
+    else if (gameLevel == "H")
+    {
         this->gameLevel = HARD;
     }
-    else if (gameLevel == "M"){
+    else if (gameLevel == "M")
+    {
         this->gameLevel = MEDIUM;
     }
-    else{
+    else
+    {
         this->gameLevel = MEDIUM;
     }
 }
 
-Game::Game(std::string mapAddress, std::string gameLevel){
+Game::Game(std::string mapAddress, std::string gameLevel)
+{
 
     srand(time(NULL));
     readMap(mapAddress);
@@ -167,23 +186,29 @@ Game::Game(std::string mapAddress, std::string gameLevel){
     addMapElements(mapAddress);
 }
 
-bool Game::isGameEnded(){
-    if (enemyManager->areAllEnemiesDead() || 
+bool Game::isGameEnded()
+{
+    if (enemyManager->areAllEnemiesDead() ||
         playerManager->allPlayersAreDead() ||
-        enemyManager->hasAHostageShipDead()){
+        enemyManager->hasAHostageShipDead())
+    {
         return true;
     }
     return false;
 }
 
-void Game::identifyWinner(){
-    if (enemyManager->hasAHostageShipDead()){
+void Game::identifyWinner()
+{
+    if (enemyManager->hasAHostageShipDead())
+    {
         winner = ENEMIES;
     }
-    else if (enemyManager->areAllEnemiesDead()){
+    else if (enemyManager->areAllEnemiesDead())
+    {
         winner = PLAYERS;
     }
-    else{
+    else
+    {
         winner = ENEMIES;
     }
 }

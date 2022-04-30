@@ -9,13 +9,12 @@
 #include "Arrow.hpp"
 #include "Managers.hpp"
 
-
 using namespace std;
 
-
-class Game{
+class Game
+{
 private:
-    Window* window;
+    Window *window;
     WinnerType winner;
     int columnsNumber;
     bool gameIsRunning = true;
@@ -23,11 +22,10 @@ private:
 
     CollisionController collisionController;
     std::vector<std::string> map;
-    EnemyManager* enemyManager;
-    PlayerManager* playerManager = new PlayerManager();
-    ItemManager* itemManager = new ItemManager();
-    Pages* pages;
-
+    EnemyManager *enemyManager;
+    PlayerManager *playerManager = new PlayerManager();
+    ItemManager *itemManager = new ItemManager();
+    Pages *pages;
 
     void closeGame();
     void doEvent(Event event);
@@ -46,6 +44,7 @@ private:
     void showGameResult();
     bool isGameEnded();
     void identifyWinner();
+
 public:
     void run();
     Game(std::string mapAddress, std::string gameLevel);
