@@ -28,10 +28,12 @@ Arrow* Player::shoot(){
     return arrow;
 }
 void Player::getGaurd(int duration){
+    if (!hasGaurdItem){
+        swap(imageSource, gaurededImage);
+    }
     hasGaurdItem = true;
     time(&getGaurdTime);
     gaurdDuration = duration;
-    swap(imageSource, gaurededImage);
 }
 void Player::getSpeed(int duration, int ratio){
     hasBonusSpeed = true;
@@ -94,19 +96,15 @@ void Player::manageKeyPress(char input, Window* window, std::vector<Arrow*>& arr
 
         switch (direction){
             case UP:
-                if (isMovePossible(direction, window->get_width(), window->get_height()))
                     movingUP = true;
                 break;
             case DOWN:
-                if (isMovePossible(direction, window->get_width(), window->get_height()))
                     movingDown = true;
                 break;
             case LEFT:
-                if (isMovePossible(direction, window->get_width(), window->get_height()))
                     movingLeft = true;
                 break;
             case RIGHT:
-                if (isMovePossible(direction, window->get_width(), window->get_height()))
                     movingRight = true;
                 break;
             case SHOOT:
@@ -118,18 +116,22 @@ void Player::manageKeyPress(char input, Window* window, std::vector<Arrow*>& arr
 }
 
 
-void Player::move(){
+void Player::move(int windowWidth, int windowHeight){
     if (movingDown){
-        moveDown();
+        if (isMovePossible(DOWN, windowWidth, windowHeight))
+            moveDown();
     }
     if (movingLeft){
-        moveLeft();
+        if (isMovePossible(LEFT, windowWidth, windowHeight))
+            moveLeft();
     }
     if (movingRight){
-        moveRight();
+        if (isMovePossible(RIGHT, windowWidth, windowHeight))
+            moveRight();
     }
     if (movingUP){
-        moveUp();
+        if (isMovePossible(UP, windowWidth, windowHeight))
+            moveUp();
     }
 }
 

@@ -41,9 +41,9 @@ void PlayerManager::moveArrows(){
     }
 }
 
-void PlayerManager::update(){
+void PlayerManager::update(int windowWidth, int windowHeight){
      moveArrows();  
-     movePlayers();
+     movePlayers(windowWidth, windowHeight);
      disableExpiredItems();
 }
 
@@ -128,10 +128,10 @@ void PlayerManager::manageKeyRelease(char released){
     }
 }
 
-void PlayerManager::movePlayers(){
+void PlayerManager::movePlayers(int windowWidth, int windowHeight){
     for (int i = 0; i < players.size(); i++)
     {
-        players[i]->move();
+        players[i]->move(windowWidth, windowHeight);
     }
 }
 

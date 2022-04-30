@@ -17,6 +17,7 @@ enum GameKey{
 enum EnemyType{
     FIXED,
     MOVING,
+    HOSTAGE_SHIP,
 };
 
 enum DifficultyLevel{
@@ -85,11 +86,14 @@ public:
 class Enemy:public Box{
 private:
     int health;
+protected:
+    EnemyType enemyType;
 public:
     Enemy(int x, int y, int width, int height,
         std::string imgAddress, int rate );
-    Arrow* shoot();
     virtual void move(int windowWidth) = 0;
+    virtual Arrow* shoot();
+    EnemyType getType();
 };
 
 class MovingEnemy:public Enemy{
@@ -110,6 +114,14 @@ public:
     void move(int windowWidth);
 };
 
+class HostageShip: public Enemy{
+private:
+
+public:
+    HostageShip(int x, int y);  
+    void move(int windowWidth);  
+    Arrow* shoot();
+};
 
 class Player:public Box{
 private:
@@ -145,7 +157,7 @@ public:
     void manageKeyPress(char input, Window* window, std::vector<Arrow*>& arrows);
     void draw(Window* winodws);
     bool hasGaurd();
-    void move();
+    void move(int windowWidth, int windowHeight);
     void disableExpiredItems();
     void manageKeyRelease(char input);
 };
@@ -191,12 +203,12 @@ private:
     void eraseAllPlayers();
     void eraseAllArrows();
     void disableExpiredItems();
-    void movePlayers();
+    void movePlayers(int windowWidth, int windowHeight);
 public:
     void manageKeyPress(char key, Window* window);
     void addPlayer(Point p);
     std::vector<Arrow*>&  getArrows();
-    void update();
+    void update(int windowWidth, int windowHeight);
     void draw(Window* window);
     void erase();
     bool allPlayersAreDead();
@@ -225,6 +237,7 @@ public:
 class EnemyManager{
 private:
     EnemyShootTimer* enemyShootTimer;
+    int hostageShipsNumber = 0;
     std::vector<Enemy*> enemies;
     std::vector<Arrow*> arrows;
     void moveArrows();
@@ -241,12 +254,14 @@ public:
     std::vector<Arrow*>& getArrows();
     void addMovingEnemy(Point p);
     void addFixedEnemy(Point p);
+    void addHostageShip(Point p);
     void erase();
     void draw(Window* window);
     void shoot();
     bool areAllEnemiesDead();
     vector<Enemy*>& getEnemies();
     void update(int windowWidth);
+    bool hasAHostageShipDead();
 };
 
 class Button:Box{

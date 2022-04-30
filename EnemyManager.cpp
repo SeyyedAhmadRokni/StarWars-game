@@ -19,6 +19,12 @@ void EnemyManager::addFixedEnemy(Point p){
     enemies.push_back(enemy);
 }
 
+void EnemyManager::addHostageShip(Point p){
+    HostageShip* hostage = new HostageShip(p.x, p.y);
+    enemies.push_back(hostage);
+    hostageShipsNumber++;
+}
+
 void EnemyManager::eraseAllArrows(){
     for (int i = 0; i < arrows.size(); i++)
     {
@@ -126,9 +132,22 @@ void EnemyManager::update(int windowWidth){
     shoot();
     moveEnemies(windowWidth);
     moveArrows();
-
 }
 
+bool EnemyManager::hasAHostageShipDead(){
+    int hostageN = 0;
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        if (enemies[i]->getType() == HOSTAGE_SHIP){
+            hostageN++;
+        }
+    }
+    
+    if (hostageN == hostageShipsNumber){
+        return false;
+    }
 
+    return true;
+}
 
 #endif

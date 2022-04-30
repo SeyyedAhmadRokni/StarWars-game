@@ -19,10 +19,16 @@ Arrow* Enemy::shoot(){
     return arrow;
 }
 
+
+EnemyType Enemy::getType(){
+    return enemyType;
+}
+
 MovingEnemy::MovingEnemy(int x, int y, int rate):
     Enemy(x, y, STANDARD_BLOCK_WIDTH,
     STANDARD_BLOCK_HEIGHT, GAME_PATH + ENEMY_IMAGES_PATH +
     "/moving.png", rate) {
+        enemyType = MOVING; 
 
 }
 
@@ -71,10 +77,25 @@ FixedEnemy::FixedEnemy(int x, int y)
     :Enemy(x, y, STANDARD_BLOCK_WIDTH,
     STANDARD_BLOCK_HEIGHT, GAME_PATH +
     ENEMY_IMAGES_PATH +"/fixed.png" , 0){
-
+        enemyType = FIXED;
 }
 
 void FixedEnemy::move(int windowWidth){
 
+}
+
+HostageShip::HostageShip(int x, int y)
+    :Enemy(x, y, STANDARD_BLOCK_WIDTH,
+    STANDARD_BLOCK_HEIGHT, GAME_PATH +
+    ENEMY_IMAGES_PATH +"/hostage.png" , 0){
+        enemyType = HOSTAGE_SHIP;
+}
+
+void HostageShip::move(int windowWidth){
+
+}
+
+Arrow* HostageShip::shoot(){
+    
 }
 #endif

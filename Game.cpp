@@ -59,7 +59,7 @@ void Game::getInput(){
 void Game::update(){
     getInput();
     enemyManager->update(window->get_width());
-    playerManager->update();
+    playerManager->update(window->get_width(), window->get_height());
     doCollisions();
     itemManager->deleteExpiredItems();
     if(isGameEnded()){
@@ -110,7 +110,7 @@ void Game::addMapElement(char input, Point position){
         enemyManager->addMovingEnemy(position);
         break;
     case 'S':
-
+        enemyManager->addHostageShip(position); 
         break;
     case 'P':
         playerManager->addPlayer(position);
@@ -165,14 +165,18 @@ Game::Game(std::string mapAddress, std::string gameLevel){
 
 bool Game::isGameEnded(){
     if (enemyManager->areAllEnemiesDead() || 
-        playerManager->allPlayersAreDead()){
+        playerManager->allPlayersAreDead() ||
+        enemyManager->hasAHostageShipDead()){
         return true;
     }
     return false;
 }
 
 void Game::identifyWinner(){
-    if (enemyManager->areAllEnemiesDead()){
+    if (enemyManager->hasAHostageShipDead()){
+        winner = ENEMIES;
+    }
+    else if (enemyManager->areAllEnemiesDead()){
         winner = PLAYERS;
     }
     else{
