@@ -115,7 +115,7 @@ void Pages::showResultPage(WinnerType winner){
     window->draw_img(GAME_PATH+BACKGROUND_IMAGES_PATH+"/end.jpg");
     showResult(winner);
     window->update_screen();
-    delay(5000);
+    delay(3000);
 }
 
 

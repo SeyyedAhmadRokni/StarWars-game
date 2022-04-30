@@ -5,33 +5,20 @@
 #include "StarWars.hpp"
 #include "Defines.cpp"
 
-void Player::lossGaurd(){
-    if (time(NULL) - getGaurdTime > gaurdDuration){
-        hasGaurdItem = false;
-    }
-}
-void Player::lossBonusSpeed(){
-    if (time(NULL)- getSpeedTime > speedDuration){
-        hasBonusSpeed = false;
-    }
-}
-Player::Player(Controller cont, Point p)
+Player::Player(Controller cont, Point p, int playerNumber)
     :Box(p, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,
-    GAME_PATH + PLAYER_IMAGES_PATH +
-    "/1.png", PLAYER_MOVE_RATE){
+    GAME_PATH + PLAYER_IMAGES_PATH + "/"+ to_string(playerNumber) + ".png",
+    PLAYER_MOVE_RATE){
 
     controls = new Controller(cont);
+    gaurededImage = GAME_PATH + PLAYER_IMAGES_PATH + "/"+
+        to_string(playerNumber) + "_gaurded.png";
 }
 
-Player::Player(char up, char down, char left, char right, char shoot)
-    :Box(x, y, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,
-    GAME_PATH + PLAYER_IMAGES_PATH +
-    "/1.png", PLAYER_MOVE_RATE){
-    controls = new Controller(up, down, left, right, shoot);
-}
 bool Player::hasKey(char released){
     return controls->isAController(released);
 }
+
 Arrow* Player::shoot(){
     std::string imageAddress = GAME_PATH + THINGS_IMAGES_PATH +
         "/player_fire.png";
@@ -44,6 +31,7 @@ void Player::getGaurd(int duration){
     hasGaurdItem = true;
     time(&getGaurdTime);
     gaurdDuration = duration;
+    swap(imageSource, gaurededImage);
 }
 void Player::getSpeed(int duration, int ratio){
     hasBonusSpeed = true;
@@ -163,8 +151,9 @@ void Player::disableSpeedItem(){
 
 void Player::disableGaurdItem(){
     if (hasGaurdItem &&
-        time(NULL)-getGaurdTime > speedDuration){
+        time(NULL)-getGaurdTime > gaurdDuration){
         hasGaurdItem = false;
+        swap(gaurededImage, imageSource);
     }
 }
 

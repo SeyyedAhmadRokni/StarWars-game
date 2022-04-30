@@ -20,7 +20,7 @@ Controller PlayerManager::getDefaultsControllers(int playerN){
 
 void PlayerManager::addPlayer(Point p){
     Controller control = getDefaultsControllers(players.size()+1);
-    Player *player = new Player(control, p);
+    Player *player = new Player(control, p, players.size()+1);
     players.push_back(player);
 }
 

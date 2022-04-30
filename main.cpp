@@ -13,6 +13,4 @@ int main(){
     game.run();
     return 0;
 }
-//TODO: -taghire name khoroji be starwars.out
-//      -voroodi dadane map be soorate argv
 #endif

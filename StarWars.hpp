@@ -120,6 +120,7 @@ private:
     bool hasGaurdItem = false;
     int gaurdDuration;
     time_t getGaurdTime;
+    std::string gaurededImage;
 
     bool hasBonusSpeed = false;
     int speedDuration;
@@ -131,13 +132,11 @@ private:
     bool movingUP = false;
     bool movingDown = false;
 
+    void disableSpeedItem();
+    void disableGaurdItem();
 
-    void lossGaurd();
-    void lossBonusSpeed();
 public:
-    Player(Controller cont, Point p);
-    Player(char up, char down, char left,
-        char right, char shoot);
+    Player(Controller cont, Point p, int playerNumber);
     bool hasKey(char released);
     Arrow* shoot();
     void getGaurd(int duration);
@@ -148,8 +147,6 @@ public:
     void draw(Window* winodws);
     bool hasGaurd();
     void move();
-    void disableSpeedItem();
-    void disableGaurdItem();
     void disableExpiredItems();
     void manageKeyRelease(char input);
 };
@@ -319,6 +316,8 @@ private:
     PlayerManager* playerManager = new PlayerManager();
     ItemManager* itemManager = new ItemManager();
     Pages* pages;
+
+
     void closeGame();
     void doEvent(Event event);
     void getInput();

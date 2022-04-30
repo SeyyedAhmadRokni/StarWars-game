@@ -7,11 +7,11 @@
 const std::string GAME_TITLE = "Star Wars";
 const std::string GAME_PATH = "/home/seyyedahmad/Documents/Term2/Taklif5/Last";
 const std::string ENEMY_IMAGES_PATH = "/img/enemy";
-const std::string PLAYER_IMAGES_PATH = "/img/ship";
+const std::string PLAYER_IMAGES_PATH = "/img/player";
 const std::string BACKGROUND_IMAGES_PATH = "/img/background";
 const std::string THINGS_IMAGES_PATH = "/img/items";
 
-const int PLAYER_MOVE_RATE = 2;
+const int PLAYER_MOVE_RATE = 3;
 
 const int FIRE_DAMAGE = 100;
 const int FIRE_WIDHT = 20;
