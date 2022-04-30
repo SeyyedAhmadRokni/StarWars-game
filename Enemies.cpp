@@ -3,7 +3,6 @@
 
 #include <bits/stdc++.h>
 #include "StarWars.hpp"
-#include "Defines.cpp"
 
 
 Enemy::Enemy(int x, int y, int width, int height, std::string imgAddress, int rate )

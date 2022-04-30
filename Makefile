@@ -8,31 +8,29 @@ a.out: Defines.o BasicStructures.o GameEquipments.o Player.o Enemies.o main.o Ga
 	$(CC) -g $(SRC_PATH)rsdl.cpp Defines.o BasicStructures.o GameEquipments.o Player.o Enemies.o EnemyManager.o OtherGameManagers.o PlayerManager.o Game.o main.o $(CCFLAGS) 
 
 
-Defines.o: $(SRC_PATH)Defines.cpp
-	$(CC) $(RUNFLAG) $(SRC_PATH)Defines.cpp
 
-Player.o: $(SRC_PATH)Player.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
+Player.o: $(SRC_PATH)Player.cpp Player.hpp $(SRC_PATH)Defines.hpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)Player.cpp
 
-Enemies.o: $(SRC_PATH)Enemies.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
+Enemies.o: $(SRC_PATH)Enemies.cpp Enemies.hpp $(SRC_PATH)Defines.hpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)Enemies.cpp
 
-BasicStructures.o: $(SRC_PATH)BasicStructures.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
+BasicStructures.o: $(SRC_PATH)BasicStructures.cpp BasicStructures.hpp $(SRC_PATH)Defines.hpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)BasicStructures.cpp
 
-GameEquipments.o: $(SRC_PATH)GameEquipments.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
+GameEquipments.o: $(SRC_PATH)GameEquipments.cpp Arrow.hpp Items.hpp  $(SRC_PATH)Defines.hpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)GameEquipments.cpp
 
-Game.o: $(SRC_PATH)Game.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
+Game.o: $(SRC_PATH)Game.cpp StarWars.hpp $(SRC_PATH)Defines.hpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)Game.cpp 
 
-EnemyManager.o: $(SRC_PATH)EnemyManager.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
+EnemyManager.o: $(SRC_PATH)EnemyManager.cpp Managers.hpp $(SRC_PATH)Defines.hpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)EnemyManager.cpp
 
-OtherGameManagers.o: $(SRC_PATH)OtherGameManagers.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
+OtherGameManagers.o: $(SRC_PATH)OtherGameManagers.cpp Managers.hpp $(SRC_PATH)Defines.hpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)OtherGameManagers.cpp
 
-PlayerManager.o: $(SRC_PATH)PlayerManager.cpp StarWars.hpp $(SRC_PATH)Defines.cpp
+PlayerManager.o: $(SRC_PATH)PlayerManager.cpp Managers.hpp $(SRC_PATH)Defines.hpp
 	$(CC) $(RUNFLAG) $(SRC_PATH)PlayerManager.cpp
 
 main.o: $(SRC_PATH)main.cpp StarWars.hpp $(SRC_PATH)Game.cpp

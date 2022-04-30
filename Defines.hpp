@@ -2,7 +2,36 @@
 #define _DEFS_
 
 #include <string>
-// #include "StarWars.hpp"
+
+enum GameKey{
+    UP,
+    DOWN,
+    RIGHT,
+    LEFT,
+    SHOOT,
+};
+
+enum EnemyType{
+    FIXED,
+    MOVING,
+    HOSTAGE_SHIP,
+};
+
+enum DifficultyLevel{
+    EASY,
+    MEDIUM, 
+    HARD,
+};
+
+enum WinnerType{
+    ENEMIES,
+    PLAYERS,
+};
+
+enum ItemType{
+    SPEED,
+    GAURD,
+};
 
 const std::string GAME_TITLE = "Star Wars";
 const std::string GAME_PATH = "/home/seyyedahmad/Documents/Term2/Taklif5/Last";

@@ -2,7 +2,6 @@
 #define _O_
 #include <bits/stdc++.h>
 #include "StarWars.hpp"
-#include "Defines.cpp"
 
 bool ItemManager::isChanceWithMakingItem(){
     const int YES_CHANCE = 100;

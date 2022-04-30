@@ -3,7 +3,6 @@
 
 #include <bits/stdc++.h>
 #include "StarWars.hpp"
-#include "Defines.cpp"
 
 void EnemyManager::addMovingEnemy(Point p){
     MovingEnemy* enemy = new MovingEnemy(p.x, p.y);

@@ -3,7 +3,6 @@
 
 #include <bits/stdc++.h>
 #include "StarWars.hpp"
-#include "Defines.cpp"
 
 Player::Player(Controller cont, Point p, int playerNumber)
     :Box(p, STANDARD_BLOCK_WIDTH, STANDARD_BLOCK_HEIGHT,

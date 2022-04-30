@@ -3,7 +3,6 @@
 
 #include <bits/stdc++.h>
 #include "StarWars.hpp"
-#include "Defines.cpp"
 
 using namespace std;
 

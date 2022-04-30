@@ -2,7 +2,6 @@
 #define _MAIN_
 #include <bits/stdc++.h>
 #include "StarWars.hpp"
-#include "rsdl.hpp"
 
 using namespace std;
 
