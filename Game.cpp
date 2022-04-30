@@ -18,9 +18,9 @@ void Game::readMap(string address){
 
 void Game::makeWindow(std::string mapAddress){
     int windowWidth = map[0].size()*STANDARD_BLOCK_WIDTH
-        +(map[0].size()+1)*STANDARD_SEPRATOR_WIDTH;
+        +(map[0].size()+1)*STANDARD_MARGIN_WIDTH;
     int windowHeight = map.size()*STANDARD_BLOCK_HEIGHT
-        + (map.size() + 1)*STANDARD_SEPRATOR_HEIGHT;
+        + (map.size() + 1)*STANDARD_MARGIN_HEIGHT;
     window = new Window(windowWidth, windowHeight, GAME_TITLE);
 }
 
@@ -95,9 +95,9 @@ void Game::run(){
 
 Point Game::getElementPosition(int x, int y){
     return Point(x*STANDARD_BLOCK_WIDTH+   
-        (x+1)*STANDARD_SEPRATOR_WIDTH,
+        (x+1)*STANDARD_MARGIN_WIDTH,
         y*STANDARD_BLOCK_HEIGHT + 
-        (y+1)*STANDARD_SEPRATOR_HEIGHT);
+        (y+1)*STANDARD_MARGIN_HEIGHT);
 }
 
 void Game::addMapElement(char input, Point position){
@@ -120,7 +120,7 @@ void Game::addMapElement(char input, Point position){
     }
 }
 
-void Game::addMapsElements(std::string address){
+void Game::addMapElements(std::string address){
     for (int i = 0; i < map.size(); i++)
     {
         for (int j = 0; j < map[i].size(); j++)
@@ -155,12 +155,14 @@ void Game::setGameLevel(string gameLevel){
 }
 
 Game::Game(std::string mapAddress, std::string gameLevel){
+
+    srand(time(NULL));
     readMap(mapAddress);
     makeWindow(mapAddress);
     pages = new Pages(window);
     setGameLevel(gameLevel);
     enemyManager = new EnemyManager(map.size(), this->gameLevel);
-    addMapsElements(mapAddress);
+    addMapElements(mapAddress);
 }
 
 bool Game::isGameEnded(){

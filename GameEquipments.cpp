@@ -9,12 +9,12 @@
 using namespace std;
 
 Arrow::Arrow(int x, int y, string imageAddress, int damage):
-    Box(x, y, FIRE_WIDHT, FIRE_HEIGHT, imageAddress, FIRE_RATE){
+    Box(x, y, ARROW_WIDHT, ARROW_HEIGHT, imageAddress, ARROW_RATE){
     this->damage = damage;
 }
 
 Arrow::Arrow(Point p, string imageAddress, int damage):
-    Box(p, FIRE_WIDHT, FIRE_HEIGHT, imageAddress, FIRE_RATE){
+    Box(p, ARROW_WIDHT, ARROW_HEIGHT, imageAddress, ARROW_RATE){
 
     this->damage = damage;
 }
@@ -49,8 +49,8 @@ bool Item::hasExpired(){
 }
 
 SpeedItem::SpeedItem(Point position):
-    Item(position.x, position.y, SPEED_ITEM_EXISTS_TIME,
-    GAME_PATH + THINGS_IMAGES_PATH + "/speed.png"){
+    Item(position.x, position.y, SPEED_ITEM_EXISTENCE_TIME,
+    GAME_PATH + ITEMS_IMAGES_PATH + "/speed.png"){
 }
 
 void SpeedItem::action(Player* player){
@@ -58,8 +58,8 @@ void SpeedItem::action(Player* player){
 }
 
 GaurdItem::GaurdItem(Point position):
-    Item(position.x, position.y, GAURD_ITEM_EXISTS_TIME,
-    GAME_PATH + THINGS_IMAGES_PATH + "/gaurd.png"){
+    Item(position.x, position.y, GAURD_ITEM_EXISTENCE_TIME,
+    GAME_PATH + ITEMS_IMAGES_PATH + "/gaurd.png"){
 }
 
 void GaurdItem::action(Player* player){

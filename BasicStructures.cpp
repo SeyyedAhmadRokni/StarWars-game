@@ -107,12 +107,13 @@ void Pages::showResult(WinnerType winner){
         break;
     }
     window->show_text(result, getCenterOfPageToShow(),
-        WHITE, GAME_PATH + FONTS_PATH + "/OpenSans.ttf");
+        RED, GAME_PATH + FONTS_PATH + "/OpenSans.ttf");
 
 }
 void Pages::showResultPage(WinnerType winner){
     window->clear();
-    window->draw_img(GAME_PATH+BACKGROUND_IMAGES_PATH+"/end.jpg");
+    window->draw_img(GAME_PATH +
+        BACKGROUND_IMAGES_PATH + "/end.jpg");
     showResult(winner);
     window->update_screen();
     delay(3000);

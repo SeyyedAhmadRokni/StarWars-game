@@ -270,11 +270,9 @@ set<int> EnemyShootTimer::chooseColumnsHard(){
 }
 
 EnemyShootTimer::EnemyShootTimer(int col, DifficultyLevel level){
-    srand(time(NULL));
     numberOfColumns;
     this->level = level;
     time(&lastShot);
-    // lastShot -= 7;
 }
 
 bool EnemyShootTimer::isTimeToShot(){
@@ -284,7 +282,7 @@ bool EnemyShootTimer::isTimeToShot(){
     return false;
 }
 
-vector<int> EnemyShootTimer::getColumnsToShoot(){
+vector<int> EnemyShootTimer::getSafeColumns(){
     time(&lastShot);
     set<int> choosedColumns;
     switch (level)
@@ -295,11 +293,11 @@ vector<int> EnemyShootTimer::getColumnsToShoot(){
     case MEDIUM:
         choosedColumns = chooseColumnsMedium();
         break;
-    
     case HARD:
         choosedColumns = chooseColumnsHard();
         break;
     }
+    
     return vector<int>(choosedColumns.begin(), choosedColumns.end());
 }
 

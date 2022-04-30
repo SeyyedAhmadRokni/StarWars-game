@@ -7,6 +7,7 @@
 using namespace std;
 
 int main(){
+
     string mapAddress = "map.txt";
     string gameLevel = "M";
     Game game(mapAddress, gameLevel);

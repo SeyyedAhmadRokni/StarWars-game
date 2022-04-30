@@ -76,8 +76,8 @@ class Arrow:public Box{
 private:
     int damage;
 public:
-    Arrow(int x, int y, std::string imageAddress, int damage = FIRE_DAMAGE);
-    Arrow(Point p, std::string imageAddress, int damage = FIRE_DAMAGE);
+    Arrow(int x, int y, std::string imageAddress, int damage = ARROW_DAMAGE);
+    Arrow(Point p, std::string imageAddress, int damage = ARROW_DAMAGE);
     bool isInScreen(int windowWidth,
         int windowHeight);
 };
@@ -230,7 +230,7 @@ private:
 public:
     EnemyShootTimer(int col, DifficultyLevel level);
     bool isTimeToShot();
-    std::vector<int> getColumnsToShoot();
+    std::vector<int> getSafeColumns();
 };
 
 
@@ -344,7 +344,7 @@ private:
     void readMap(std::string address);
     Point getElementPosition(int i, int j);
     void addMapElement(char input, Point position);
-    void addMapsElements(std::string address);
+    void addMapElements(std::string address);
     void makeWindow(std::string mapAddress);
     void drawBackGround();
     void setGameLevel(std::string gameLevel);
