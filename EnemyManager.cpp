@@ -93,8 +93,8 @@ EnemyManager::EnemyManager(int columnsNumber, DifficultyLevel level){
 
 bool EnemyManager::isInColumn(Enemy* enemy, int col){
     Point position = enemy->getPosition();
-    int colStart = col*STANDARD_BLOCK_WIDTH +
-        (col+1)*STANDARD_MARGIN_WIDTH;
+    int colStart = (col-1)*STANDARD_BLOCK_WIDTH +
+        col*STANDARD_MARGIN_WIDTH;
     if (position.x >= colStart && position.x <= colStart+STANDARD_BLOCK_WIDTH){
         return true;
     }
