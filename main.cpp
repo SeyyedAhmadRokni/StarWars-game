@@ -8,16 +8,9 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-    string mapAddress = str(argv[0]);
-    string gameLevel;
-    if (argc == 1)
-    {
-        gameLevel = "M";
-    }
-    else
-    {
-        gameLevel = str(argv[1]);
-    }
+    string mapAddress = string(argv[1]);
+    string gameLevel = (argc==2) ?"M" :string(argv[2]);
+    cout << gameLevel << endl;
     Game game(mapAddress, gameLevel);
     game.run();
     return 0;
