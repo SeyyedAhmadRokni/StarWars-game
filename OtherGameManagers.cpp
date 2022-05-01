@@ -232,7 +232,7 @@ set<int> EnemyShootTimer::chooseColumns(int number)
     set<int> columns;
     while (columns.size() < number)
     {
-        columns.insert((rand() % number) + 1);
+        columns.insert((rand() % numberOfColumns) + 1);
     }
 
     return columns;

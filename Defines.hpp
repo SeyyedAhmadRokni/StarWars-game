@@ -50,7 +50,7 @@ const int PLAYER_MOVE_RATE = 3;
 const int ARROW_DAMAGE = 100;
 const int ARROW_WIDHT = 20;
 const int ARROW_HEIGHT = 20;
-const int ARROW_RATE = 5;
+const int ARROW_RATE = 4;
 
 const int ITEM_WIDTH = 30;
 const int ITEM_HEIGHT = 30;
@@ -58,10 +58,10 @@ const int BONUS_SPEED_RATIO = 2;
 
 const int STANDARD_BLOCK_WIDTH = 80;
 const int STANDARD_BLOCK_HEIGHT = 80;
-const int STANDARD_MARGIN_WIDTH = 80;
+const int STANDARD_MARGIN_WIDTH = 70;
 const int STANDARD_MARGIN_HEIGHT = 100;
 
-const int TWO_SHOT_DIFFERENCE = 3;
+const double TWO_SHOT_DIFFERENCE = 1.5;
 
 const int MOVING_ENEMY_MOVE_RATE = 5;
 
