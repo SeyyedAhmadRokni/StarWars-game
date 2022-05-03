@@ -12,7 +12,8 @@ you can play this game multiplayer.
 
 <h2> Running the game </h2>
   
-for starting the game use run this format commands in the terminal:
+  to run this game you must have **SDL** library.<br>
+  for starting the game first make the project then run command in ths format :
 
 `./starwars.out <map.txt> <hardship level>`
  
